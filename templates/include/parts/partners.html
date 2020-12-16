@@ -1,0 +1,27 @@
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+
+{% if based_partners %}
+    <!-- ============================================== BRANDS CAROUSEL ============================================== -->
+    <div id="brands-carousel" class="logo-slider wow fadeInUp">
+        <div class="logo-slider-inner">
+            <div id="brand-slider" class="owl-carousel brand-slider custom-carousel owl-theme">
+                {% for based_partner in based_partners %}
+                    <div class="item {% if forloop.counter == 1 %} m-t-15 {% elif forloop.counter == 2 %} m-t-10 {% else %}{% endif %}">
+                        <a href="{{ based_partner.url }}" class="image">
+                            <img data-echo="{{ based_partner.logo|thumbnail_url:'partner_list' }}"
+                                 src="{{ based_partner.logo|thumbnail_url:'partner_list' }}"
+                                 alt="{{ based_partner.name }}"> </a></div>
+                    <!--/.item-->
+                {% endfor %}
+
+            </div>
+            <!-- /.owl-carousel #logo-slider -->
+        </div>
+        <!-- /.logo-slider-inner -->
+
+    </div>
+    <!-- /.logo-slider -->
+    <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->
+{% endif %}

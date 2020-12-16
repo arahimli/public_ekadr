@@ -1,0 +1,331 @@
+{% extends 'profile_base.html' %}
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+{% block head_container %}
+
+    <title>{{ base_company_info.name }} | {% trans 'dashboard' %}</title>
+    <link rel="canonical" href="{% url 'dashboard' %}"/>
+    <!--  Social tags      -->
+    <meta name="keywords"
+          content="">
+    <meta name="description"
+          content="">
+    <!-- Schema.org markup for Google+ -->
+    <meta itemprop="name" content="{{ base_company_info.name }} | {% trans 'dashboard' %}">
+    <meta itemprop="description"
+          content="">
+    <meta itemprop="image" content="{{ base_company_info.social_image|thumbnail_url:'facebook_image' }}">
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="image">
+    <meta name="twitter:site" content="@twitter_user">
+    <meta name="twitter:title" content="{{ base_company_info.name }} | {% trans 'dashboard' %}">
+    <meta name="twitter:description"
+          content="">
+    <meta name="twitter:creator" content="@creativetim">
+    <meta name="twitter:image"
+          content="{{ base_company_info.social_image|thumbnail_url:'facebook_image' }}">
+    <!-- Open Graph data -->
+    <meta property="fb:app_id" content="fb_id">
+    <meta property="og:title" content="| {% trans 'dashboard' %}"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:url" content="{% url 'dashboard' %}"/>
+    <meta property="og:image"
+          content="{{ base_company_info.social_image|thumbnail_url:'facebook_image' }}"/>
+    <meta property="og:description"
+          content=""/>
+    <meta property="og:site_name" content="{{ base_company_info.name }}"/>
+
+
+{% endblock %}
+
+
+{% block base_container %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <a href="{% url 'admin_content_section' 'companies' 'all' %}" style="width: 100%"
+                   class="btn btn-info">{% trans 'companies' %}</a>
+            </div>
+            <div class="col-md-6">
+                <a href="{% url 'admin_content_section' 'profiles' 'all' %}" style="width: 100%"
+                   class="btn btn-info">{% trans 'profiles' %}</a>
+            </div>
+        </div>
+        {% if content_slug == 'companies' %}
+            <div class="row">
+                <div class="col-md-4">
+                    <a href="{% url 'admin_content_section' 'companies' 'all' %}" style="width: 100%"
+                       class="btn btn-info">{% trans 'all' %}</a>
+                </div>
+                <div class="col-md-4">
+                    <a href="{% url 'admin_content_section' 'companies' 'active' %}" style="width: 100%"
+                       class="btn btn-success">{% trans 'active' %}</a>
+                </div>
+                <div class="col-md-4">
+                    <a href="{% url 'admin_content_section' 'companies' 'deactive' %}" style="width: 100%"
+                       class="btn btn-danger">{% trans 'deactive' %}</a>
+                </div>
+            </div>
+        {% endif %}
+        {% if content_slug == 'profiles' %}
+            <div class="row">
+                <div class="col-md-4">
+                    <a href="{% url 'admin_content_section' 'profiles' 'all' %}" style="width: 100%"
+                       class="btn btn-info">{% trans 'all' %}</a>
+                </div>
+                <div class="col-md-4">
+                    <a href="{% url 'admin_content_section' 'profiles' 'active' %}" style="width: 100%"
+                       class="btn btn-success">{% trans 'active' %}</a>
+                </div>
+                <div class="col-md-4">
+                    <a href="{% url 'admin_content_section' 'profiles' 'deactive' %}" style="width: 100%"
+                       class="btn btn-danger">{% trans 'deactive' %}</a>
+                </div>
+            </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-xs-12 col-md-offset-8 col-md-4 col-sm-offset-4  col-sm-8 col-md-4">
+                <form class="navbar-form navbar-right" role="search" method="get" action=""
+                      style="margin-bottom: 0;margin-top: 0;">
+                    <div class="form-group form-search is-empty">
+                        <input type="text" class="form-control" placeholder="{% trans 'search' %}" name="search" value="{% if search_word %}{{ search_word }}{% endif %}">
+                        <span class="material-input"></span>
+                        <span class="material-input"></span></div>
+                    <button type="submit" class="btn btn-white btn-round btn-just-icon">
+                        <i class="material-icons">search</i>
+                        <div class="ripple-container"></div>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            {% if content_slug == 'profiles' %}
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-icon" data-background-color="rose">
+                            <i class="material-icons">store</i>
+                        </div>
+                        <h4 class="card-title">{% trans 'profiles' %}</h4>
+                        <div class="card-content">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>{% trans 'image' %}</th>
+                                        <th>{% trans 'name' %}</th>
+                                        <th>{% trans 'email' %}</th>
+                                        <th>{% trans 'type' %}</th>
+                                        <th>{% trans 'voen' %}</th>
+                                        <th class="">{% trans 'bank_account' %}</th>
+                                        <th>{% trans 'active' %}</th>
+                                        <th class="text-right">{% trans 'Actions' %}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for data in datas %}
+                                        <tr>
+                                            <td>
+                                                <img style="height: 60px;width:60px" src="
+
+
+
+                                                        {% if data.image %}{{ data.image|thumbnail_url:'profile_list_company' }}{% else %}{% static 'profile/assets/img/default-avatar.png' %}{% endif %}">
+                                            </td>
+                                            <td>{{ data.user.first_name }} {{ data.user.last_name }}</td>
+                                            <td>{{ data.email }}</td>
+                                            <td>{{ data.type }}</td>
+                                            <td>{{ data.voen }}</td>
+                                            <td>{{ data.bank_account }}</td>
+                                            <td class="td-actions">{% if data.user.is_active %}
+                                                <a type="button" rel="tooltip" class="btn btn-success btn-round">
+                                                    <i class="material-icons">check</i>
+                                                </a>
+                                            {% else %}
+                                                <button type="button" rel="tooltip" class="btn btn-danger btn-round">
+                                                    <i class="material-icons">close</i>
+                                                </button>
+                                            {% endif %}
+                                            </td>
+                                            <td class="td-actions text-right">
+                                                <a href="{% url 'admin_profile_page' 'profile' data.id %}" rel="tooltip"
+                                                   class="btn btn-success">
+                                                    <i class="material-icons">edit</i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if content_slug == 'companies' %}
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-icon" data-background-color="rose">
+                            <i class="material-icons">store</i>
+                        </div>
+                        <h4 class="card-title">{% trans 'companies' %}</h4>
+                        <div class="card-content">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>{% trans 'image' %}</th>
+                                        <th>{% trans 'name' %}</th>
+                                        <th>{% trans 'company_boss' %}</th>
+                                        <th>{% trans 'slogan' %}</th>
+                                        <th>{% trans 'email' %}</th>
+                                        <th>{% trans 'voen' %}</th>
+                                        <th class="">{% trans 'bank_account' %}</th>
+                                        <th class="">{% trans 'active' %}</th>
+                                        <th class="text-right">{% trans 'actions' %}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for data in datas %}
+                                        <tr>
+                                            <td><img src="
+
+
+
+
+                                                    {% if data.logo %}{{ data.logo|thumbnail_url:'profile_list_company' }}{% else %}{% static 'profile/assets/img/default-avatar.png' %}{% endif %}">
+                                            </td>
+                                            <td>{{ data.name }}</td>
+                                            <td>{{ data.profile.user.first_name }} {{ data.profile.user.last_name }}</td>
+                                            <td>{{ data.slogan }}</td>
+                                            <td>{{ data.email }}</td>
+                                            <td>{{ data.voen }}</td>
+                                            <td>{{ data.bank_account }}</td>
+
+                                            <td class="td-actions">{% if data.is_active %}
+                                                <a type="button" rel="tooltip" class="btn btn-success btn-round">
+                                                    <i class="material-icons">check</i>
+                                                </a>
+                                            {% else %}
+                                                <button type="button" rel="tooltip" class="btn btn-danger btn-round">
+                                                    <i class="material-icons">close</i>
+                                                </button>
+                                            {% endif %}
+                                            </td>
+                                            <td class="td-actions text-right">
+                                                <a href="{% url 'admin_company_page' 'companies' data.id %}"
+                                                   rel="tooltip" class="btn btn-success">
+                                                    <i class="material-icons">edit</i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <div id="products" class="row list-group">
+            {% if datas %}
+                <div class="col-md-12" style="    background: #fff;text-align: center;">
+                    {#            {{ datas.count }}#}
+                    <ul class="pagination pagination-info" style="    background: #fff;">
+                        {% if datas.has_previous %}
+                            <li><a href="?page={{ datas.previous_page_number }}">{% trans 'previous' %}</a></li>
+                        {% endif %}
+                        {% if datas.page_range_data.show_first %}
+                            <li><a href="?page=1">1</a></li>
+                            <li><a class="ellipsis">...</a></li>
+                        {% endif %}
+                        {% for i in datas.page_range_data.page_range %}
+                            {% ifequal i datas.number %}
+                                <li class="active"><a>{{ i }}</a></li>
+                            {% else %}
+                                <li><a href="?page={{ i }}">{{ i }}</a></li>
+                            {% endifequal %}
+                        {% endfor %}
+                        {% if datas.page_range_data.show_last %}
+                            <li><a class="ellipsis">...</a></li>
+                            <li>
+                                <a href="?page={{ datas.paginator.num_pages }}">{{ datas.paginator.num_pages }}</a>
+                            </li>
+                        {% endif %}
+
+                        {% if datas.has_next %}
+                            <li><a href="?page={{ datas.next_page_number }}">{% trans 'next' %}</a></li>
+                        {% endif %}
+
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
+{% block js_container %}
+    <script>
+        function removeProductOrservices($id, $url) {
+            swal({
+                title: '{% trans 'are_you_sure' %}?',
+                text: "{% trans 'are_you_sure_delete' %}!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '{% trans 'yes_delete_it' %}!',
+                cancelButtonText: '{% trans 'no_cancel' %}!',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false
+            }).then(function () {
+                window.location.replace($url);
+            }, function (dismiss) {
+                // dismiss can be 'cancel', 'overlay',
+                // 'close', and 'timer'
+                if (dismiss === 'cancel') {
+                    swal(
+                        '{% trans 'cancelled' %}',
+                        '{% trans 'cancelled_deleted' %} :)',
+                        'error'
+                    )
+                }
+            })
+        }
+    </script>
+
+
+    <script>
+        function removeCompany($id, $url) {
+            swal({
+                title: '{% trans 'are_you_sure' %}?',
+                text: "{% trans 'are_you_sure_delete_company' %}!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '{% trans 'yes_delete_it_company' %}!',
+                cancelButtonText: '{% trans 'no_cancel' %}!',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false
+            }).then(function () {
+                window.location.replace($url);
+            }, function (dismiss) {
+                // dismiss can be 'cancel', 'overlay',
+                // 'close', and 'timer'
+                if (dismiss === 'cancel') {
+                    swal(
+                        '{% trans 'cancelled' %}',
+                        '{% trans 'cancelled_deleted' %} :)',
+                        'error'
+                    )
+                }
+            })
+        }
+    </script>
+
+{% endblock %}

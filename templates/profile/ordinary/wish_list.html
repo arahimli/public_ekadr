@@ -1,0 +1,234 @@
+{% extends 'profile_base.html' %}
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+{% block head_container %}
+
+{% endblock %}
+
+
+{% block base_container %}
+
+    <div class="container-fluid">
+        {#        <div class="row">#}
+        {#            <div class="col-lg-3 col-md-6 col-sm-6">#}
+        {#                <div class="card card-stats">#}
+        {#                    <div class="card-header" data-background-color="orange">#}
+        {#                        <i class="material-icons">weekend</i>#}
+        {#                    </div>#}
+        {#                    <div class="card-content">#}
+        {#                        <p class="category">Bookings</p>#}
+        {#                        <h3 class="card-title">184</h3>#}
+        {#                    </div>#}
+        {#                    <div class="card-footer">#}
+        {#                        <div class="stats">#}
+        {#                            <i class="material-icons text-danger">warning</i>#}
+        {#                            <a href="#pablo">Get More Space...</a>#}
+        {#                        </div>#}
+        {#                    </div>#}
+        {#                </div>#}
+        {#            </div>#}
+        {#            <div class="col-lg-3 col-md-6 col-sm-6">#}
+        {#                <div class="card card-stats">#}
+        {#                    <div class="card-header" data-background-color="rose">#}
+        {#                        <i class="material-icons">equalizer</i>#}
+        {#                    </div>#}
+        {#                    <div class="card-content">#}
+        {#                        <p class="category">Website Visits</p>#}
+        {#                        <h3 class="card-title">75.521</h3>#}
+        {#                    </div>#}
+        {#                    <div class="card-footer">#}
+        {#                        <div class="stats">#}
+        {#                            <i class="material-icons">local_offer</i> Tracked from Google Analytics#}
+        {#                        </div>#}
+        {#                    </div>#}
+        {#                </div>#}
+        {#            </div>#}
+        {#            <div class="col-lg-3 col-md-6 col-sm-6">#}
+        {#                <div class="card card-stats">#}
+        {#                    <div class="card-header" data-background-color="green">#}
+        {#                        <i class="material-icons">store</i>#}
+        {#                    </div>#}
+        {#                    <div class="card-content">#}
+        {#                        <p class="category">Revenue</p>#}
+        {#                        <h3 class="card-title">$34,245</h3>#}
+        {#                    </div>#}
+        {#                    <div class="card-footer">#}
+        {#                        <div class="stats">#}
+        {#                            <i class="material-icons">date_range</i> Last 24 Hours#}
+        {#                        </div>#}
+        {#                    </div>#}
+        {#                </div>#}
+        {#            </div>#}
+        {#            <div class="col-lg-3 col-md-6 col-sm-6">#}
+        {#                <div class="card card-stats">#}
+        {#                    <div class="card-header" data-background-color="blue">#}
+        {#                        <i class="fa fa-twitter"></i>#}
+        {#                    </div>#}
+        {#                    <div class="card-content">#}
+        {#                        <p class="category">Followers</p>#}
+        {#                        <h3 class="card-title">+245</h3>#}
+        {#                    </div>#}
+        {#                    <div class="card-footer">#}
+        {#                        <div class="stats">#}
+        {#                            <i class="material-icons">update</i> Just Updated#}
+        {#                        </div>#}
+        {#                    </div>#}
+        {#                </div>#}
+        {#            </div>#}
+        {#        </div>#}
+        <br>
+        <h3>
+            {% trans 'wish_list' %}
+        </h3>
+        <br>
+
+        <div id="products" class="row list-group">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">assignment</i>
+                    </div>
+                    <h4 class="card-title">{% trans 'wish_list' %}</h4>
+                    <div class="card-content">
+                        <div class="table-responsive">
+                            <table class="table table-shopping">
+                                <thead>
+                                <tr style="text-align: center;">
+                                    <th class="text-center"></th>
+                                    <th>{% trans 'product' %}</th>
+{#                                    <th class="text-center">{% trans 'price' %}</th>#}
+                                    <th class="text-center">{% trans 'active' %}</th>
+{#                                    <th class="text-center">{% trans 'quantity' %}</th>#}
+                                    <th class="text-center">{% trans 'date' %}</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for order in orders %}
+                                    <tr>
+                                        <td>
+                                            <div class="img-container">
+                                                <img src="{{ order.company_product_or_service.logo|thumbnail_url:'profile_buying_product_image' }}"
+                                                     alt="...">
+                                            </div>
+                                        </td>
+                                        <td class="td-name">
+                                            <a target="_blank"
+                                               href="{% url 'company_product_or_service' order.company_product_or_service.id %}">{{ order.company_product_or_service.name }}</a>
+                                            <br/>
+                                            <small>
+                                                {% trans 'by' %} <a target="_blank"
+                                                                    href="{% url 'company' order.company_product_or_service.company.id %}">{{ order.company_product_or_service.company.name }}</a>
+                                            </small>
+                                        </td>
+{#                                        <td class="td-number text-center">#}
+{#                                            <small>{{ order.currency.noinal }}</small>#}
+                                            {#                                            {{ order.price|floatformat:'-2' }}#}
+{#                                        </td>#}
+                                        <td class="td-actions text-center">
+                                            {% if order.active %}
+                                                <button type="button" rel="tooltip" class="btn btn-success btn-round">
+                                                    <i class="material-icons">check</i>
+                                                </button>
+                                            {% else %}
+                                                <button type="button" rel="tooltip" class="btn btn-danger btn-round">
+                                                    <i class="material-icons">close</i>
+                                                </button>
+                                            {% endif %}
+                                        </td>
+{#                                        <td class="td-number" style="text-align: center;">#}
+{#                                            {{ order.quantity|floatformat:'-2' }}#}
+{#                                            {% if not order.active %}#}
+{#                                                <div class="btn-group">#}
+{#                                                    <button class="btn btn-round btn-info btn-xs">#}
+{#                                                        <i class="material-icons">remove</i>#}
+{#                                                    </button>#}
+{#                                                    <button class="btn btn-round btn-info btn-xs">#}
+{#                                                        <i class="material-icons">add</i>#}
+{#                                                    </button>#}
+{#                                                </div>#}
+{#                                            {% endif %}#}
+{#                                        </td>#}
+                                        <td>
+                                            {{ order.date }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" style="    background: #fff;text-align: center;">
+
+                <ul class="pagination pagination-info" style="    background: #fff;">
+                    {% if company_products_or_services.has_previous %}
+                        <li>
+                            <a href="?page={{ company_products_or_services.previous_page_number }}">{% trans 'previous' %}</a>
+                        </li>
+                    {% endif %}
+                    {% if company_products_or_services.page_range_data.show_first %}
+                        <li><a href="?page=1">1</a></li>
+                        <li><a class="ellipsis">...</a></li>
+                    {% endif %}
+                    {% for i in company_products_or_services.page_range_data.page_range %}
+                        {% ifequal i company_products_or_services.number %}
+                            <li class="active"><a>{{ i }}</a></li>
+                        {% else %}
+                            <li><a href="?page={{ i }}">{{ i }}</a></li>
+                        {% endifequal %}
+                    {% endfor %}
+                    {% if company_products_or_services.page_range_data.show_last %}
+                        <li><a class="ellipsis">...</a></li>
+                        <li>
+                            <a href="?page={{ company_products_or_services.paginator.num_pages }}">{{ company_products_or_services.paginator.num_pages }}</a>
+                        </li>
+                    {% endif %}
+
+                    {% if company_products_or_services.has_next %}
+                        <li><a href="?page={{ company_products_or_services.next_page_number }}">{% trans 'next' %}</a>
+                        </li>
+                    {% endif %}
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js_container %}
+    <script>
+        function removeProductOrservices($id, $url) {
+            swal({
+                title: '{% trans 'are_you_sure' %}?',
+                text: "{% trans 'are_you_sure_delete' %}!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '{% trans 'yes_delete_it' %}!',
+                cancelButtonText: '{% trans 'no_cancel' %}!',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false
+            }).then(function () {
+                window.location.replace($url);
+            }, function (dismiss) {
+                // dismiss can be 'cancel', 'overlay',
+                // 'close', and 'timer'
+                if (dismiss === 'cancel') {
+                    swal(
+                        '{% trans 'cancelled' %}',
+                        '{% trans 'cancelled_deleted' %} :)',
+                        'error'
+                    )
+                }
+            })
+        }
+    </script>
+
+
+{% endblock %}

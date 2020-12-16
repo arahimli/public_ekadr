@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+{% load widget_tweaks %}
+{% get_current_language as LANGUAGE_CODE %}
+{% block head_container %}
+
+{% endblock %}
+
+
+{% block base_container %}
+    <script src="https://www.google.com/recaptcha/api.js?hl={{ LANGUAGE_CODE }}" async defer></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+    <link rel="stylesheet" href="{% static 'select2/select2-bootstrap.css' %}">
+    <style>
+        .errorlist {
+            list-style: none !important;
+        }
+    </style>
+
+    <!-- ============================================== HEADER : END ============================================== -->
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-inner">
+                <ul class="list-inline list-unstyled">
+                    <li><a href="{% url 'index' %}">{% trans 'home' %}</a></li>
+                    <li class='active'>{% trans 'sign_in' %}</li>
+                </ul>
+            </div><!-- /.breadcrumb-inner -->
+        </div><!-- /.container -->
+    </div><!-- /.breadcrumb -->
+
+    <div class="body-content">
+        <div class="container">
+            <div class="sign-in-page">
+                <div class="row">
+                    <!-- Sign-in -->
+                    <div class="col-md-6 col-sm-12 col-md-offset-3 sign-in">
+                        <h4 class="">{% trans 'sign_in' %}</h4>
+                        {% if message_login %}
+                            <div class="alert alert-danger ">
+                                {{ message_login }}
+                            </div>
+                        {% endif %}
+                        <form class="register-form outer-top-xs" role="form" id="sign_in-form" method="post"
+                          action="{% url 'sign_in' %}{% if next_url %}?next_url={{ next_url }}{% endif %}">
+                        {% csrf_token %}
+                            <div class="form-group">
+                                <label class="info-title" for="exampleInputEmail1">{% trans 'username_or_email' %} <span>*</span></label>
+                                {{ login_form.username_or_email|add_class:'form-control logpadding'|attr:'required' }}
+                                {% if login_form.username_or_email.errors %}
+                                    <div class="alert alert-error">
+                                        <button type="button" class="close" data-dismiss="alert">×
+                                        </button>
+                                        <strong>{{ login_form.username_or_email.errors }}</strong>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label class="info-title" for="exampleInputPassword1">{% trans 'password' %} <span>*</span></label>
+                                {{ login_form.password|add_class:'form-control unicase-form-control text-input'|attr:'required' }}
+{#                                {% if login_form.password.errors %}#}
+{#                                    <div class="alert alert-error">#}
+{#                                        <button type="button" class="close" data-dismiss="alert">×#}
+{#                                        </button>#}
+{#                                        <strong>{{ login_form.password.errors }}</strong>#}
+{#                                    </div>#}
+{#                                {% endif %}#}
+                            </div>
+                            <div class="radio outer-xs">
+                                <label>
+                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">Remember
+                                    me!
+                                </label>
+                                <a href="#" class="forgot-password pull-right">Forgot your Password?</a>
+                            </div>
+                            <button type="submit" class="btn-upper btn btn-primary checkout-page-button">Login</button>
+                        </form>
+                    </div>
+                    <!-- Sign-in -->
+
+
+                    <!-- create a new account -->            </div><!-- /.row -->
+            </div><!-- /.sigin-in-->
+            <!-- ============================================== BRANDS CAROUSEL ============================================== -->
+            {% include 'include/parts/partners.html' %}<!-- /.logo-slider -->
+            <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->
+        </div><!-- /.container -->
+    </div><!-- /.body-content -->
+
+{% endblock %}
+
+
+{% block js_container %}
+    <script>
+        $(document).ready(function () {
+            console.log("ready!");
+        });
+    </script>
+    <script>
+
+    </script>
+    <script src="{% static 'select2/select2.full.js' %}"></script>
+
+    <script>
+        $(".select2-single, .select2-multiple").select2({
+            theme: "bootstrap",
+            placeholder: "Select a State",
+            maximumSelectionSize: 6,
+            containerCssClass: ':all:'
+        });
+
+        $(":checkbox").on("click", function () {
+            $(this).parent().nextAll("select").prop("disabled", !this.checked);
+        });
+    </script>
+
+{% endblock %}

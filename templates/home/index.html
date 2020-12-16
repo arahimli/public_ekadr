@@ -1,0 +1,1159 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+{% load widget_tweaks %}
+{% block head_container %}
+
+{% endblock %}
+
+
+{% block base_container %}
+
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        {#      #map {#}
+        {#        height: 100%;#}
+        {#      }#}
+        /* Optional: Makes the sample page fill the window. */
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #description {
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+        }
+
+        #infowindow-content .title {
+            font-weight: bold;
+        }
+
+        #infowindow-content {
+            display: none;
+        }
+
+        #map #infowindow-content {
+            display: inline;
+        }
+
+        .pac-card {
+            margin: 10px 10px 0 0;
+            border-radius: 2px 0 0 2px;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            outline: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            background-color: #fff;
+            font-family: Roboto;
+        }
+
+        #pac-container {
+            padding-bottom: 12px;
+            margin-right: 12px;
+        }
+
+        .pac-controls {
+            display: inline-block;
+            padding: 5px 11px;
+        }
+
+        .pac-controls label {
+            font-family: Roboto;
+            font-size: 13px;
+            font-weight: 300;
+        }
+
+        @media (min-width: 979px) {
+            #pac-input {
+                background-color: #fff;
+                font-family: Roboto;
+                font-size: 15px;
+                font-weight: 300;
+                margin-left: 12px;
+                text-overflow: ellipsis;
+                width: 400px;
+                border: 17px solid #0581b5;
+                top: 10% !important;
+                padding: 8px;
+                left: 25% !important;
+
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 979px) {
+            #pac-input {
+                background-color: #fff;
+                font-family: Roboto;
+                font-size: 15px;
+                font-weight: 300;
+                margin-left: 12px;
+            {#            padding: 0 11px 0 13px;#} text-overflow: ellipsis;
+                width: 300px;
+                border: 17px solid #0581b5;
+                top: 10% !important;
+                padding: 10px;
+                left: 15% !important;
+
+            }
+        }
+
+        @media (min-width: 480px) and (max-width: 768px) {
+            #pac-input {
+                background-color: #fff;
+                font-family: Roboto;
+                font-size: 15px;
+                font-weight: 300;
+                margin-left: 12px;
+            {#            padding: 0 11px 0 13px;#} text-overflow: ellipsis;
+                width: 253px;
+                border: 17px solid #0581b5;
+                top: 5% !important;
+                padding: 10px;
+                left: 21% !important;
+
+            }
+
+        }
+
+        @media (max-width: 480px) {
+            #pac-input {
+                background-color: #fff;
+                font-family: Roboto;
+                font-size: 15px;
+                font-weight: 300;
+                margin-left: 12px;
+            {#            padding: 0 11px 0 13px;#} text-overflow: ellipsis;
+                width: 200px;
+                border: 17px solid #0581b5;
+                top: 5% !important;
+                padding: 10px;
+                left: 3% !important;
+
+            }
+        }
+
+        @media (min-width: 320px) and (max-width: 480px) {
+            #pac-input {
+                background-color: #fff;
+                font-family: Roboto;
+                font-size: 15px;
+                font-weight: 300;
+                margin-left: 12px;
+                text-overflow: ellipsis;
+                width: 215px;
+                border: 12px solid #0581b5;
+                top: 5% !important;
+                padding: 10px;
+                left: 10% !important;
+
+            }
+        }
+
+        @media (max-width: 320px) {
+            #pac-input {
+                background-color: #fff;
+                font-family: Roboto;
+                font-size: 15px;
+                font-weight: 300;
+                margin-left: 12px;
+                text-overflow: ellipsis;
+                width: 150px;
+                border: 12px solid #0581b5;
+                top: 5% !important;
+                padding: 10px;
+                left: 7% !important;
+
+            }
+        }
+
+        #pac-input:focus {
+            border-color: #4d90fe;
+        }
+
+        #title {
+            color: #fff;
+            background-color: #4d90fe;
+            font-size: 25px;
+            font-weight: 500;
+            padding: 6px 12px;
+        }
+
+        #target {
+            width: 345px;
+        }
+
+        .gray-background-section {
+            background: dimgray;
+        }
+
+        .white-background-section {
+            background: white;
+        }
+    </style>
+    <style>
+
+        label.btn span {
+        }
+
+        label input[type="radio"] ~ i.fa.fa-circle-o {
+            color: #c8c8c8;
+            display: inline;
+            font-size: 15px;
+        }
+
+        label input[type="radio"] ~ i.fa.fa-dot-circle-o {
+            display: none;
+        }
+
+        label input[type="radio"]:checked ~ i.fa.fa-circle-o {
+            display: none;
+        }
+
+        label input[type="radio"]:checked ~ i.fa.fa-dot-circle-o {
+            color: #7AA3CC;
+            display: inline;
+            font-size: 17px;
+        }
+
+        label:hover input[type="radio"] ~ i.fa {
+            color: #7AA3CC;
+        }
+
+        div[data-toggle="buttons"] label.active {
+            color: #7AA3CC;
+        }
+
+        div[data-toggle="buttons"] label {
+            display: inline-block;
+            padding: 3px 3px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: normal;
+            line-height: 1.7em;
+            text-align: left;
+            white-space: nowrap;
+            vertical-align: top;
+            cursor: pointer;
+            background-color: none;
+            border: 0px solid #c8c8c8;
+            border-radius: 3px;
+            color: #c8c8c8;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -o-user-select: none;
+            user-select: none;
+        }
+
+        div[data-toggle="buttons"] label:hover {
+            color: #7AA3CC;
+        }
+
+        div[data-toggle="buttons"] label:active, div[data-toggle="buttons"] label.active {
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+
+
+    </style>
+
+    <div class="slideup">
+        <div class="container z-index100">
+            <div class="slidercontainer">
+
+                <div class="row">
+
+                    <div class="col-md-4 scolleft">
+                        <span class="opensans size18">{% trans 'business' %}</span>
+                        <div class="w100percent">
+                            <div class="btn-group btn-group-vertical" data-toggle="buttons">
+                                {% for based_busines in based_busineses %}
+                                    <label class="btn active"
+                                           onclick="businesShow('{{ based_busines.id }}','{% url 'busines_ajax' based_busines.id %}')">
+                                        <input type="radio" name='business-name'  {% if forloop.first %}
+                                               checked="checked" {% endif %}
+                                               onclick="businesShow('{{ based_busines.id }}','{% url 'busines_ajax' based_busines.id %}')"
+                                               id="business-{{ based_busines.id }}"
+                                               value="{{ based_busines.id }}">
+                                        <i class="fa fa-circle-o fa-2x"></i><i
+                                            class="fa fa-dot-circle-o fa-2x"></i> <span
+                                            id="busines-menu-item-{{ based_busines.id }}">  {{ based_busines.name }}</span>
+                                    </label>
+                                {% endfor %}
+                            </div>
+                            {#                            {% for based_busines in based_busineses %}#}
+                            {#                                <div class="radio">#}
+                            {#                                    <label>#}
+                            {#                                        <input type="radio" name="business-name" {% if forloop.first %}#}
+                            {#                                               checked="checked" {% endif %}#}
+                            {#                                               onclick="businesShow('{{ based_busines.id }}','{% url 'busines_ajax' based_busines.id %}')"#}
+                            {#                                               id="business-{{ based_busines.id }}"#}
+                            {#                                               value="{{ based_busines.id }}"#}
+                            {#                                        />#}
+                            {#                                        <i class="{{ based_busines.icon }}" aria-hidden="true"></i> <span#}
+                            {#                                            id="busines-menu-item-{{ based_busines.id }}">{{ based_busines.name }}</span>#}
+                            {#                                    </label>#}
+                            {#                                </div>#}
+                            {#                                {% if forloop.counter|divisibleby:'6' and not forloop.last %}#}
+                            {#                                    </div>#}
+                            {#                                    <div class="w100percentlast">#}
+                            {#                                {% endif %}#}
+                            {#                            {% endfor %}#}
+                            {#                            #}
+                        </div>
+                        <div class="clearfix"></div>
+                        <br/>
+
+
+                    </div>
+                    {#446px height#}
+                    <div class="col-md-8 scolright">
+                        <div class="map-wrapper" id="mobile-map-div-index">
+                            <div class="map">
+                                {#                                <input id="pac-input" class="controls" type="text" placeholder="Search Box">#}
+                                <input id="pac-input" class="controls" type="text"
+                                       placeholder="{% trans 'google_search_box' %}">
+                                <div id="map" style="    height: 436px;"></div>
+                                {#                <div class="container">#}
+                                {#                            <div class="row">#}
+                                {#                                <div class="span3" style="margin-top: -380px;margin-right: 7px;">#}
+                                {#                                    <div class="property-filter pull-right">#}
+                                {#                                        <div class="content">#}
+                                {#                                            <form method="get"#}
+                                {#                                                  action="{% url 'search' 'products-or-services' %}">#}
+                                {#                                                <div class="location control-group">#}
+                                {#                                                    <label class="control-label" for="inputLocation">#}
+                                {#                                                        {% trans 'search' %}#}
+                                {#                                                    </label>#}
+                                {#                                                    <div class="controls">#}
+                                {#                                                        <input id="pac-input" class="controls" type="text"#}
+                                {#                                                               placeholder="Search Box">#}
+                                {##}
+                                {#                                                        {{ home_search_form.search }}#}
+                                {#                                                    </div><!-- /.controls -->#}
+                                {#                                                </div><!-- /.control-group -->#}
+                                {##}
+                                {#                                                <div class="type control-group">#}
+                                {#                                                    <label class="control-label" for="inputType">#}
+                                {#                                                        {% trans 'busines' %}#}
+                                {#                                                    </label>#}
+                                {#                                                    <div class="controls">#}
+                                {#                                                        {{ home_search_form.businnes|add_class:"" }}#}
+                                {#                                                    </div><!-- /.controls -->#}
+                                {#                                                </div><!-- /.control-group -->#}
+                                {##}
+                                {#                                                <div class="control-group" style="margin-top: 20px;">#}
+                                {#                                                    <label class="control-label" for="inputBeds">#}
+                                {#                                                        {% trans 'region' %}#}
+                                {#                                                    </label>#}
+                                {#                                                    <div class="controls">#}
+                                {#                                                        {{ home_search_form.regions|add_class:"" }}#}
+                                {#                                                    </div><!-- /.controls -->#}
+                                {#                                                </div><!-- /.control-group -->#}
+                                {#                                                <div class="form-actions">#}
+                                {#                                                    <input type="submit" value="{% trans 'search' %}!"#}
+                                {#                                                           class="btn btn-primary btn-large">#}
+                                {#                                                </div><!-- /.form-actions -->#}
+                                {#                                            </form>#}
+                                {#                                        </div><!-- /.content -->#}
+                                {#                                    </div><!-- /.property-filter -->#}
+                                {#                                </div><!-- /.span3 -->#}
+                                {#                            </div><!-- /.row -->#}
+                                {#                </div><!-- /.container -->#}
+                            </div><!-- /.map -->
+                        </div><!-- /.map-wrapper -->
+                    </div>
+
+                </div><!-- end of row -->
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container cstyle06">
+
+        <div class="row anim2">
+            <div class="col-md-3">
+                <h2 id="busines-title-header">{{ first_busines_o.name }}</h2><br/>
+
+            </div>
+            <div class="col-md-9" style="margin-top: 20px;">
+                {#                <hr/>#}
+
+                <div id="exTab2" class="">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#1" data-toggle="tab">{% trans 'products_or_servies' %}</a>
+                        </li>
+                        <li>
+                            <a href="#2" data-toggle="tab">{% trans 'events' %}</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content "
+                         style="height: auto;box-shadow:none;border-top: 1px solid rgba(0, 0, 0, 0.1);padding: 30px 0 0px 0;">
+                        <div class="tab-pane active" id="1">
+                            <div class="itemscontainer offset-1" id="company_products_or_services-tab-content">
+
+                                {% for company_product_or_service in first_company_products %}
+                                    <div class="col-md-4">
+                                        <div class="listitem">
+                                            <img src="{{ company_product_or_service.logo|thumbnail_url:'main_event_list' }}"
+                                                 alt=""/>
+                                            <div class="liover"></div>
+                                            <a class="book-icon"
+                                               href="{% url 'company_product_or_service' company_product_or_service.id %}"></a>
+                                        </div>
+                                        <div class="itemlabel2">
+                                            <div class="labelright">
+                                                {#                                            <span class="size11 grey">18 Reviews </span><br/><br/>#}
+                                                <br/>{{ company_product_or_service.slogan }}<br/><br/>
+                                                <span class="green size18"><b>{{ company_product_or_service.currency.nominal }}{{ company_product_or_service.price|floatformat:'-2' }} </b></span><br/>
+                                                {#                                            <span class="size11 grey">avg/night </span>#}
+                                                <br/><br/><br/>
+                                                <a href="{% url 'company_product_or_service' company_product_or_service.id %}"
+                                                   class="bookbtn mt1">{% trans 'buy_now' %}</a>
+                                            </div>
+                                            <div class="labelleft">
+                                                <a href="{% url 'company_product_or_service' company_product_or_service.id %}"><b>{{ company_product_or_service.name }} </b></a><br/><br/><br/>
+                                                <p class="grey">
+                                                    {{ company_product_or_service.description }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if forloop.counter|divisibleby:3 and not forloop.last %}
+
+                                        <div class="clearfix"></div>
+                                        <div class="offset-2">
+                                            <hr class="featurette-divider3"/>
+                                        </div>
+                                    {% endif %}
+
+                                {% endfor %}
+
+                                <div class="clearfix"></div>
+                                <div class="offset-2">
+                                    <hr class="featurette-divider3"/>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="2">
+                            <div class="itemscontainer offset-1" id="events-tab-content">
+
+                                {% for event in first_events %}
+                                    <div class="col-md-4">
+                                        <div class="listitem">
+                                            <img src="{{ event.image|thumbnail_url:'main_event_list' }}" alt=""/>
+                                            <div class="liover"></div>
+                                            <a class="book-icon" href="{% url 'event' event.id %}"></a>
+                                        </div>
+                                        <div class="itemlabel2">
+                                            <div class="labelright">
+                                <span class="label {% if event.end_date > now %} label-success {% else %} label-danger {% endif %}">
+                                    {% if event.end_date > now %}
+                                        {% trans 'continues' %}
+                                    {% else %}
+                                        {% trans 'finished' %}
+                                    {% endif %}
+                                </span>
+                                                <br/>
+                                                <br/>
+                                                {% trans 'start_date' %}<br>
+                                                {{ event.start_date|date:'d F Y' }}
+                                                <br/>
+                                                {{ event.start_date|date:'H:m:s' }}
+                                                <br/>
+                                                <br/>
+                                                {% trans 'end_date' %}<br>
+                                                {{ event.end_date|date:'d F Y' }}
+                                                <br/>
+                                                {{ event.end_date|date:'H:m:s' }}
+                                                <br/>
+                                                <br/>
+                                                <a href="{% url 'event' event.id %}"
+                                                   class="bookbtn mt1">{% trans 'apply' %}</a>
+                                            </div>
+                                            <div class="labelleft">
+                                                <b><a href="{% url 'event' event.id %}"><b>{{ event.name }}</b></a></b><br/><br/><br/>
+                                                <p class="grey">{{ event.description }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if forloop.counter|divisibleby:3 and not forloop.last %}
+
+                                        <div class="clearfix"></div>
+                                        <div class="offset-2">
+                                            <hr class="featurette-divider3"/>
+                                        </div>
+                                    {% endif %}
+
+                                {% endfor %}
+
+                                <div class="clearfix"></div>
+                                <div class="offset-2">
+                                    <hr class="featurette-divider3"/>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {#                <hr/>#}
+
+
+            </div>
+        </div>
+
+        <hr class="featurette-divider2"/>
+        <div class="row anim2">
+            <div class="col-md-3">
+                <h2>Today's Top <br/>Deals </h2><br/>
+                Start your search with _ look at the best _____ on our site.
+            </div>
+            <div class="col-md-9">
+
+
+                <!-- Carousel -->
+                    <div class="wrapper">
+                        <div class="list_carousel">
+                            <ul id="foo">
+                                <li>
+                                    <a href="list.html"><img src="{% static 'main/images/thumb-hawaii.jpg' %}" alt=""/></a>
+                                    <div class="m1">
+                                        <h6 class="lh1 dark"><b>Visit the Hawaii Beaches </b></h6>
+                                        <h6 class="lh1 green">Save up to 30% </h6>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="list.html"><img src="{% static 'main/images/thumb-santorini.jpg' %}" alt=""/></a>
+                                    <div class="m1">
+                                        <h6 class="lh1 dark"><b>Santorini - Greece </b></h6>
+                                        <h6 class="lh1 green">Save up to 30% </h6>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="list.html"><img src="{% static 'main/images/thumb-dubai.jpg' %}" alt=""/></a>
+                                    <div class="m1">
+                                        <h6 class="lh1 dark"><b>Dubai </b></h6>
+                                        <h6 class="lh1 green">Save up to 30% </h6>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="list.html"><img src="{% static 'main/images/thumb-hawaii.jpg' %}" alt=""/></a>
+                                    <div class="m1">
+                                        <h6 class="lh1 dark"><b>Visit the Hawaii Beaches </b></h6>
+                                        <h6 class="lh1 green">Save up to 30% </h6>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="list.html"><img src="{% static 'main/images/thumb-santorini.jpg' %}" alt=""/></a>
+                                    <div class="m1">
+                                        <h6 class="lh1 dark"><b>Santorini - Greece </b></h6>
+                                        <h6 class="lh1 green">Save up to 30% </h6>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="list.html"><img src="{% static 'main/images/thumb-dubai.jpg' %}" alt=""/></a>
+                                    <div class="m1">
+                                        <h6 class="lh1 dark"><b>Dubai </b></h6>
+                                        <h6 class="lh1 green">Save up to 30% </h6>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                            <a id="prev_btn" class="prev" href="#"><img src="{% static 'main/images/spacer.png' %}" alt=""/></a>
+                            <a id="next_btn" class="next" href="#"><img src="{% static 'main/images/spacer.png' %}" alt=""/></a>
+                        </div>
+                    </div>
+
+
+            </div>
+        </div>
+
+        <div class="row anim3">
+
+            <div class="col-md-12">
+                <div class="row">
+
+                    <div class="itemscontainer offset-1" id="events-tab-content">
+                        <div class="gray-background-section">
+                            <div class="col-md-3">
+                                <h2>{% trans 'last_product_or_services' %}</h2><br/>
+                            </div>
+
+
+                            {% for company_product_or_service in sponsored_company_products_or_services %}
+                                <div class="col-md-3">
+                                    <div class="listitem">
+                                        <img src="{{ company_product_or_service.logo|thumbnail_url:'main_event_list' }}"
+                                             alt=""/>
+                                        <div class="liover"></div>
+                                        <a class="book-icon"
+                                           href="{% url 'company_product_or_service' company_product_or_service.id %}"></a>
+                                    </div>
+                                    <div class="itemlabel2">
+                                        <div class="labelright">
+                                            {#                                            <span class="size11 grey">18 Reviews </span><br/><br/>#}
+                                            <br/>{{ company_product_or_service.slogan }}<br/><br/>
+                                            <span class="green size18"><b>{{ company_product_or_service.currency.nominal }}{{ company_product_or_service.price|floatformat:'-2' }} </b></span><br/>
+                                            {#                                            <span class="size11 grey">avg/night </span>#}
+                                            <br/><br/><br/>
+                                            <a href="{% url 'company_product_or_service' company_product_or_service.id %}"
+                                               class="bookbtn mt1">{% trans 'buy_now' %}</a>
+                                        </div>
+                                        <div class="labelleft">
+                                            <a href="{% url 'company_product_or_service' company_product_or_service.id %}"><b>{{ company_product_or_service.name }} </b></a><br/><br/><br/>
+                                            <p class="grey">
+                                                {{ company_product_or_service.description }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% if forloop.counter|add:'1'|divisibleby:4 and not forloop.counter|add:'1'|divisibleby:8  and not forloop.last %}
+                                    </div>
+                                    <div class="gray-background-section">
+                                {% endif %}
+                            {% if forloop.counter|add:'1'|divisibleby:8 and not forloop.last %}
+                                </div>
+                                <div class="white-background-section">
+                            {% endif %}
+                                {% if forloop.counter|add:'-3'|divisibleby:4 and not forloop.last %}
+
+                                    <div class="clearfix"></div>
+                                    <div class="offset-2">
+                                        <hr class="featurette-divider3"/>
+                                    </div>
+                                {% endif %}
+
+                            {% endfor %}
+
+                            </div>
+                        <div class="clearfix"></div>
+                        <div class="offset-2">
+                            <hr class="featurette-divider3"/>
+                        </div>
+
+                    </div>
+                    <!-- End of offset1-->
+
+                    <div class="line4"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row anim3">
+
+            <div class="col-md-12">
+                <div class="row">
+
+                    <div class="itemscontainer offset-1" id="events-tab-content">
+                        <div class="gray-background-section">
+                            <div class="col-md-3">
+                                <h2>{% trans 'last_events' %}</h2><br/>
+                            </div>
+
+                            {% for event in events %}
+                                <div class="col-md-3">
+                                    <div class="listitem">
+                                        <img src="{{ event.image|thumbnail_url:'main_event_list' }}" alt=""/>
+                                        <div class="liover"></div>
+                                        <a class="book-icon" href="{% url 'event' event.id %}"></a>
+                                    </div>
+                                    <div class="itemlabel2">
+                                        <div class="labelright">
+                                <span class="label {% if event.end_date > now %} label-success {% else %} label-danger {% endif %}">
+                                    {% if event.end_date > now %}
+                                        {% trans 'continues' %}
+                                    {% else %}
+                                        {% trans 'finished' %}
+                                    {% endif %}
+                                </span>
+                                            <br/>
+                                            <br/>
+                                            {% trans 'start_date' %}<br>
+                                            {{ event.start_date|date:'d F Y' }}
+                                            <br/>
+                                            {{ event.start_date|date:'H:m:s' }}
+                                            <br/>
+                                            <br/>
+                                            {% trans 'end_date' %}<br>
+                                            {{ event.end_date|date:'d F Y' }}
+                                            <br/>
+                                            {{ event.end_date|date:'H:m:s' }}
+                                            <br/>
+                                            <br/>
+                                            <a href="{% url 'event' event.id %}"
+                                               class="bookbtn mt1">{% trans 'apply' %}</a>
+                                        </div>
+                                        <div class="labelleft">
+                                            <b><a href="{% url 'event' event.id %}"><b>{{ event.name }}</b></a></b><br/><br/><br/>
+                                            <p class="grey">{{ event.description }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {% if forloop.counter|add:'1'|divisibleby:4 and not forloop.counter|add:'1'|divisibleby:8  and not forloop.last %}
+                                    </div>
+                                    <div class="white-background-section">
+                                        {% elif forloop.counter|add:'1'|divisibleby:8 and not forloop.last %}
+                                    </div>
+                                    <div class="gray-background-section">
+                                        {% elif forloop.counter|add:'1'|divisibleby:8 and  forloop.last %}
+                                    </div>
+                                    <div class="gray-background-section">
+                                    </div>
+                                    <div class="white-background-section">
+                                        {% elif forloop.counter|add:'1'|divisibleby:8 and forloop.last %}
+                                    </div>
+                                    <div class="gray-background-section">
+                                    </div>
+                                    <div class="white-background-section">
+                                {% endif %}
+                                {% if forloop.counter|add:'-3'|divisibleby:4 and not forloop.last %}
+
+                                    <div class="clearfix"></div>
+                                    <div class="offset-2">
+                                        <hr class="featurette-divider3"/>
+                                    </div>
+                                {% endif %}
+
+                            {% endfor %}
+                            </div>
+                        <div class="clearfix"></div>
+                        <div class="offset-2">
+                            <hr class="featurette-divider3"/>
+                        </div>
+
+                    </div>
+                    <!-- End of offset1-->
+
+                    <div class="line4"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="deals4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="lbl">
+                        <a href="list4.html"><img src="{% static 'main/images/egypt-thumb.jpg' %}" alt=""
+                                                  class="fwimg"/></a>
+                        <div class="smallblacklabel">Last Minute</div>
+                    </div>
+                    <div class="deal">
+                        <a href="details.html"><img src="{% static 'main/images/thumb-img.jpg' %}" alt=""
+                                                    class="dealthumb"/></a>
+                        <div class="dealtitle">
+                            <p><a href="details.html" class="dark">Diana Hotel </a></p>
+                            <img src="{% static 'main/images/smallrating-4.png' %}" alt="" class="mt-10"/><span
+                                class="size13 grey mt-9">Zakynthos </span>
+                        </div>
+                        <div class="dealprice">
+                            <p class="size12 grey lh2">from <span class="price">$35 </span><br/>per night </p>
+                        </div>
+                    </div>
+                    <div class="deal">
+                        <a href="details.html"><img src="{% static 'main/images/thumb-img.jpg' %}" alt=""
+                                                    class="dealthumb"/></a>
+                        <div class="dealtitle">
+                            <p><a href="details.html" class="dark">Village Inn Studios & ______ Apartments </a></p>
+                            <img src="{% static 'main/images/smallrating-3.png' %}" alt="" class="mt-10"/><span
+                                class="size13 grey mt-9">Zakynthos </span>
+                        </div>
+                        <div class="dealprice">
+                            <p class="size12 grey lh2">from <span class="price">$49 </span><br/>per night </p>
+                        </div>
+                    </div>
+                    <div class="deal">
+                        <a href="details.html"><img src="{% static 'main/images/thumb-img.jpg' %}" alt=""
+                                                    class="dealthumb"/></a>
+                        <div class="dealtitle">
+                            <p><a href="details.html" class="dark">Palatino Hotel </a></p>
+                            <img src="{% static 'main/images/smallrating-4.png' %}" alt="" class="mt-10"/><span
+                                class="size13 grey mt-9">Zakynthos </span>
+                        </div>
+                        <div class="dealprice">
+                            <p class="size12 grey lh2">from <span class="price">$90 </span><br/>per night </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- End of first row-->
+
+                <div class="col-md-4">
+                    <div class="lbl">
+                        <a href="list4.html"><img src="{% static 'main/images/rome-thumb.jpg' %}" alt="" class="fwimg"/></a>
+                        <div class="smallblacklabel">Early Booking</div>
+                    </div>
+                    <div class="deal">
+                        <a href="details.html"><img src="{% static 'main/images/thumb-img.jpg' %}" alt=""
+                                                    class="dealthumb"/></a>
+                        <div class="dealtitle">
+                            <p><a href="details.html" class="dark">Comfort Suites Paradise Island </a></p>
+                            <img src="{% static 'main/images/smallrating-4.png' %}" alt="" class="mt-10"/><span
+                                class="size13 grey mt-9">Bahamas </span>
+                        </div>
+                        <div class="dealprice">
+                            <p class="size12 grey lh2">from <span class="price">$29 </span><br/>per night </p>
+                        </div>
+                    </div>
+                    <div class="deal">
+                        <a href="details.html"><img src="{% static 'main/images/thumb-img.jpg' %}" alt=""
+                                                    class="dealthumb"/></a>
+                        <div class="dealtitle">
+                            <p><a href="details.html" class="dark">Barcelo Malaga </a></p>
+                            <img src="{% static 'main/images/smallrating-3.png' %}" alt="" class="mt-10"/><span
+                                class="size13 grey mt-9">Spain </span>
+                        </div>
+                        <div class="dealprice">
+                            <p class="size12 grey lh2">from <span class="price">$32 </span><br/>per night </p>
+                        </div>
+                    </div>
+                    <div class="deal">
+                        <a href="details.html"><img src="{% static 'main/images/thumb-img.jpg' %}" alt=""
+                                                    class="dealthumb"/></a>
+                        <div class="dealtitle">
+                            <p><a href="details.html" class="dark">Palatino Hotel </a></p>
+                            <img src="{% static 'main/images/smallrating-3.png' %}" alt="" class="mt-10"/><span
+                                class="size13 grey mt-9">Zakynthos </span>
+                        </div>
+                        <div class="dealprice">
+                            <p class="size12 grey lh2">from <span class="price">$90 </span><br/>per night </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- End of first row-->
+
+                <div class="col-md-4">
+                    <div class="lbl">
+                        <a href="list4.html"><img src="{% static 'main/images/surfer-thumb.jpg' %}" alt=""
+                                                  class="fwimg"/></a>
+                        <div class="smallblacklabel">Hot Deals</div>
+                    </div>
+                    <div class="deal">
+                        <a href="details.html"><img src="{% static 'main/images/thumb-img.jpg' %}" alt=""
+                                                    class="dealthumb"/></a>
+                        <div class="dealtitle">
+                            <p><a href="details.html" class="dark">Parayso Hotel And Spa </a></p>
+                            <img src="{% static 'main/images/smallrating-4.png' %}" alt="" class="mt-10"/><span
+                                class="size13 grey mt-9">Zakynthos </span>
+                        </div>
+                        <div class="dealprice">
+                            <p class="size12 grey lh2">from <span class="price">$49 </span><br/>per night </p>
+                        </div>
+                    </div>
+                    <div class="deal">
+                        <a href="details.html"><img src="{% static 'main/images/thumb-img.jpg' %}" alt=""
+                                                    class="dealthumb"/></a>
+                        <div class="dealtitle">
+                            <p><a href="details.html" class="dark">Village Inn Studios & ______ Apartments </a></p>
+                            <img src="{% static 'main/images/smallrating-3.png' %}" alt="" class="mt-10"/><span
+                                class="size13 grey mt-9">Zakynthos </span>
+                        </div>
+                        <div class="dealprice">
+                            <p class="size12 grey lh2">from <span class="price">$79 </span><br/>per night </p>
+                        </div>
+                    </div>
+                    <div class="deal">
+                        <a href="details.html"><img src="{% static 'main/images/thumb-img.jpg' %}" alt=""
+                                                    class="dealthumb"/></a>
+                        <div class="dealtitle">
+                            <p><a href="details.html" class="dark">Diana Hotel </a></p>
+                            <img src="{% static 'main/images/smallrating-3.png' %}" alt="" class="mt-10"/><span
+                                class="size13 grey mt-9">Zakynthos </span>
+                        </div>
+                        <div class="dealprice">
+                            <p class="size12 grey lh2">from <span class="price">$299 </span><br/>per night </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- End of first row-->
+            </div>
+        </div>
+    </div>
+
+    {#    <div class="lastminute4">#}
+    {#        <div class="container">#}
+    {#            <img src="{% static 'main/images/rating-4.png' %}" alt=""/><br/>#}
+    {#            LAST MINUTE: <b>Barcelona </b> - 2 nights - Flight+4* Hotel, Dep 27h ___ from $209/person <br/>#}
+    {#            <form action="details.html">#}
+    {#                <button class="btn iosbtn" type="submit">Read more</button>#}
+    {#            </form>#}
+    {#        </div>#}
+    {#    </div>#}
+
+    {#    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%D#}
+
+    <script src="{% static 'main/assets/js/jquery.v2.0.3.js' %}"></script>
+    <script>
+        // This example adds a search box to a map, using the Google Place Autocomplete
+        // feature. People can enter geographical searches. The search box will return a
+        // pick list containing a mix of places and predicted search terms.
+
+        // This example requires the Places library. Include the libraries=places
+        // parameter when you first load the API. For example:
+        // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+        function initAutocomplete() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 40.40926169999999, lng: 49.86709240000005},
+                zoom: 10,
+                scrollwheel: false,
+                mapTypeId: 'roadmap'
+            });
+
+            // Create the search box and link it to the UI element.
+            var input = document.getElementById('pac-input');
+            var searchBox = new google.maps.places.SearchBox(input);
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+            // Bias the SearchBox results towards current map's viewport.
+            map.addListener('bounds_changed', function () {
+                searchBox.setBounds(map.getBounds());
+            });
+
+            var markers = [];
+            // Listen for the event fired when the user selects a prediction and retrieve
+            // more details for that place.
+            searchBox.addListener('places_changed', function () {
+                var places = searchBox.getPlaces();
+
+                if (places.length == 0) {
+                    return;
+                }
+
+                // Clear out the old markers.
+                markers.forEach(function (marker) {
+                    marker.setMap(null);
+                });
+                markers = [];
+                var locations = new Array(
+                    [40.40926169999999, 49.86709240000005], [40.551374198715166, 50.020751953125], [34.009714, -118.480296], [34.010408, -118.473215], [34.01521, -118.474889], [34.022502, -118.480124],
+                    [34.024423, -118.459868], [34.024885, -118.44871], [34.002368, -118.482828], [34.003791, -118.473001], [34.015922, -118.457422], [34.022147, -118.457894],
+                    [34.028904, -118.46725], [34.030114, -118.481326], [34.03143, -118.494029], [34.031643, -118.504758], [34.029616, -118.515058], [34.001834, -118.451414]
+                );
+                // For each place, get the icon, name and location.
+                var bounds = new google.maps.LatLngBounds();
+                places.forEach(function (place) {
+                    if (!place.geometry) {
+                        console.log("Returned place contains no geometry");
+                        return;
+                    }
+                    var icon = {
+                        url: place.icon,
+                        size: new google.maps.Size(71, 71),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(17, 34),
+                        scaledSize: new google.maps.Size(25, 25)
+                    };
+
+                    // Create a marker for each place.
+                    markers.push(new google.maps.Marker({
+                        map: map,
+                        icon: icon,
+                        title: place.name,
+                        position: place.geometry.location
+                    }));
+                    console.log(place.geometry.location);
+                    if (place.geometry.viewport) {
+                        // Only geocodes have viewport.
+                        bounds.union(place.geometry.viewport);
+                    } else {
+                        bounds.extend(place.geometry.location);
+                    }
+                });
+                map.fitBounds(bounds);
+            });
+            console.log();
+
+
+        }
+        function initMap() {
+            var locations = [
+                {% for map_company in map_companies %}
+                    {#'<div class="infobox"><div class="image"><img src="{{ map_company.logo|thumbnail_url:'company_page_map' }}" alt=""></div><div class="title"><a href="{% url 'company' map_company.id %}">{{ map_company.name }}</a></div><div class="link"><a href="{% url 'company' map_company.id %}">{{ map_company.name }}</a></div></div>'#}
+                    ['<a href="{% url 'company' map_company.id %}"><strong><img src="{{ map_company.logo|thumbnail_url:'company_page_map' }}" style="margin-right: 5px;"/>{{ map_company.name }}</strong></a><br>\
+					<p style="text-align:center; margin: 5px auto;font-weight: 500;">{{ map_company.slogan }}</p>\
+					<p style="text-align:center;     margin-bottom: 0;"><a style="padding: 4px 7px;" class="btn btn-primary" href="{% url 'company' map_company.id %}">{% trans 'view_more' %}</a></p>',
+                        {{ map_company.position.latitude }},
+                        {{ map_company.position.longitude }},
+                        3
+                    ],
+                {% endfor %}
+
+                {% for map_event in map_events %}
+                    {#'<div class="infobox"><div class="image"><img src="{{ map_company.logo|thumbnail_url:'company_page_map' }}" alt=""></div><div class="title"><a href="{% url 'company' map_company.id %}">{{ map_company.name }}</a></div><div class="link"><a href="{% url 'company' map_company.id %}">{{ map_company.name }}</a></div></div>'#}
+                    ['<a href="{% url 'event' map_event.id %}"><strong><img src="{{ map_event.image|thumbnail_url:'company_page_map' }}" style="margin-right: 5px;"/>{{ map_event.name }}</strong></a><br>\
+					<p style="text-align:center; margin: 5px auto;font-weight: 500;">{{ map_event.slogan }}</p>\
+					<p style="text-align:center;     margin-bottom: 0;"><a style="padding: 4px 7px;" class="btn btn-primary" href="{% url 'event' map_event.id %}">{% trans 'get_event' %}</a></p>',
+                        {{ map_event.position.latitude }},
+                        {{ map_event.position.longitude }},
+                        3
+                    ],
+                {% endfor %}
+
+                {#                [broadway.info, broadway.lat, broadway.long, 0],#}
+                {#                [belmont.info, belmont.lat, belmont.long, 1],#}
+                {#                [sheridan.info, sheridan.lat, sheridan.long, 2],#}
+            ];
+
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 10,
+                center: new google.maps.LatLng(40.40926129999999, 49.86709241000005),
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                scrollwheel: false,
+            });
+
+            var infowindow = new google.maps.InfoWindow({});
+
+            var marker, i;
+
+            for (i = 0; i < locations.length; i++) {
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                    map: map
+                });
+
+                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                    return function () {
+                        infowindow.setContent(locations[i][0]);
+                        infowindow.open(map, marker);
+                    }
+                })(marker, i));
+            }
+
+            var input = document.getElementById('pac-input');
+            var searchBox = new google.maps.places.SearchBox(input);
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+            // Bias the SearchBox results towards current map's viewport.
+            map.addListener('bounds_changed', function () {
+                searchBox.setBounds(map.getBounds());
+            });
+
+            var markers = [];
+            // Listen for the event fired when the user selects a prediction and retrieve
+            // more details for that place.
+            searchBox.addListener('places_changed', function () {
+                var places = searchBox.getPlaces();
+
+                if (places.length == 0) {
+                    return;
+                }
+
+                // Clear out the old markers.
+                markers.forEach(function (marker) {
+                    marker.setMap(null);
+                });
+                markers = [];
+                var locations = new Array(
+                    [40.40926169999999, 49.86709240000005], [40.551374198715166, 50.020751953125], [34.009714, -118.480296], [34.010408, -118.473215], [34.01521, -118.474889], [34.022502, -118.480124],
+                    [34.024423, -118.459868], [34.024885, -118.44871], [34.002368, -118.482828], [34.003791, -118.473001], [34.015922, -118.457422], [34.022147, -118.457894],
+                    [34.028904, -118.46725], [34.030114, -118.481326], [34.03143, -118.494029], [34.031643, -118.504758], [34.029616, -118.515058], [34.001834, -118.451414]
+                );
+                // For each place, get the icon, name and location.
+                var bounds = new google.maps.LatLngBounds();
+                places.forEach(function (place) {
+                    if (!place.geometry) {
+                        console.log("Returned place contains no geometry");
+                        return;
+                    }
+                    var icon = {
+                        url: place.icon,
+                        size: new google.maps.Size(71, 71),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(17, 34),
+                        scaledSize: new google.maps.Size(25, 25)
+                    };
+
+                    // Create a marker for each place.
+                    markers.push(new google.maps.Marker({
+                        map: map,
+                        icon: icon,
+                        title: place.name,
+                        position: place.geometry.location
+                    }));
+                    console.log(place.geometry.location);
+                    if (place.geometry.viewport) {
+                        // Only geocodes have viewport.
+                        bounds.union(place.geometry.viewport);
+                    } else {
+                        bounds.extend(place.geometry.location);
+                    }
+                });
+                map.fitBounds(bounds);
+            });
+
+
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSa6WgfgKT23MVzgPs9YkGlDE7i0MNFqA&libraries=places&callback=initMap"
+            async defer></script>
+
+    {#    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%D#}
+
+
+
+{% endblock %}
+
+
+{% block js_container %}
+
+    <script src="{% static 'main/assets/js/jquery.v2.0.3.js' %}"></script>
+    <script>
+
+        function businesShow($id, $url) {
+            {#            alert($id)#}
+            var busines_menu_item = $('#busines-menu-item-' + $id);
+            var busines_title_header = $('#busines-title-header');
+            var company_products_or_services_tab_content = $('#company_products_or_services-tab-content');
+            var events_tab_content = $('#events-tab-content');
+            var busines_title_content = $('#busines-title-content');
+            {#            alert(busines_menu_item.html());#}
+            busines_title_header.text(busines_menu_item.text());
+            $.ajax({
+                url: $url, // the endpoint,commonly same url
+                dataType: "json",
+                type: "GET",
+                data: {
+                    busines: $id,
+                },
+                success: function (result) {
+
+                    if (result['message_code'] == 1) {
+                        company_products_or_services_tab_content.html(result['company_products_html_data']);
+                        events_tab_content.html(result['events_html_data']);
+                    }
+                    //alert('success');
+                    // register_form_button.show(1000)
+                },
+                // handle a non-successful response
+                error: function (xhr, errmsg, err) {
+                    //{#                 console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console#}
+                    {#                    product_or_service_message.removeClass('alert').removeClass('alert-success').addClass('alert').addClass('alert-danger');#}
+                    {#                    product_or_service_message.html('<strong>' + 'error' + '</strong>').show();#}
+                    {#                    setTimeout(function () {#}
+                    {#                        product_or_service_message.fadeOut();#}
+                    {#                        product_or_service_button.show(1000);#}
+                    {#                    }, 4000);#}
+
+//{#                 $(".signup-message").show();#}
+//                $('#signup-loader-image').hide();
+//                 $('#register-form-button').show(1000);
+                }
+            });
+        }
+    </script>
+
+{% endblock %}

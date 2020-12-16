@@ -1,0 +1,196 @@
+{% extends 'profile_base.html' %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load thumbnail %}
+{% block head_container %}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+    <link rel="stylesheet" href="{% static 'select2/select2-bootstrap.css' %}">
+    <style>
+        #add_new_product_or_service_div {
+            display: none;
+        }
+    </style>
+{% endblock %}
+
+
+{% block base_container %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <form id="" class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="card-header card-header-text" data-background-color="rose">
+                            <h4 class="card-title">
+                                {% if company %}
+                                    {{ company.name }}
+                                {% else %}
+                                    {% trans 'add_new_company' %}
+                                {% endif %}
+                            </h4>
+                        </div>
+                        <div class="card-content">
+
+
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left" for="id_is_active">{% trans 'is_active' %}</label>
+                                <div class="col-sm-10" style="text-align: center;">
+                                    <div class="checkbox pull-left">
+                                        <label class="control-label">
+                                            {{ admin_company_form.is_active }}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-footer text-center">
+                                <input type="submit" class="btn btn-rose btn-fill" value="{% trans 'save_changes' %}"/>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'name' %}</label>
+                                <div class="col-sm-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+                                        <div>{{ company.name }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'logo' %}</label>
+                                <div class="col-md-offset-2 col-md-4 col-sm-4">
+                                    <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                        <div class="fileinput-new thumbnail">
+                                            <img src="
+
+
+                                                    {% if company.logo %}{{ company.logo|thumbnail_url:'companies_list' }}{% else %}{% static 'profile/assets/img/image_placeholder.jpg' %}{% endif %}"
+                                                 alt="...">
+                                        </div>
+                                        <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'slogan' %}</label>
+                                <div class="col-sm-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+                                        <div>{{ company.slogan }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'email' %}</label>
+                                <div class="col-sm-6 ">
+                                    <div class="form-group label-floating column-sizing">
+                                        <label class="control-label"></label>
+                                        <div>{{ company.email }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'voen' %}</label>
+                                <div class="col-sm-6 ">
+                                    <div class="form-group label-floating column-sizing">
+                                        <label class="control-label"></label>
+                                        <div>{{ company.voen }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'bank_account' %}</label>
+                                <div class="col-sm-6 ">
+                                    <div class="form-group label-floating column-sizing">
+                                        <label class="control-label"></label>
+                                        <div>{{ company.bank_account }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'region' %}</label>
+                                <div class="col-sm-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+                                        <div>{{ company.region.name }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'address' %}</label>
+                                <div class="col-sm-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+
+                                        <div>{{ company.address }}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'attachments' %}</label>
+                                <div class="col-sm-8">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+                                        <div>
+                                            {% for get_attachment in company.get_attachments %}
+                                                <a class="btn btn-danger btn-round" href="{{ get_attachment.file.url }}" target="_blank">{% trans 'attachment' %} {{ forloop.counter }}</a>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'businnes_type' %}</label>
+                                <div class="col-sm-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+                                        <div>
+                                            {% for company_businnes_type in company.businnes_type.all %}
+                                                <button class="btn btn-success btn-round">{{ company_businnes_type.name }}</button>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'practices' %}</label>
+                                <div class="col-sm-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+
+                                        <div>{{ company.practices }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block js_container %}
+
+    <script>
+        $(document).ready(function () {
+
+            {% if success_messages %}
+                swal({
+                    title: "{% trans 'success' %}",
+                    text: "{% trans 'successfully_changed_company_detail' %}",
+                    buttonsStyling: false,
+                    confirmButtonClass: "btn btn-success",
+                    type: "success"
+                });
+            {% endif %}
+        });
+
+    </script>
+
+{% endblock %}

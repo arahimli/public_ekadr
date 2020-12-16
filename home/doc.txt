@@ -1,0 +1,10 @@
+1.foreign key ,related data
+
+2.profile ve profile company ler param Stack0verflow (http://stackoverflow.com/questions/6624530/django-using-select-related-and-get-object-or-404-together)
+
+3.908 ci setirde
+
+
+
+
+

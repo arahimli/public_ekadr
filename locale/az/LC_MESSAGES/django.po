@@ -1,0 +1,1734 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-07-12 17:34+0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\company\models.py:80
+#: .\templates\profile\ordinary\products_buy_list.html:99
+#: .\templates\profile\ordinary\wish_list.html:99
+msgid "product"
+msgstr "Məhsul"
+
+#: .\company\models.py:81
+msgid "service"
+msgstr "Xidmət"
+
+#: .\company\models.py:122
+msgid "CompanyProductOrServiceImage"
+msgstr "Məhsul və Xidmət Şəkli"
+
+#: .\company\views.py:209
+msgid "event_appeal_success_message"
+msgstr "Müraciətiniz müvəffəqiyyətlə qeydə alındı"
+
+#: .\ekadr\settings.py:183
+msgid "Azerbaijani"
+msgstr ""
+
+#: .\ekadr\settings.py:184
+msgid "English"
+msgstr ""
+
+#: .\ekadr\settings.py:185
+msgid "Russian"
+msgstr ""
+
+#: .\home\models.py:32
+msgid "Facebook_Color"
+msgstr "Facebook Rəngi"
+
+#: .\home\models.py:33
+msgid "Twitter_Color"
+msgstr "Twitter Rəngi"
+
+#: .\registration\forms.py:41
+msgid "married"
+msgstr "Evli"
+
+#: .\registration\forms.py:42
+msgid "single"
+msgstr "Subay"
+
+#: .\registration\forms.py:43
+msgid "widow"
+msgstr "Dul"
+
+#: .\registration\forms.py:46 .\registration\models.py:19
+#: .\registration\models.py:30 .\templates\profile\dashboard.html:273
+msgid "juridical_person"
+msgstr "Hüquqi şəxs"
+
+#: .\registration\forms.py:47 .\registration\models.py:20
+#: .\registration\models.py:31 .\templates\profile\dashboard.html:274
+msgid "individual_person"
+msgstr "Fiziki şəxs"
+
+#: .\registration\forms.py:48 .\registration\models.py:21
+#: .\registration\models.py:32 .\templates\profile\dashboard.html:275
+msgid "ordinary_person"
+msgstr "Adi şəxs"
+
+#: .\registration\forms.py:97 .\userprofile\views.py:1681
+msgid "username_allready_use"
+msgstr "bu istifadəçi adı artıq istifadə olunur"
+
+#: .\registration\forms.py:100 .\userprofile\views.py:1683
+msgid "email_allready_use"
+msgstr "bu email artıq istifadə olunur"
+
+#: .\registration\forms.py:102 .\userprofile\forms.py:79
+#: .\userprofile\views.py:1689
+msgid "type_is_incorrect"
+msgstr "Düzgün məlumat daxil edin"
+
+#: .\registration\forms.py:107 .\registration\forms.py:109
+#: .\registration\forms.py:111 .\userprofile\forms.py:85
+#: .\userprofile\forms.py:87 .\userprofile\forms.py:89
+#: .\userprofile\views.py:619
+msgid "this_field_is_required"
+msgstr "Boş qoyula bilməz"
+
+#: .\registration\forms.py:113 .\userprofile\forms.py:91
+msgid "this_field_is_required."
+msgstr "Boş qoyula bilməz"
+
+#: .\registration\forms.py:117 .\registration\forms.py:121
+#: .\userprofile\forms.py:95 .\userprofile\forms.py:99
+msgid "please_insert_correct_data."
+msgstr "Düzgün məlumat daxil edin"
+
+#: .\registration\forms.py:125
+msgid "passwords_not same"
+msgstr "Şifrələr eyni deyil"
+
+#: .\registration\forms.py:139 .\registration\views.py:284
+msgid "not_user_with_this_email"
+msgstr "Sistmedə bu emailə bağli hesab yoxdur"
+
+#: .\registration\models.py:14
+msgid "Married"
+msgstr "Evli"
+
+#: .\registration\models.py:15
+msgid "Single"
+msgstr "Subay"
+
+#: .\registration\models.py:16
+msgid "Widow"
+msgstr "Dul"
+
+#: .\registration\models.py:25 .\registration\models.py:29
+#: .\templates\profile\dashboard.html:272
+msgid "admin_person"
+msgstr "Admin profili"
+
+#: .\registration\views.py:181
+msgid "please_wait_for_confirmed_account"
+msgstr "Xahiş edirik profilinizi aktiv edin"
+
+#: .\registration\views.py:184
+msgid "email_or_password_incorrect"
+msgstr "email və ya şifrə səhvdir"
+
+#: .\registration\views.py:186
+msgid "username_or_password_incorrect"
+msgstr "istifadəçi adı və ya şifrə səhvdir"
+
+#: .\templates\404.html:18
+msgid "we_are_sorry,_the_page_you_have_requested_is_not_available"
+msgstr "Səhifə tapilmadı, silinmiş ola bilər,tıkrar cəhd edin !"
+
+#: .\templates\404.html:23
+msgid "go_to_homepage"
+msgstr "Ana səhifəyə qayıt"
+
+#: .\templates\base.html:128
+msgid "my_account"
+msgstr "hesabım"
+
+#: .\templates\base.html:130 .\templates\base.html:142
+#: .\templates\events\event.html:613 .\templates\events\event_d.html:656
+#: .\templates\main_c_base.html:126 .\templates\main_c_base.html:130
+#: .\templates\registration\sign_in.html:28
+#: .\templates\registration\sign_in.html:40
+msgid "sign_in"
+msgstr "daxil ol"
+
+#: .\templates\base.html:137 .\templates\main_c_base.html:117
+#: .\templates\main_c_base.html:120 .\templates\profile_base.html:367
+msgid "profile"
+msgstr "profil"
+
+#: .\templates\base.html:138 .\templates\main_c_base.html:121
+#: .\templates\profile_base.html:245 .\templates\profile_base.html:330
+msgid "log_out"
+msgstr "çıxış"
+
+#: .\templates\base.html:147 .\templates\events\event.html:616
+#: .\templates\events\event_d.html:658 .\templates\main_c_base.html:132
+#: .\templates\registration\sign_up.html:32
+#: .\templates\registration\sign_up.html:56
+#: .\templates\registration\sign_up.html:365
+msgid "sign_up"
+msgstr "sistemə qoşul"
+
+#: .\templates\base.html:202 .\templates\profile\admin\admin-contents.html:60
+#: .\templates\profile\admin\admin-contents.html:76
+#: .\templates\profile\tender\my_appeal_events.html:96
+#: .\templates\profile\tender\tender_appeals.html:225
+#: .\templates\profile\tender\tenders.html:140
+msgid "all"
+msgstr "Hamısı"
+
+#: .\templates\base.html:214 .\templates\home\search.html:77
+#: .\templates\include\sidebar_filter\b_company.html:18
+#: .\templates\include\sidebar_filter\b_company.html:25
+#: .\templates\include\sidebar_filter\b_event.html:15
+#: .\templates\include\sidebar_filter\b_event.html:22
+#: .\templates\include\sidebar_filter\b_product_or_services.html:12
+#: .\templates\include\sidebar_filter\company.html:18
+#: .\templates\include\sidebar_filter\company.html:25
+#: .\templates\include\sidebar_filter\event.html:15
+#: .\templates\include\sidebar_filter\event.html:22
+#: .\templates\include\sidebar_filter\product_or_services.html:12
+#: .\templates\profile\admin\admin-contents.html:93
+#: .\templates\profile\admin\confirm_changes_list.html:61
+msgid "search"
+msgstr "axtar"
+
+#: .\templates\base.html:422 .\templates\base.html:437
+#: .\templates\main_c_base.html:194 .\templates\main_c_base.html:203
+#: .\templates\main_c_base.html:210 .\templates\main_c_base.html:220
+#: .\templates\main_c_base.html:224
+msgid "useful_links"
+msgstr "Faydalı Linklər"
+
+#: .\templates\company\business.html:79 .\templates\company\companies.html:22
+#: .\templates\company\company.html:459
+#: .\templates\company\product_or_service.html:20
+#: .\templates\events\event.html:272 .\templates\events\events.html:29
+#: .\templates\home\faq.html:49 .\templates\home\search.html:76
+#: .\templates\main_c_base.html:86 .\templates\main_c_base.html:241
+#: .\templates\profile_base.html:324 .\templates\registration\sign_in.html:27
+#: .\templates\registration\sign_up.html:31
+msgid "home"
+msgstr "Ana Səhifə"
+
+#: .\templates\company\business.html:151 .\templates\company\business.html:194
+#: .\templates\company\companies.html:77 .\templates\home\search.html:284
+#: .\templates\home\search.html:332 .\templates\profile\dashboard.html:370
+#: .\templates\profile\dashboard.html:440
+#: .\templates\profile\include\chart\business_all_content.html:18
+#: .\templates\profile\include\chart\business_all_content_month.html:13
+#: .\templates\profile\my_company.html:69
+#: .\templates\profile\product_or_service\company_products_or_services.html:81
+#: .\templates\profile\tender\tenders.html:16 .\templates\profile_base.html:158
+msgid "products_or_services"
+msgstr "Məhsul və ya xidmətlər"
+
+#: .\templates\company\business.html:153 .\templates\company\company.html:517
+#: .\templates\events\events.html:30 .\templates\events\events.html:44
+#: .\templates\home\index.html:395 .\templates\home\index2.html:680
+#: .\templates\home\search.html:287
+#: .\templates\include\_html_data\_businness_right.html:8
+#: .\templates\include\parts\random_events.html:8
+#: .\templates\include\parts\random_pors.html:8
+#: .\templates\main_c_base.html:113 .\templates\main_c_base.html:243
+#: .\templates\profile\dashboard.html:370
+#: .\templates\profile\dashboard.html:440
+#: .\templates\profile\include\chart\business_all_content.html:18
+#: .\templates\profile\include\chart\business_all_content_month.html:13
+#: .\templates\profile\my_company.html:72
+#: .\templates\profile\tender\my_appeal_events.html:22
+#: .\templates\profile\tender\tenders.html:19
+#: .\templates\profile\tender\tenders.html:37 .\templates\profile_base.html:176
+#: .\templates\profile_base.html:213
+msgid "events"
+msgstr "Tenderlər"
+
+#: .\templates\company\business.html:155 .\templates\company\companies.html:23
+#: .\templates\company\companies.html:33 .\templates\home\search.html:291
+#: .\templates\main_c_base.html:112 .\templates\main_c_base.html:242
+#: .\templates\profile\admin\admin-contents.html:49
+#: .\templates\profile\admin\admin-contents.html:172
+#: .\templates\profile\dashboard.html:370
+#: .\templates\profile\include\chart\business_all_content.html:18
+#: .\templates\profile_base.html:102 .\templates\profile_base.html:210
+msgid "companies"
+msgstr "Şirkətlər"
+
+#: .\templates\company\business.html:196 .\templates\company\companies.html:79
+#: .\templates\home\search.html:334
+msgid "event_count"
+msgstr "tender sayı"
+
+#: .\templates\company\business.html:213 .\templates\company\business.html:493
+#: .\templates\company\companies.html:96 .\templates\home\search.html:351
+#: .\templates\home\search.html:595 .\templates\profile\dashboard.html:142
+#: .\templates\profile\my_companies.html:55
+#: .\templates\profile\recycle_bin.html:67
+msgid "view"
+msgstr "bax"
+
+#: .\templates\company\business.html:244 .\templates\company\business.html:351
+#: .\templates\company\business.html:445
+#: .\templates\profile\change_profile\notifications.html:103
+msgid "have_not_registired"
+msgstr ""
+
+#: .\templates\company\business.html:283 .\templates\company\business.html:474
+#: .\templates\company\company.html:656 .\templates\events\events.html:89
+#: .\templates\home\index.html:462 .\templates\home\index.html:675
+#: .\templates\home\index2.html:351 .\templates\home\index2.html:481
+#: .\templates\home\index2.html:813 .\templates\home\index2.html:981
+#: .\templates\home\search.html:144 .\templates\home\search.html:408
+#: .\templates\home\search.html:576
+#: .\templates\include\_html_data\_businness_right.html:46
+#: .\templates\include\_html_data\events_html_data.html:30
+#: .\templates\include\company\_html_data\_company_events.html:31
+#: .\templates\include\parts\businenss_random_datas.html:47
+#: .\templates\include\parts\random_events.html:46
+#: .\templates\include\parts\random_pors.html:26
+msgid "continues"
+msgstr "dəvam edir"
+
+#: .\templates\company\business.html:285 .\templates\company\business.html:476
+#: .\templates\company\company.html:658 .\templates\events\events.html:91
+#: .\templates\home\index.html:464 .\templates\home\index.html:677
+#: .\templates\home\index2.html:353 .\templates\home\index2.html:483
+#: .\templates\home\index2.html:815 .\templates\home\index2.html:983
+#: .\templates\home\search.html:146 .\templates\home\search.html:410
+#: .\templates\home\search.html:578
+#: .\templates\include\_html_data\_businness_right.html:48
+#: .\templates\include\_html_data\events_html_data.html:32
+#: .\templates\include\company\_html_data\_company_events.html:33
+#: .\templates\include\parts\businenss_random_datas.html:49
+#: .\templates\include\parts\random_events.html:48
+#: .\templates\include\parts\random_pors.html:28
+msgid "finished"
+msgstr "bitdi"
+
+#: .\templates\company\business.html:290 .\templates\company\business.html:481
+#: .\templates\company\company.html:663 .\templates\events\event.html:415
+#: .\templates\events\event_d.html:536 .\templates\events\events.html:96
+#: .\templates\home\index.html:469 .\templates\home\index.html:682
+#: .\templates\home\index2.html:358 .\templates\home\index2.html:820
+#: .\templates\home\index2.html:988 .\templates\home\search.html:415
+#: .\templates\home\search.html:583
+#: .\templates\include\_html_data\_businness_right.html:53
+#: .\templates\include\_html_data\events_html_data.html:37
+#: .\templates\include\company\_html_data\_company_events.html:38
+#: .\templates\include\parts\businenss_random_datas.html:54
+#: .\templates\include\parts\random_events.html:53
+#: .\templates\include\parts\random_pors.html:33
+#: .\templates\profile\recycle_bin.html:180
+#: .\templates\profile\recycle_bin.html:192
+#: .\templates\profile\tender\my_appeal_events.html:36
+#: .\templates\profile\tender\my_appeal_events.html:48
+#: .\templates\profile\tender\tender_create_or_edit.html:140
+#: .\templates\profile\tender\tenders.html:51
+#: .\templates\profile\tender\tenders.html:63
+msgid "start_date"
+msgstr "başlanğıc tarixi"
+
+#: .\templates\company\business.html:293 .\templates\company\business.html:487
+#: .\templates\company\company.html:666 .\templates\events\event.html:428
+#: .\templates\events\event_d.html:540 .\templates\events\events.html:99
+#: .\templates\home\index.html:475 .\templates\home\index.html:688
+#: .\templates\home\index2.html:361 .\templates\home\index2.html:823
+#: .\templates\home\index2.html:991 .\templates\home\search.html:418
+#: .\templates\home\search.html:589
+#: .\templates\include\_html_data\_businness_right.html:56
+#: .\templates\include\_html_data\events_html_data.html:40
+#: .\templates\include\company\_html_data\_company_events.html:41
+#: .\templates\include\parts\businenss_random_datas.html:57
+#: .\templates\include\parts\random_events.html:56
+#: .\templates\include\parts\random_pors.html:36
+#: .\templates\profile\recycle_bin.html:181
+#: .\templates\profile\recycle_bin.html:193
+#: .\templates\profile\tender\my_appeal_events.html:37
+#: .\templates\profile\tender\my_appeal_events.html:49
+#: .\templates\profile\tender\tender_create_or_edit.html:161
+#: .\templates\profile\tender\tenders.html:52
+#: .\templates\profile\tender\tenders.html:64
+msgid "end_date"
+msgstr "bitiş tarixi"
+
+#: .\templates\company\business.html:312 .\templates\company\company.html:685
+#: .\templates\company\company.html:692 .\templates\events\event.html:485
+#: .\templates\events\event.html:519 .\templates\events\event.html:624
+#: .\templates\events\event_d.html:586 .\templates\events\event_d.html:665
+#: .\templates\events\events.html:118 .\templates\events\events.html:125
+#: .\templates\home\index.html:482 .\templates\home\index.html:695
+#: .\templates\home\index2.html:377 .\templates\home\index2.html:842
+#: .\templates\home\index2.html:849 .\templates\home\index2.html:1011
+#: .\templates\home\index2.html:1018 .\templates\home\search.html:437
+#: .\templates\include\_html_data\_businness_right.html:72
+#: .\templates\include\_html_data\events_html_data.html:59
+#: .\templates\include\_html_data\events_html_data.html:66
+#: .\templates\include\company\_html_data\_company_events.html:60
+#: .\templates\include\company\_html_data\_company_events.html:67
+#: .\templates\include\parts\businenss_random_datas.html:75
+#: .\templates\include\parts\random_events.html:74
+#: .\templates\include\parts\random_pors.html:51
+msgid "apply"
+msgstr "Müraciət et"
+
+#: .\templates\company\business.html:409 .\templates\company\business.html:416
+#: .\templates\company\company.html:581 .\templates\company\company.html:588
+#: .\templates\company\product_or_service.html:231
+#: .\templates\company\product_or_service.html:333
+#: .\templates\home\index2.html:752 .\templates\home\index2.html:757
+#: .\templates\home\index2.html:1195 .\templates\home\index2.html:1493
+#: .\templates\home\search.html:520
+#: .\templates\include\_html_data\company_products_html_data.html:47
+#: .\templates\include\_html_data\company_products_html_data.html:54
+#: .\templates\include\busines-part.html:17
+#: .\templates\include\company\_html_data\_company_pors.html:53
+#: .\templates\include\company\_html_data\_company_pors.html:60
+msgid "add_to_cart"
+msgstr "Karta əlavə et"
+
+#: .\templates\company\company.html:514 .\templates\home\index.html:392
+#: .\templates\home\index2.html:675
+msgid "products_or_servies"
+msgstr "Məhsul və ya xidmətlər"
+
+#: .\templates\company\company.html:519 .\templates\company\company.html:762
+#: .\templates\profile\admin\admin_profile_page.html:128
+#: .\templates\profile\admin\admincompany_page.html:159
+#: .\templates\profile\admin\confirm_changes.html:204
+#: .\templates\profile\change_profile\change_profile_details.html:247
+#: .\templates\profile\create_or_edit_company.html:329
+#: .\templates\registration\sign_up.html:321
+msgid "practices"
+msgstr "təcrübə"
+
+#: .\templates\company\company.html:523
+msgid "map"
+msgstr "Xəritə"
+
+#: .\templates\company\company.html:753
+#, fuzzy
+#| msgid "create_company"
+msgid "about_company"
+msgstr "Şirkət əlavə et"
+
+#: .\templates\company\company.html:756
+#: .\templates\profile\admin\admin-contents.html:117
+#: .\templates\profile\admin\admin-contents.html:179
+#: .\templates\profile\admin\admin_profile_page.html:47
+#: .\templates\profile\admin\admincompany_page.html:52
+#: .\templates\profile\admin\confirm_changes.html:94
+#: .\templates\profile\admin\confirm_changes_list.html:86
+#: .\templates\profile\create_or_edit_company.html:52
+#: .\templates\profile\product_or_service\create_or_edit_product_service.html:66
+#: .\templates\profile\product_or_service\create_or_edit_product_service.html:87
+#: .\templates\profile\recycle_bin.html:176
+#: .\templates\profile\recycle_bin.html:188
+#: .\templates\profile\tender\my_appeal_events.html:32
+#: .\templates\profile\tender\my_appeal_events.html:44
+#: .\templates\profile\tender\tender_create_or_edit.html:37
+#: .\templates\profile\tender\tenders.html:47
+#: .\templates\profile\tender\tenders.html:59
+msgid "name"
+msgstr "Ad"
+
+#: .\templates\company\company.html:757
+#: .\templates\profile\admin\admin-contents.html:181
+#: .\templates\profile\admin\admincompany_page.html:76
+#: .\templates\profile\create_or_edit_company.html:139
+#: .\templates\profile\product_or_service\create_or_edit_product_service.html:127
+msgid "slogan"
+msgstr "Sloqan"
+
+#: .\templates\company\company.html:758
+#: .\templates\profile\create_or_edit_company.html:175
+msgid "phones"
+msgstr "Telefonlar"
+
+#: .\templates\company\company.html:759
+#: .\templates\profile\admin\admin-contents.html:118
+#: .\templates\profile\admin\admin-contents.html:182
+#: .\templates\profile\admin\admin_profile_page.html:68
+#: .\templates\profile\admin\admincompany_page.html:85
+#: .\templates\profile\admin\confirm_changes.html:125
+#: .\templates\profile\admin\confirm_changes_list.html:87
+#: .\templates\profile\change_profile\change_profile_details.html:98
+#: .\templates\profile\create_or_edit_company.html:157
+#: .\templates\registration\forgot_password.html:59
+#: .\templates\registration\sign_up.html:119
+msgid "email"
+msgstr "Email"
+
+#: .\templates\company\company.html:760
+#: .\templates\profile\admin\admin-contents.html:120
+#: .\templates\profile\admin\admin-contents.html:183
+#: .\templates\profile\admin\admin_profile_page.html:77
+#: .\templates\profile\admin\admincompany_page.html:94
+#: .\templates\profile\admin\confirm_changes.html:134
+#: .\templates\profile\admin\confirm_changes_list.html:89
+#: .\templates\profile\change_profile\change_profile_details.html:211
+#: .\templates\profile\create_or_edit_company.html:193
+#: .\templates\registration\sign_up.html:281
+msgid "voen"
+msgstr "Veon"
+
+#: .\templates\company\company.html:761
+#: .\templates\profile\admin\admin_profile_page.html:104
+#: .\templates\profile\admin\admincompany_page.html:121
+#: .\templates\profile\admin\confirm_changes.html:176
+#: .\templates\profile\change_profile\change_profile_details.html:193
+#: .\templates\profile\create_or_edit_company.html:247
+#: .\templates\registration\sign_up.html:301
+msgid "address"
+msgstr "Adres"
+
+#: .\templates\company\company.html:769 .\templates\events\event_d.html:694
+msgid "company_events"
+msgstr "Tenderlər"
+
+#: .\templates\company\company.html:794 .\templates\events\event_d.html:717
+#: .\templates\home\index.html:661
+msgid "last_events"
+msgstr "Ən son əlavə olunan tenderlər"
+
+#: .\templates\company\product_or_service.html:152
+#: .\templates\events\event.html:404
+msgid "reviews"
+msgstr "baxış sayı"
+
+#: .\templates\company\product_or_service.html:162
+msgid "availability"
+msgstr ""
+
+#: .\templates\company\product_or_service.html:167
+msgid "in_stock"
+msgstr "stokda var"
+
+#: .\templates\company\product_or_service.html:212
+msgid "qty"
+msgstr "Say"
+
+#: .\templates\company\product_or_service.html:250
+#: .\templates\events\event.html:505
+#: .\templates\profile\product_or_service\create_or_edit_product_service.html:314
+#: .\templates\profile\tender\tender_create_or_edit.html:231
+msgid "description"
+msgstr "Təsvir"
+
+#: .\templates\company\product_or_service.html:251
+msgid "comments"
+msgstr "Şərhlər"
+
+#: .\templates\company\product_or_service.html:287
+msgid "related_product_service"
+msgstr "Oxşar Məhsul və ya Xidmətlər"
+
+#: .\templates\events\event.html:503
+msgid "appeal"
+msgstr "Müraciət"
+
+#: .\templates\events\event.html:532 .\templates\events\event_d.html:598
+#: .\templates\profile\dashboard.html:363
+#: .\templates\profile\include\chart\business_all_content.html:11
+msgid "company"
+msgstr "Şirkət"
+
+#: .\templates\events\event.html:550 .\templates\events\event_d.html:520
+#: .\templates\events\event_d.html:616
+#: .\templates\profile\ordinary\products_buy_list.html:100
+#: .\templates\profile\product_or_service\create_or_edit_product_service.html:277
+#: .\templates\profile\tender\my_appeal_events.html:35
+#: .\templates\profile\tender\my_appeal_events.html:47
+msgid "price"
+msgstr "Qiymət"
+
+#: .\templates\events\event.html:568 .\templates\events\event_d.html:633
+#: .\templates\profile\product_or_service\create_or_edit_product_service.html:296
+#: .\templates\profile\tender\tender_create_or_edit.html:213
+msgid "currency"
+msgstr "Valyuta"
+
+#: .\templates\events\event.html:586
+msgid "choose_all_event_attachments"
+msgstr "Tendere aid bütün sənədləri seçin"
+
+#: .\templates\events\event.html:605 .\templates\events\event_d.html:650
+msgid "apply_now"
+msgstr "Müraciət et"
+
+#: .\templates\events\event.html:614 .\templates\events\event_d.html:657
+msgid "or"
+msgstr "və ya"
+
+#: .\templates\events\event.html:655 .\templates\home\index.html:988
+#: .\templates\home\index2.html:1340
+msgid "view_more"
+msgstr "Ətraflı bax"
+
+#: .\templates\events\event.html:840 .\templates\home\index.html:999
+#: .\templates\home\index2.html:1350
+msgid "get_event"
+msgstr "tenderə bax"
+
+#: .\templates\events\event_d.html:516
+msgid "overview"
+msgstr "İcmal"
+
+#: .\templates\events\event_d.html:524
+#: .\templates\profile\tender\tender_appeals.html:36
+#: .\templates\profile\tender\tender_appeals.html:46
+#: .\templates\profile\tender\tender_appeals.html:106
+msgid "company_name"
+msgstr "Şirkət adı"
+
+#: .\templates\events\event_d.html:528
+msgid "product_or_service_name"
+msgstr "Məhsul və ya Xidmətin Adı"
+
+#: .\templates\events\event_d.html:532
+#: .\templates\profile\ordinary\products_buy_list.html:102
+#: .\templates\profile\product_or_service\create_or_edit_product_service.html:187
+#: .\templates\profile\recycle_bin.html:178
+#: .\templates\profile\recycle_bin.html:190
+#: .\templates\profile\tender\my_appeal_events.html:34
+#: .\templates\profile\tender\my_appeal_events.html:46
+#: .\templates\profile\tender\tender_create_or_edit.html:194
+#: .\templates\profile\tender\tenders.html:49
+#: .\templates\profile\tender\tenders.html:61
+msgid "quantity"
+msgstr "miqdar"
+
+#: .\templates\events\event_d.html:559 .\templates\events\event_d.html:565
+msgid "days"
+msgstr "gün"
+
+#: .\templates\events\event_d.html:560 .\templates\events\event_d.html:567
+msgid "hours"
+msgstr "saat"
+
+#: .\templates\events\event_d.html:561 .\templates\events\event_d.html:569
+msgid "minutes"
+msgstr "dəqiqə"
+
+#: .\templates\events\event_d.html:562 .\templates\events\event_d.html:571
+msgid "seconds"
+msgstr "saniyə"
+
+#: .\templates\home\faq.html:50 .\templates\main_c_base.html:114
+#: .\templates\main_c_base.html:244 .\templates\profile_base.html:372
+msgid "faq"
+msgstr "Faq"
+
+#: .\templates\home\faq.html:61
+msgid "frequently_asked_questions"
+msgstr "Tez-tez soruşulan suallar"
+
+#: .\templates\home\index.html:273 .\templates\home\index2.html:211
+#: .\templates\main_c_base.html:88 .\templates\main_c_base.html:94
+msgid "business"
+msgstr "Sahələr"
+
+#: .\templates\home\index.html:321 .\templates\home\index2.html:586
+msgid "google_search_box"
+msgstr "Google'da axtar"
+
+#: .\templates\home\index.html:421 .\templates\home\index.html:611
+msgid "buy_now"
+msgstr "Indi al"
+
+#: .\templates\home\index.html:590
+msgid "last_product_or_services"
+msgstr "Ən yeni məhsul və ya servislər"
+
+#: .\templates\home\index2.html:313
+msgid "special_events"
+msgstr "Seçilmiş Tenderlər"
+
+#: .\templates\home\index2.html:395 .\templates\home\search.html:215
+#: .\templates\include\parts\businenss_random_datas.html:94
+msgid "random_products_or_services"
+msgstr "Təsadüfi seçilmiş məhsul və ya servislər"
+
+#: .\templates\home\index2.html:454 .\templates\home\search.html:117
+#: .\templates\include\parts\businenss_random_datas.html:9
+msgid "random_events"
+msgstr "Təsadüfi seçilmiş tenderlər"
+
+#: .\templates\home\index2.html:750 .\templates\home\index2.html:755
+#: .\templates\home\index2.html:1477
+msgid "remove_cart"
+msgstr "Kartdan çıxar"
+
+#: .\templates\home\index2.html:878
+msgid "more_view"
+msgstr "Ətraflı bax"
+
+#: .\templates\home\index2.html:1084
+msgid "best_seller"
+msgstr "Ən çox satılanlar"
+
+#: .\templates\home\index2.html:1145
+msgid "most_view_company_products_or_services"
+msgstr "Ən çox baxılan məhsul və ya xidmətlər"
+
+#: .\templates\include\sidebar_filter\b_company.html:17
+#: .\templates\include\sidebar_filter\b_event.html:14
+#: .\templates\include\sidebar_filter\b_product_or_services.html:11
+#: .\templates\include\sidebar_filter\company.html:17
+#: .\templates\include\sidebar_filter\event.html:14
+#: .\templates\include\sidebar_filter\product_or_services.html:11
+msgid "search_word"
+msgstr "axtar..."
+
+#: .\templates\include\sidebar_filter\b_product_or_services.html:22
+#: .\templates\include\sidebar_filter\product_or_services.html:41
+msgid "price_range"
+msgstr "qiymət aralığı"
+
+#: .\templates\include\sidebar_filter\b_product_or_services.html:46
+#: .\templates\include\sidebar_filter\product_or_services.html:65
+#: .\templates\profile\dashboard.html:349
+msgid "filter"
+msgstr "Rəng"
+
+#: .\templates\main_c_base.html:184 .\templates\profile_base.html:383
+msgid "all_rights_reserved"
+msgstr "Bütün hüquqlar qorunur"
+
+#: .\templates\main_c_base.html:229
+msgid "customer_support"
+msgstr "Müştəriyə Dəstək"
+
+#: .\templates\profile\admin\admin-contents.html:7
+#: .\templates\profile\admin\admin-contents.html:15
+#: .\templates\profile\admin\admin-contents.html:22
+#: .\templates\profile\admin\admin-contents.html:30
+#: .\templates\profile\admin\confirm_changes_list.html:7
+#: .\templates\profile\admin\confirm_changes_list.html:15
+#: .\templates\profile\admin\confirm_changes_list.html:22
+#: .\templates\profile\admin\confirm_changes_list.html:30
+#: .\templates\profile\dashboard.html:8 .\templates\profile\dashboard.html:16
+#: .\templates\profile\dashboard.html:23 .\templates\profile\dashboard.html:31
+#: .\templates\profile\recycle_bin.html:7
+#: .\templates\profile\recycle_bin.html:15
+#: .\templates\profile\recycle_bin.html:22
+#: .\templates\profile\recycle_bin.html:30 .\templates\profile_base.html:86
+#: .\templates\profile_base.html:267 .\templates\profile_base.html:327
+msgid "dashboard"
+msgstr "İdarə etmə paneli"
+
+#: .\templates\profile\admin\admin-contents.html:53
+#: .\templates\profile\admin\admin-contents.html:110
+#: .\templates\profile\admin\confirm_changes_list.html:53
+#: .\templates\profile\admin\confirm_changes_list.html:79
+#: .\templates\profile\dashboard.html:279 .\templates\profile_base.html:105
+#: .\templates\profile_base.html:125
+msgid "profiles"
+msgstr "Profillər"
+
+#: .\templates\profile\admin\admin-contents.html:64
+#: .\templates\profile\admin\admin-contents.html:80
+#: .\templates\profile\admin\admin-contents.html:122
+#: .\templates\profile\admin\admin-contents.html:185
+#: .\templates\profile\admin\confirm_changes_list.html:91
+#: .\templates\profile\ordinary\wish_list.html:101
+msgid "active"
+msgstr "Aktiv"
+
+#: .\templates\profile\admin\admin-contents.html:68
+#: .\templates\profile\admin\admin-contents.html:84
+msgid "deactive"
+msgstr "Deaktiv"
+
+#: .\templates\profile\admin\admin-contents.html:116
+#: .\templates\profile\admin\admin-contents.html:178
+#: .\templates\profile\admin\confirm_changes_list.html:85
+#: .\templates\profile\change_profile\change_photo.html:33
+#: .\templates\profile\recycle_bin.html:175
+#: .\templates\profile\recycle_bin.html:187
+#: .\templates\profile\tender\my_appeal_events.html:31
+#: .\templates\profile\tender\my_appeal_events.html:43
+#: .\templates\profile\tender\tender_create_or_edit.html:73
+#: .\templates\profile\tender\tenders.html:46
+#: .\templates\profile\tender\tenders.html:58
+msgid "image"
+msgstr "Şəkil"
+
+#: .\templates\profile\admin\admin-contents.html:119
+#: .\templates\profile\admin\confirm_changes_list.html:88
+#: .\templates\profile\change_profile\change_profile_details.html:172
+#: .\templates\registration\sign_up.html:239
+msgid "type"
+msgstr "İstifadəçi tipi"
+
+#: .\templates\profile\admin\admin-contents.html:121
+#: .\templates\profile\admin\admin-contents.html:184
+#: .\templates\profile\admin\admin_profile_page.html:86
+#: .\templates\profile\admin\admincompany_page.html:103
+#: .\templates\profile\admin\confirm_changes.html:148
+#: .\templates\profile\admin\confirm_changes_list.html:90
+#: .\templates\profile\change_profile\change_profile_details.html:229
+#: .\templates\profile\create_or_edit_company.html:211
+#: .\templates\registration\sign_up.html:261
+msgid "bank_account"
+msgstr "Bank Hesabı"
+
+#: .\templates\profile\admin\admin-contents.html:123
+#: .\templates\profile\admin\confirm_changes_list.html:92
+msgid "Actions"
+msgstr "Əməliyyatlar"
+
+#: .\templates\profile\admin\admin-contents.html:180
+msgid "company_boss"
+msgstr "Şirkət Rəhbəri"
+
+#: .\templates\profile\admin\admin-contents.html:186
+msgid "actions"
+msgstr "əməliyyatlar"
+
+#: .\templates\profile\admin\admin-contents.html:238
+#: .\templates\profile\admin\confirm_changes_list.html:141
+#: .\templates\profile\change_profile\notifications.html:115
+#: .\templates\profile\my_company.html:133
+#: .\templates\profile\ordinary\products_buy_list.html:169
+#: .\templates\profile\ordinary\wish_list.html:169
+#: .\templates\profile\product_or_service\company_products_or_services.html:143
+msgid "previous"
+msgstr "Əvvəlki"
+
+#: .\templates\profile\admin\admin-contents.html:259
+#: .\templates\profile\admin\confirm_changes_list.html:162
+#: .\templates\profile\change_profile\notifications.html:136
+#: .\templates\profile\my_company.html:154
+#: .\templates\profile\ordinary\products_buy_list.html:191
+#: .\templates\profile\ordinary\wish_list.html:191
+#: .\templates\profile\product_or_service\company_products_or_services.html:166
+msgid "next"
+msgstr "Növbəti"
+
+#: .\templates\profile\admin\admin-contents.html:273
+#: .\templates\profile\admin\admin-contents.html:304
+#: .\templates\profile\admin\confirm_changes_list.html:176
+#: .\templates\profile\admin\confirm_changes_list.html:207
+#: .\templates\profile\dashboard.html:670
+#: .\templates\profile\dashboard.html:701
+#: .\templates\profile\my_companies.html:135
+#: .\templates\profile\my_company.html:172
+#: .\templates\profile\ordinary\products_buy_list.html:206
+#: .\templates\profile\ordinary\wish_list.html:206
+#: .\templates\profile\product_or_service\company_products_or_services.html:182
+#: .\templates\profile\recycle_bin.html:239
+#: .\templates\profile\recycle_bin.html:270
+#: .\templates\profile\recycle_bin.html:299
+#: .\templates\profile\tender\tenders.html:107
+msgid "are_you_sure"
+msgstr "Əminsiniz"
+
+#: .\templates\profile\admin\admin-contents.html:274
+#: .\templates\profile\admin\confirm_changes_list.html:177
+#: .\templates\profile\dashboard.html:671
+#: .\templates\profile\my_company.html:173
+#: .\templates\profile\ordinary\products_buy_list.html:207
+#: .\templates\profile\ordinary\wish_list.html:207
+#: .\templates\profile\product_or_service\company_products_or_services.html:183
+msgid "are_you_sure_delete"
+msgstr "Silmək istədiyinizdən əminsiniz"
+
+#: .\templates\profile\admin\admin-contents.html:279
+#: .\templates\profile\admin\confirm_changes_list.html:182
+#: .\templates\profile\dashboard.html:676
+#: .\templates\profile\my_company.html:178
+#: .\templates\profile\ordinary\products_buy_list.html:212
+#: .\templates\profile\ordinary\wish_list.html:212
+#: .\templates\profile\product_or_service\company_products_or_services.html:188
+msgid "yes_delete_it"
+msgstr "Silindi"
+
+#: .\templates\profile\admin\admin-contents.html:280
+#: .\templates\profile\admin\admin-contents.html:311
+#: .\templates\profile\admin\confirm_changes_list.html:183
+#: .\templates\profile\admin\confirm_changes_list.html:214
+#: .\templates\profile\dashboard.html:677
+#: .\templates\profile\dashboard.html:708
+#: .\templates\profile\my_companies.html:142
+#: .\templates\profile\my_company.html:179
+#: .\templates\profile\ordinary\products_buy_list.html:213
+#: .\templates\profile\ordinary\wish_list.html:213
+#: .\templates\profile\product_or_service\company_products_or_services.html:189
+#: .\templates\profile\recycle_bin.html:246
+#: .\templates\profile\recycle_bin.html:277
+#: .\templates\profile\recycle_bin.html:306
+#: .\templates\profile\tender\tenders.html:114
+msgid "no_cancel"
+msgstr "İmtina et"
+
+#: .\templates\profile\admin\admin-contents.html:291
+#: .\templates\profile\admin\admin-contents.html:322
+#: .\templates\profile\admin\confirm_changes_list.html:194
+#: .\templates\profile\admin\confirm_changes_list.html:225
+#: .\templates\profile\dashboard.html:688
+#: .\templates\profile\dashboard.html:719
+#: .\templates\profile\my_companies.html:153
+#: .\templates\profile\my_company.html:190
+#: .\templates\profile\ordinary\products_buy_list.html:224
+#: .\templates\profile\ordinary\wish_list.html:224
+#: .\templates\profile\product_or_service\company_products_or_services.html:200
+#: .\templates\profile\recycle_bin.html:257
+#: .\templates\profile\recycle_bin.html:288
+#: .\templates\profile\recycle_bin.html:317
+#: .\templates\profile\tender\tenders.html:125
+msgid "cancelled"
+msgstr "İmtina edildi"
+
+#: .\templates\profile\admin\admin-contents.html:292
+#: .\templates\profile\admin\admin-contents.html:323
+#: .\templates\profile\admin\confirm_changes_list.html:195
+#: .\templates\profile\admin\confirm_changes_list.html:226
+#: .\templates\profile\dashboard.html:689
+#: .\templates\profile\dashboard.html:720
+#: .\templates\profile\my_companies.html:154
+#: .\templates\profile\my_company.html:191
+#: .\templates\profile\ordinary\products_buy_list.html:225
+#: .\templates\profile\ordinary\wish_list.html:225
+#: .\templates\profile\product_or_service\company_products_or_services.html:201
+#: .\templates\profile\tender\tenders.html:126
+msgid "cancelled_deleted"
+msgstr "Silməldən imtina etdiniz"
+
+#: .\templates\profile\admin\admin-contents.html:305
+#: .\templates\profile\admin\confirm_changes_list.html:208
+#: .\templates\profile\dashboard.html:702
+#: .\templates\profile\my_companies.html:136
+#: .\templates\profile\tender\tenders.html:108
+msgid "are_you_sure_delete_company"
+msgstr "Şirkəti Silmək istədiyinizdən əminsiniz"
+
+#: .\templates\profile\admin\admin-contents.html:310
+#: .\templates\profile\admin\confirm_changes_list.html:213
+#: .\templates\profile\dashboard.html:707
+#: .\templates\profile\my_companies.html:141
+#: .\templates\profile\tender\tenders.html:113
+msgid "yes_delete_it_company"
+msgstr "Şirkəti Sil"
+
+#: .\templates\profile\admin\admin_profile_page.html:33
+#: .\templates\profile\admin\admincompany_page.html:38
+#: .\templates\profile\product_or_service\create_or_edit_product_service.html:177
+#: .\templates\profile\tender\tender_create_or_edit.html:182
+msgid "is_active"
+msgstr "Aktiv"
+
+#: .\templates\profile\admin\admin_profile_page.html:44
+#: .\templates\profile\admin\admincompany_page.html:49
+#: .\templates\profile\admin\confirm_changes.html:91
+#: .\templates\profile\create_or_edit_company.html:368
+msgid "save_changes"
+msgstr "Dəyişiklikləri yadda saxla"
+
+#: .\templates\profile\admin\admin_profile_page.html:56
+#: .\templates\profile\admin\confirm_changes.html:108
+msgid "photo"
+msgstr "Foto"
+
+#: .\templates\profile\admin\admin_profile_page.html:95
+#: .\templates\profile\admin\admincompany_page.html:112
+#: .\templates\profile\admin\confirm_changes.html:162
+#: .\templates\profile\change_profile\change_profile_details.html:116
+#: .\templates\profile\create_or_edit_company.html:229
+#: .\templates\registration\sign_up.html:177
+msgid "region"
+msgstr "Region"
+
+#: .\templates\profile\admin\admin_profile_page.html:115
+#: .\templates\profile\admin\admincompany_page.html:146
+#: .\templates\profile\admin\confirm_changes.html:191
+#: .\templates\profile\create_or_edit_company.html:267
+msgid "businnes_type"
+msgstr "Sahələr"
+
+#: .\templates\profile\admin\admin_profile_page.html:153
+#: .\templates\profile\admin\admincompany_page.html:185
+#: .\templates\profile\admin\confirm_changes.html:233
+#: .\templates\profile\change_profile\change_profile_details.html:329
+msgid "success"
+msgstr "Uğurlu"
+
+#: .\templates\profile\admin\admincompany_page.html:30
+#: .\templates\profile\create_or_edit_company.html:46
+msgid "add_new_company"
+msgstr "Yeni şirkət əlavə et"
+
+#: .\templates\profile\admin\admincompany_page.html:61
+#: .\templates\profile\create_or_edit_company.html:70
+#: .\templates\profile\product_or_service\create_or_edit_product_service.html:145
+msgid "logo"
+msgstr "Loqo"
+
+#: .\templates\profile\admin\admincompany_page.html:132
+#: .\templates\profile\create_or_edit_company.html:303
+#, fuzzy
+#| msgid "choose_all_event_attachments"
+msgid "attachments"
+msgstr "Tendere aid bütün sənədləri seçin"
+
+#: .\templates\profile\admin\admincompany_page.html:138
+#, fuzzy
+#| msgid "choose_all_event_attachments"
+msgid "attachment"
+msgstr "Tendere aid bütün sənədləri seçin"
+
+#: .\templates\profile\admin\admincompany_page.html:186
+msgid "successfully_changed_company_detail"
+msgstr "Şirkət məlumatları müvəffəqiyyətlə dəyişildi"
+
+#: .\templates\profile\admin\confirm_changes.html:58
+msgid "confirm_or_reject_profile_changes"
+msgstr ""
+
+#: .\templates\profile\admin\confirm_changes.html:64
+#: .\templates\profile\tender\tender_appeals.html:40
+#: .\templates\profile\tender\tender_appeals.html:50
+#: .\templates\profile\tender\tender_appeals.html:132 .\userprofile\forms.py:20
+msgid "confirm"
+msgstr "Təsdiqlə"
+
+#: .\templates\profile\admin\confirm_changes.html:73 .\userprofile\forms.py:21
+msgid "reject"
+msgstr "İmtina Et"
+
+#: .\templates\profile\change_profile\change_password.html:27
+#: .\templates\profile_base.html:76
+msgid "change_password"
+msgstr "Şifrəni Dəyiş"
+
+#: .\templates\profile\change_profile\change_password.html:28
+#: .\templates\profile\change_profile\change_photo.html:28
+#: .\templates\profile\change_profile\change_profile_details.html:36
+msgid "form"
+msgstr "Form"
+
+#: .\templates\profile\change_profile\change_password.html:36
+msgid "old_password"
+msgstr "Köhnə Şifrə"
+
+#: .\templates\profile\change_profile\change_password.html:54
+msgid "new_password"
+msgstr "Yeni Şifrə"
+
+#: .\templates\profile\change_profile\change_password.html:72
+#: .\templates\registration\sign_up.html:158
+msgid "repeat_password"
+msgstr "Şifrə Təkrarı"
+
+#: .\templates\profile\change_profile\change_photo.html:27
+#: .\templates\profile_base.html:73
+msgid "change_photo"
+msgstr "Fotonu Dəyiş"
+
+#: .\templates\profile\change_profile\change_photo.html:43
+#: .\templates\profile\create_or_edit_company.html:85
+#: .\templates\profile\create_or_edit_company.html:118
+#: .\templates\profile\product_or_service\create_or_edit_product_service.html:156
+#: .\templates\profile\tender\tender_create_or_edit.html:83
+msgid "select_image"
+msgstr "Şəkil seç"
+
+#: .\templates\profile\change_profile\change_photo.html:44
+#: .\templates\profile\create_or_edit_company.html:86
+#: .\templates\profile\create_or_edit_company.html:119
+#: .\templates\profile\product_or_service\create_or_edit_product_service.html:157
+#: .\templates\profile\tender\tender_create_or_edit.html:84
+msgid "change"
+msgstr "Dəyiş"
+
+#: .\templates\profile\change_profile\change_photo.html:49
+#: .\templates\profile\create_or_edit_company.html:90
+#: .\templates\profile\create_or_edit_company.html:123
+#: .\templates\profile\dashboard.html:152
+#: .\templates\profile\my_companies.html:65
+#: .\templates\profile\product_or_service\create_or_edit_product_service.html:161
+#: .\templates\profile\tender\tender_create_or_edit.html:88
+msgid "remove"
+msgstr "Sil"
+
+#: .\templates\profile\change_profile\change_photo.html:65
+msgid "change_profile_photo"
+msgstr "Profil şəklini dəyiş"
+
+#: .\templates\profile\change_profile\change_profile_details.html:35
+#: .\templates\profile_base.html:70
+#, fuzzy
+#| msgid "change_profile_photo"
+msgid "change_profile_data"
+msgstr "Profil şəklini dəyiş"
+
+#: .\templates\profile\change_profile\change_profile_details.html:44
+#: .\templates\registration\sign_up.html:63
+msgid "first_name"
+msgstr "Ad"
+
+#: .\templates\profile\change_profile\change_profile_details.html:62
+#: .\templates\registration\sign_up.html:82
+msgid "last_name"
+msgstr "Soyad"
+
+#: .\templates\profile\change_profile\change_profile_details.html:80
+#: .\templates\registration\sign_up.html:101
+msgid "username"
+msgstr "İstifadəçi adı"
+
+#: .\templates\profile\change_profile\change_profile_details.html:134
+#: .\templates\profile\product_or_service\create_or_edit_product_service.html:206
+#: .\templates\registration\sign_up.html:196
+msgid "businnes_types"
+msgstr "Sahələr"
+
+#: .\templates\profile\change_profile\change_profile_details.html:152
+#: .\templates\profile\create_or_edit_company.html:285
+#: .\templates\profile\product_or_service\create_or_edit_product_service.html:225
+msgid "businnes_types_parent"
+msgstr "Alt Sahələr"
+
+#: .\templates\profile\change_profile\change_profile_details.html:267
+#, fuzzy
+#| msgid "repeat_password"
+msgid "current_password"
+msgstr "Şifrə Təkrarı"
+
+#: .\templates\profile\change_profile\change_profile_details.html:284
+#, fuzzy
+#| msgid "profile"
+msgid "update_profile"
+msgstr "profil"
+
+#: .\templates\profile\change_profile\notifications.html:7
+#: .\templates\profile\change_profile\notifications.html:15
+#: .\templates\profile\change_profile\notifications.html:22
+#: .\templates\profile\change_profile\notifications.html:30
+#: .\templates\profile\change_profile\notifications.html:46
+#: .\templates\profile_base.html:297
+msgid "notifications"
+msgstr "Bildirişlər"
+
+#: .\templates\profile\create_or_edit_company.html:44
+msgid "edit_company"
+msgstr "Dəyiş"
+
+#: .\templates\profile\create_or_edit_company.html:106
+msgid "cover_photo"
+msgstr "Kover Foto"
+
+#: .\templates\profile\create_or_edit_company.html:348
+#: .\templates\profile\tender\tender_create_or_edit.html:250
+msgid "position"
+msgstr "Mövqe"
+
+#: .\templates\profile\create_or_edit_company.html:368
+#: .\templates\profile\product_or_service\create_or_edit_product_service.html:334
+#: .\templates\profile\tender\tender_create_or_edit.html:270
+msgid "create"
+msgstr "Əlavə et"
+
+#: .\templates\profile\create_or_edit_company.html:449
+#, fuzzy
+#| msgid "select_image"
+msgid "select_a_state"
+msgstr "Şəkil seç"
+
+#: .\templates\profile\dashboard.html:73 .\templates\profile\dashboard.html:120
+#: .\templates\profile\my_companies.html:20
+#: .\templates\profile\my_companies.html:33
+#: .\templates\profile\my_company.html:21
+#: .\templates\profile\product_or_service\create_product_service_redirect.html:17
+#: .\templates\profile\product_or_service\list_product_service_redirect.html:17
+#: .\templates\profile\recycle_bin.html:47
+#: .\templates\profile\tender\company_event_appeal_redirect.html:13
+#: .\templates\profile\tender\tender_redirect.html:13
+#: .\templates\profile_base.html:139 .\templates\profile_base.html:147
+msgid "my_companies"
+msgstr "Şirkətlərim"
+
+#: .\templates\profile\dashboard.html:79
+#: .\templates\profile\my_companies.html:26
+#: .\templates\profile\my_company.html:27
+msgid "all_companies"
+msgstr "Bütün Şirkətlərim"
+
+#: .\templates\profile\dashboard.html:122
+#: .\templates\profile\my_companies.html:35 .\templates\profile_base.html:150
+msgid "create_company"
+msgstr "Şirkət əlavə et"
+
+#: .\templates\profile\dashboard.html:138
+#: .\templates\profile\my_companies.html:51
+msgid "build"
+msgstr ""
+
+#: .\templates\profile\dashboard.html:138
+#: .\templates\profile\my_companies.html:51
+#: .\templates\profile\recycle_bin.html:63
+msgid "fix_header"
+msgstr "Sabit Başlıq"
+
+#: .\templates\profile\dashboard.html:147
+#: .\templates\profile\my_companies.html:60
+#: .\templates\profile\product_or_service\create_or_edit_product_service.html:334
+#: .\templates\profile\recycle_bin.html:72
+#: .\templates\profile\tender\tender_create_or_edit.html:270
+msgid "edit"
+msgstr "Dəyiş"
+
+#: .\templates\profile\dashboard.html:184
+#: .\templates\profile\my_companies.html:80
+msgid "is_not_active"
+msgstr "Aktiv deyil"
+
+#: .\templates\profile\dashboard.html:203
+#: .\templates\profile\my_company.html:75
+msgid "my_company_products_or_services"
+msgstr "Məhsul və ya xidmətlərim"
+
+#: .\templates\profile\dashboard.html:205
+#: .\templates\profile\my_company.html:77
+#: .\templates\profile\product_or_service\company_products_or_services.html:83
+msgid "add_company_products_or_services"
+msgstr "Məhsul və ya xidmət əlavə et"
+
+#: .\templates\profile\dashboard.html:271
+#, fuzzy
+#| msgid "profiles"
+msgid "profile_types"
+msgstr "Profillər"
+
+#: .\templates\profile\dashboard.html:271
+#, fuzzy
+#| msgid "profile"
+msgid "profile_count"
+msgstr "profil"
+
+#: .\templates\profile\dashboard.html:302
+#, fuzzy
+#| msgid "add_new_company"
+msgid "busines_company"
+msgstr "Yeni şirkət əlavə et"
+
+#: .\templates\profile\dashboard.html:318
+#: .\templates\profile\dashboard.html:390
+#, fuzzy
+#| msgid "business"
+msgid "choose_busines"
+msgstr "Sahələr"
+
+#: .\templates\profile\dashboard.html:363
+#: .\templates\profile\include\chart\business_all_content.html:11
+#: .\templates\profile\product_or_service\create_or_edit_product_service.html:41
+#: .\templates\profile\recycle_bin.html:177
+#: .\templates\profile\recycle_bin.html:189
+#: .\templates\profile\tender\my_appeal_events.html:33
+#: .\templates\profile\tender\my_appeal_events.html:45
+#: .\templates\profile\tender\tenders.html:48
+#: .\templates\profile\tender\tenders.html:60
+msgid "product_or_service"
+msgstr "Məhsul və ya xidmət"
+
+#: .\templates\profile\dashboard.html:363
+#: .\templates\profile\include\chart\business_all_content.html:11
+#, fuzzy
+#| msgid "events"
+msgid "event"
+msgstr "Tenderlər"
+
+#: .\templates\profile\dashboard.html:424
+#, fuzzy
+#| msgid "filter"
+msgid "Filter"
+msgstr "Rəng"
+
+#: .\templates\profile\dashboard.html:440
+#: .\templates\profile\include\chart\business_all_content_month.html:13
+#, fuzzy
+#| msgid "company"
+msgid "companys"
+msgstr "Şirkət"
+
+#: .\templates\profile\dashboard.html:447
+#: .\templates\profile\include\chart\business_all_content_month.html:20
+msgid "monthly_data"
+msgstr "Aylar üzrə Məlumat"
+
+#: .\templates\profile\dashboard.html:448
+#: .\templates\profile\include\chart\business_all_content_month.html:21
+#, fuzzy
+#| msgid "my_account"
+msgid "count"
+msgstr "hesabım"
+
+#: .\templates\profile\dashboard.html:449
+#: .\templates\profile\include\chart\business_all_content_month.html:13
+#: .\templates\profile\include\chart\business_all_content_month.html:22
+msgid "month"
+msgstr "Ay"
+
+#: .\templates\profile\dashboard.html:580
+#, fuzzy
+#| msgid "select_image"
+msgid "select"
+msgstr "Şəkil seç"
+
+#: .\templates\profile\include\chart\business_all_content.html:11
+msgid "year"
+msgstr "İl"
+
+#: .\templates\profile\include\chart\chart.html:11
+#, fuzzy
+#| msgid "company_events_count"
+msgid "company_count"
+msgstr "Şirkət Tenderləri"
+
+#: .\templates\profile\my_companies.html:109
+msgid "good_job"
+msgstr "Uğurlu"
+
+#: .\templates\profile\my_companies.html:115
+#, fuzzy
+#| msgid "no_cancel"
+msgid "cancel"
+msgstr "İmtina et"
+
+#: .\templates\profile\my_companies.html:117
+msgid "okay"
+msgstr "Bəli"
+
+#: .\templates\profile\my_company.html:38
+msgid "company_product_or_service_count"
+msgstr "Məhsul və ya xidmət sayı"
+
+#: .\templates\profile\my_company.html:44
+#: .\templates\profile\tender\tender_create_or_edit.html:55
+msgid "company_product_or_service"
+msgstr "Məhsul və ya xidmət"
+
+#: .\templates\profile\my_company.html:55
+msgid "company_events_count"
+msgstr "Şirkət Tenderləri"
+
+#: .\templates\profile\my_company.html:61
+msgid "all_events"
+msgstr "Bütün tenderlər"
+
+#: .\templates\profile\ordinary\products_buy_list.html:82
+#: .\templates\profile\ordinary\products_buy_list.html:92
+msgid "products_buy_list"
+msgstr "Sifariş Etdiyiniz Məhsullar"
+
+#: .\templates\profile\ordinary\products_buy_list.html:101
+msgid "order_status"
+msgstr "Ödəniş edilibmi?"
+
+#: .\templates\profile\ordinary\products_buy_list.html:103
+#: .\templates\profile\ordinary\wish_list.html:103
+#: .\templates\profile\tender\tender_appeals.html:39
+#: .\templates\profile\tender\tender_appeals.html:49
+msgid "date"
+msgstr "Tarix"
+
+#: .\templates\profile\ordinary\products_buy_list.html:121
+#: .\templates\profile\ordinary\wish_list.html:121
+msgid "by"
+msgstr ""
+
+#: .\templates\profile\ordinary\wish_list.html:82
+#: .\templates\profile\ordinary\wish_list.html:92
+#: .\templates\profile_base.html:234
+msgid "wish_list"
+msgstr "Favorit Siyahı"
+
+#: .\templates\profile\product_or_service\create_or_edit_product_service.html:37
+msgid "add_new_company_product_or_service"
+msgstr "Məhsul və ya xidmət əlavə et"
+
+#: .\templates\profile\product_or_service\create_or_edit_product_service.html:61
+#: .\templates\profile\product_or_service\create_or_edit_product_service.html:357
+msgid "add_new"
+msgstr "Yenisini əlavə et"
+
+#: .\templates\profile\product_or_service\create_or_edit_product_service.html:81
+msgid "add"
+msgstr "Əlavə et"
+
+#: .\templates\profile\product_or_service\create_or_edit_product_service.html:105
+msgid "product_or_service-question"
+msgstr "Məhsul yoxsa Xidmət"
+
+#: .\templates\profile\product_or_service\create_or_edit_product_service.html:243
+msgid "images"
+msgstr "Şəkillər"
+
+#: .\templates\profile\product_or_service\create_or_edit_product_service.html:361
+#: .\templates\profile\tender\tender_appeals.html:147
+msgid "close"
+msgstr "Bağla"
+
+#: .\templates\profile\product_or_service\create_product_service_redirect.html:34
+#: .\templates\profile\product_or_service\create_product_service_redirect.html:35
+#: .\templates\profile\product_or_service\list_product_service_redirect.html:33
+#: .\templates\profile\product_or_service\list_product_service_redirect.html:34
+#: .\templates\profile\tender\company_event_appeal_redirect.html:29
+#: .\templates\profile\tender\company_event_appeal_redirect.html:30
+#: .\templates\profile\tender\tender_redirect.html:29
+#: .\templates\profile\tender\tender_redirect.html:30
+msgid "choose"
+msgstr "Seç"
+
+#: .\templates\profile\recycle_bin.html:77
+msgid "undo"
+msgstr "Geri qaytar"
+
+#: .\templates\profile\recycle_bin.html:113
+msgid "my_products_or_services"
+msgstr "Məhsul və ya xidmətlərim"
+
+#: .\templates\profile\recycle_bin.html:240
+msgid "are_you_sure_undo"
+msgstr "Geri qaytarmaq istədiyinizə əminsiniz"
+
+#: .\templates\profile\recycle_bin.html:245
+msgid "yes_undo_it"
+msgstr "Geri qaytarıldı"
+
+#: .\templates\profile\recycle_bin.html:258
+#: .\templates\profile\recycle_bin.html:289
+#: .\templates\profile\recycle_bin.html:318
+msgid "cancelled_undoed"
+msgstr "Geri qaytarmaqdan imtina etdiniz"
+
+#: .\templates\profile\recycle_bin.html:271
+msgid "are_you_sure_undo_company"
+msgstr "Şirkəti geri qaytarmaq istədiyinizə əminsiniz"
+
+#: .\templates\profile\recycle_bin.html:276
+msgid "yes_undo_it_company"
+msgstr "Şirkət geri qaytarıldı"
+
+#: .\templates\profile\recycle_bin.html:300
+msgid "are_you_sure_undo_event"
+msgstr "Tenderi qaytarmaq istədiyinizə əminsiniz"
+
+#: .\templates\profile\recycle_bin.html:305
+msgid "yes_undo_it_event"
+msgstr "Tender geri qaytarıldı"
+
+#: .\templates\profile\tender\my_appeal_events.html:101
+#: .\templates\profile\tender\tender_appeals.html:230
+#: .\templates\profile\tender\tenders.html:145
+msgid "search_records"
+msgstr "axtar ..."
+
+#: .\templates\profile\tender\tender_appeals.html:35
+#: .\templates\profile\tender\tender_appeals.html:45
+msgid "company_image"
+msgstr "Şirkət loqosu"
+
+#: .\templates\profile\tender\tender_appeals.html:37
+#: .\templates\profile\tender\tender_appeals.html:47
+#: .\templates\profile\tender\tender_appeals.html:102
+#: .\templates\profile\tender\tender_appeals.html:111
+msgid "offer_price"
+msgstr "Təklif edilən məbləğ"
+
+#: .\templates\profile\tender\tender_appeals.html:38
+#: .\templates\profile\tender\tender_appeals.html:48
+#: .\templates\profile\tender\tender_appeals.html:63
+#, fuzzy
+#| msgid "view_more"
+msgid "view_detail"
+msgstr "Ətraflı bax"
+
+#: .\templates\profile\tender\tender_appeals.html:85
+#, fuzzy
+#| msgid "appeal"
+msgid "appeal_deatils"
+msgstr "Müraciət"
+
+#: .\templates\profile\tender\tender_appeals.html:115
+#, fuzzy
+#| msgid "appeal"
+msgid "appeal_date"
+msgstr "Müraciət"
+
+#: .\templates\profile\tender\tender_appeals.html:119
+#, fuzzy
+#| msgid "choose_all_event_attachments"
+msgid "appeal_attachments"
+msgstr "Tendere aid bütün sənədləri seçin"
+
+#: .\templates\profile\tender\tender_appeals.html:127
+#, fuzzy
+#| msgid "comments"
+msgid "document"
+msgstr "Şərhlər"
+
+#: .\templates\profile\tender\tender_create_or_edit.html:29
+msgid "edit_event"
+msgstr "Tenderdə Dəyişiklik et"
+
+#: .\templates\profile\tender\tender_create_or_edit.html:31
+#: .\userprofile\views.py:1310
+msgid "add_new_event"
+msgstr "Yeni tender əlavə et"
+
+#: .\templates\profile\tender\tender_create_or_edit.html:104
+msgid "businness_types"
+msgstr "Sahələr"
+
+#: .\templates\profile\tender\tenders.html:24
+msgid "add_event"
+msgstr "Tender əlavə et"
+
+#: .\templates\profile_base.html:46
+msgid "ekadr"
+msgstr ""
+
+#: .\templates\profile_base.html:51
+msgid "ek"
+msgstr ""
+
+#: .\templates\profile_base.html:94
+msgid "admin"
+msgstr "Admin"
+
+#: .\templates\profile_base.html:117
+#, fuzzy
+#| msgid "profile"
+msgid "profile_changed_confirm"
+msgstr "profil"
+
+#: .\templates\profile_base.html:165
+msgid "product_or_service_list"
+msgstr "Məhsul və ya xidmətlərin siyahısı"
+
+#: .\templates\profile_base.html:168
+msgid "create_product_or_service_service"
+msgstr "Məhsul və ya xidmət əlavə et"
+
+#: .\templates\profile_base.html:183
+msgid "company_appeal_events"
+msgstr "Müaricət edilmiş Tenderlərl"
+
+#: .\templates\profile_base.html:186
+msgid "all_event_list"
+msgstr "Bütün tenderlər"
+
+#: .\templates\profile_base.html:189
+msgid "company_event_list"
+msgstr "Şirkət Tenderlərinin siyahısı"
+
+#: .\templates\profile_base.html:192
+msgid "create_event"
+msgstr "Tender əlavə et"
+
+#: .\templates\profile_base.html:200
+msgid "recycle_bin"
+msgstr "Zibil Qutusu"
+
+#: .\templates\profile_base.html:207
+msgid "products-or-services"
+msgstr "Məhsul və ya xidmətlər"
+
+#: .\templates\profile_base.html:223
+msgid "products"
+msgstr "məhsullar"
+
+#: .\templates\profile_base.html:231
+msgid "products_buy"
+msgstr "Sifariş Verdiyiniz Məhsullar"
+
+#: .\templates\profile_base.html:311
+msgid "all_notifications"
+msgstr "Bütün Bildirişlər"
+
+#: .\templates\profile_base.html:362
+msgid "index"
+msgstr "Ana Səhifə"
+
+#: .\templates\profile_base.html:382
+msgid "copyright"
+msgstr "@"
+
+#: .\templates\profile_base.html:395
+msgid "sidebar_filters"
+msgstr "Rəng"
+
+#: .\templates\profile_base.html:409
+msgid "sidebar_background"
+msgstr "Arxa Fon Rəngi"
+
+#: .\templates\profile_base.html:421
+msgid "sidebar_mini"
+msgstr "Yan Menu"
+
+#: .\templates\profile_base.html:432
+msgid "sidebar_image"
+msgstr "Arxa Fon Şəkli"
+
+#: .\templates\registration\forgot_password.html:26
+#: .\templates\registration\forgot_password.html:35
+msgid "forgot_password"
+msgstr "Şifrəmi unutdum"
+
+#: .\templates\registration\sign_in.html:50
+msgid "username_or_email"
+msgstr "İstifadəçi adı və ya Email"
+
+#: .\templates\registration\sign_in.html:61
+#: .\templates\registration\sign_up.html:138
+msgid "password"
+msgstr "Şifrə"
+
+#: .\templates\registration\sign_up.html:342
+msgid "captcha"
+msgstr "Captcha"
+
+#: .\userprofile\views.py:82 .\userprofile\views.py:2174
+msgid "january"
+msgstr "Yanvar"
+
+#: .\userprofile\views.py:83 .\userprofile\views.py:2175
+msgid "february"
+msgstr "Fevral"
+
+#: .\userprofile\views.py:84 .\userprofile\views.py:2176
+#, fuzzy
+#| msgid "search"
+msgid "march"
+msgstr "Mart"
+
+#: .\userprofile\views.py:85 .\userprofile\views.py:2177
+msgid "april"
+msgstr "Aprel"
+
+#: .\userprofile\views.py:86 .\userprofile\views.py:2178
+#, fuzzy
+#| msgid "map"
+msgid "may"
+msgstr "May"
+
+#: .\userprofile\views.py:87 .\userprofile\views.py:2179
+msgid "june"
+msgstr "İyun"
+
+#: .\userprofile\views.py:88 .\userprofile\views.py:2180
+msgid "july"
+msgstr "İyul"
+
+#: .\userprofile\views.py:89 .\userprofile\views.py:2181
+msgid "august"
+msgstr "Avqust"
+
+#: .\userprofile\views.py:90 .\userprofile\views.py:2182
+msgid "september"
+msgstr "Sentyabr"
+
+#: .\userprofile\views.py:91 .\userprofile\views.py:2183
+msgid "october"
+msgstr "Oktyabr"
+
+#: .\userprofile\views.py:92 .\userprofile\views.py:2184
+msgid "november"
+msgstr "Noyabr"
+
+#: .\userprofile\views.py:93 .\userprofile\views.py:2185
+msgid "december"
+msgstr "Dekabr"
+
+#: .\userprofile\views.py:407
+msgid "profile_activated_successfully"
+msgstr "Profiliniz müvaəffəqiyyətlər aktivləşdi"
+
+#: .\userprofile\views.py:1154
+msgid "cancled_appeal_title"
+msgstr "Tenderə Müaciətiniz İmtina Edildi"
+
+#: .\userprofile\views.py:1155
+msgid "cancled_appeal_content"
+msgstr "Tenderə Müaciətiniz İmtina Edildi"
+
+#: .\userprofile\views.py:1170
+msgid "succesfully_unconfirmed_event_appeal"
+msgstr "İmtina Etdiniz"
+
+#: .\userprofile\views.py:1180
+msgid "confirmed_appeal_title"
+msgstr "Tenderi Qazandınız"
+
+#: .\userprofile\views.py:1181
+msgid "confirmed_appeal_content"
+msgstr "Tenderi Qazandınız"
+
+#: .\userprofile\views.py:1185
+msgid "succesfully_confirmed_event_appeal"
+msgstr "Müraciəti Təsdiq Etdiniz"
+
+#: .\userprofile\views.py:1194
+msgid "end_date_greater_than_now_date_message"
+msgstr "Tender bimtədən təsdiq edə bilməzsiniz"
+
+#: .\userprofile\views.py:1198
+msgid "start_date_greater_than_now_date_message"
+msgstr "Tender başlamadan təsdiq edə bilməzsiniz"
+
+#: .\userprofile\views.py:1537
+msgid "password_changed_successfully"
+msgstr "Şifrəniz uğurla dəyişildi"
+
+#: .\userprofile\views.py:1568
+msgid "photo_changed_successfully"
+msgstr "Profil Şəkliniz uğurla dəyişildi"
+
+#: .\userprofile\views.py:1686
+#, fuzzy
+#| msgid "email_or_password_incorrect"
+msgid "your_password_is_incorrect"
+msgstr "email və ya şifrə səhvdir"
+
+#: .\userprofile\views.py:1717
+#, fuzzy
+#| msgid "successfully_changed_company_detail"
+msgid "succesfully_changed_profile_data"
+msgstr "Məlumatlar müvəffəqiyyətlə dəyişildi"
+
+#: .\userprofile\views.py:1806
+msgid "name_greater_than_1_character"
+msgstr "Ad 1 simvoldan uzun olmalidir"
+
+#: .\userprofile\views.py:1811
+msgid "allready_product"
+msgstr "artiq mövcududr"
+
+#: .\userprofile\views.py:1817
+msgid "saved_succesfully"
+msgstr "Müvəffəqiyyətlə dəyişdi"
+
+#: .\userprofile\views.py:1893
+msgid "event_deleted_message"
+msgstr "Tender silindi"
+
+#~ msgid "status_is_incorrect"
+#~ msgstr "Düzgün məlumat daxil edin"

@@ -1,0 +1,35 @@
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+<div class="row">
+    {% for sponsored_company_product_or_service in sponsored_company_products_or_services %}
+        <div class="span3 product-single-span">
+            <div class="product-single">
+                <div class="image">
+                    <img src="{{ sponsored_company_product_or_service.logo|thumbnail_url:'home_sponsored_events' }}"
+                         class="img-responsive center-block"
+                         alt="">
+                </div>
+                <div class="info">
+                    <span class="compare"><i class="fa fa-sliders"></i></span>
+                    <div class="add-to-cart">
+                        <button class="btn btn-cart"
+                                type="">{% trans 'add_to_cart' %}</button>
+                    </div>
+                    {#                                                        <span class="wishlist"><i class="fa fa-heart"></i></span>#}
+                    <h2 class="product-name">
+                        {#                                                            <a href="{% url 'company_product_or_service' sponsored_company_product_or_service.id %}">#}
+                        <a href="{% url 'company_product_or_service' sponsored_company_product_or_service.id %}">
+                            {{ sponsored_company_product_or_service.name }}
+                        </a>
+                    </h2>
+
+                    <div class="price">
+                        {#                                                            <span class="old"><small><del>$200</del></small></span>#}
+                        <span class="new">{{ sponsored_company_product_or_service.currency.nominal }} {{ sponsored_company_product_or_service.price|floatformat:'-2' }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

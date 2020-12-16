@@ -1,0 +1,671 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+{% block head_container %}
+
+{% endblock %}
+
+
+{% block base_container %}
+    <style>
+        .busness-tab-button {
+            /* color: #be3507; */
+            color: #ffffff;
+            /* text-shadow: rgba(255,255,255,.4) 0 1px 0; */
+            text-shadow: rgba(0, 0, 0, .4) 0 -1px 0;
+            background: #81bcef;
+            background: -webkit-gradient(linear, left top, left bottom, from(#006699), to(#81bcef));
+            background: -webkit-linear-gradient(top, #006699, #81bcef);
+            background: -moz-linear-gradient(top, #006699, #81bcef);
+            background: -ms-linear-gradient(top, #006699, #81bcef);
+            background: -o-linear-gradient(top, #006699, #81bcef);
+            padding: 13px 10px;
+            text-align: center;
+            border-right: 1px solid #fff;
+            font-size: 18px;
+            float: left;
+            margin-top:5px;
+            margin-bottom:5px;
+        }
+        .busness-tab-button:hover {
+            text-decoration: none;
+            color: #fff;
+            /* color: #be3507; */
+            color: #ffffff;
+            /* text-shadow: rgba(255,255,255,.4) 0 1px 0; */
+            text-shadow: rgba(0, 0, 0, .4) 0 -1px 0;
+            background: #ff6633;
+            background: -webkit-gradient(linear, left top, left bottom, from(#e35121), to(#ff6633));
+            background: -webkit-linear-gradient(top, #e35121, #ff6633);
+            background: -moz-linear-gradient(top, #e35121, #ff6633);
+            background: -ms-linear-gradient(top, #e35121, #ff6633);
+            background: -o-linear-gradient(top, #e35121, #ff6633);
+        }
+        .busness-tab-button-active {
+            text-decoration: none;
+            color: #fff;
+            /* color: #be3507; */
+            color: #ffffff;
+            /* text-shadow: rgba(255,255,255,.4) 0 1px 0; */
+            text-shadow: rgba(0, 0, 0, .4) 0 -1px 0;
+            background: #ff6633;
+            background: -webkit-gradient(linear, left top, left bottom, from(#e35121), to(#ff6633));
+            background: -webkit-linear-gradient(top, #e35121, #ff6633);
+            background: -moz-linear-gradient(top, #e35121, #ff6633);
+            background: -ms-linear-gradient(top, #e35121, #ff6633);
+            background: -o-linear-gradient(top, #e35121, #ff6633);
+            padding: 13px 10px;
+            text-align: center;
+            border-right: 1px solid #fff;
+            font-size: 18px;
+            float: left;
+            margin-top:5px;
+            margin-bottom:5px;
+        }
+    .busness-tab-button-active:hover {
+            text-decoration: none;
+            color: #fff;
+    }
+    </style>
+
+   <div class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-inner">
+                <ul class="list-inline list-unstyled">
+                    <li><a href="{% url 'index' %}">{% trans 'home' %}</a></li>
+                    <li class='active'>{% trans 'search' %}</li>
+                </ul>
+            </div><!-- /.breadcrumb-inner -->
+        </div><!-- /.container -->
+    </div><!-- /.breadcrumb -->
+    <!-- CONTENT -->
+
+    <div class="body-content outer-top-xs">
+        <!-- CONTENT -->
+        <div class="container">
+            <div class="container pagecontainer offset-0">
+                <!-- FILTERS -->
+                <div class="col-md-3  sidebar">
+                    <!-- ================================== TOP NAVIGATION ================================== -->
+                    <div class="home-banner outer-top-n" style="margin-bottom: 10px;">
+                        {% if based_ads.search1_ads_active %}
+                            {% if based_ads.search1_ads_image %}
+                                <a href="{{ based_ads.search1_ads_url }}">
+                                    <img class="img-responsive"
+                                         src="{{ based_ads.search1_ads_image|thumbnail_url:'search1_ads_image' }}"
+                                         alt="">
+                                </a>
+                            {% elif based_ads.search1_ads_context %}
+                                {% autoescape off %}
+                                    {{ based_ads.search1_ads_context }}
+                                {% endautoescape %}
+
+                            {% else %}
+                                <img class="img-responsive"
+                                     src="https://placeholdit.co//i/262x262?bg=cccccc"
+                                     alt="">
+                            {% endif %}
+                        {% else %}
+                            <img class="img-responsive"
+                                 src="https://placeholdit.co//i/262x262?bg=cccccc"
+                                 alt="">
+                        {% endif %}
+                    </div>
+                    <br/>
+                    <div class="sidebar-widget outer-bottom-small wow fadeInUp">
+                        <h3 class="section-title">{% trans 'random_events' %}</h3>
+                        <div class="sidebar-widget-body outer-top-xs">
+                            <div class="owl-carousel sidebar-carousel special-offer custom-carousel owl-theme outer-top-xs">
+                                <div class="item">
+                                    <div class="products special-product">
+                                        {% for based_random_event in based_random_events %}
+                                            <div class="product">
+                                                <div class="product-micro">
+                                                    <div class="row product-micro-row">
+                                                        <div class="col col-xs-5">
+                                                            <div class="product-image">
+                                                                <div class="image"><a href="#"> <img
+                                                                        src="{{ based_random_event.image|thumbnail_url:'events_products_services' }}"
+                                                                        alt=""> </a></div>
+                                                                <!-- /.image -->
+
+                                                            </div>
+                                                            <!-- /.product-image -->
+                                                        </div>
+                                                        <!-- /.col -->
+                                                        <div class="col col-xs-7">
+                                                            <div class="product-info">
+                                                                <h3 class="name"><a
+                                                                        href="#">{{ based_random_event.name }}</a></h3>
+                                                                {#                                                            <div class="rating rateit-small"></div>#}
+                                                                <span class="label {% if based_random_event.end_date > now %} label-success {% else %} label-danger {% endif %}">
+                                                                        {% if based_random_event.end_date > now %}
+                                                                            {% trans 'continues' %}
+                                                                        {% else %}
+                                                                            {% trans 'finished' %}
+                                                                        {% endif %}
+                                                                    </span>
+                                                                <div class="product-price">
+                                                                    <span class="price">
+
+                                                                        <span class="font-weight700 green-start_date">
+                                                                            {{ based_random_event.start_date|date:'d F Y' }}
+                                                                        </span>
+                                                                        <br/>
+                                                                        <span class="font-weight700 red-end_date">
+                                                                            {{ based_random_event.end_date|date:'d F Y' }}
+                                                                        </span>
+                                                                    </span>
+                                                                    {#                                                                        <span class="price-before-discount">$ 800</span>#}
+                                                                </div>
+                                                                <!-- /.product-price -->
+
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.col -->
+                                                    </div>
+                                                    <!-- /.product-micro-row -->
+                                                </div>
+                                                <!-- /.product-micro -->
+
+                                            </div>
+                                            {% if forloop.counter|divisibleby:'3' and not forloop.last %}
+                                                </div>
+                                                </div>
+                                                <div class="item">
+                                                <div class="products special-product">
+                                            {% endif %}
+                                        {% endfor %}
+                                        </div>
+                                        </div>
+                            </div>
+                        </div>
+                        <!-- /.sidebar-widget-body -->
+                    </div>
+                    <!-- /.side-menu -->
+                    <!-- ================================== TOP NAVIGATION : END ================================== -->
+                    <!-- ============================================== SPECIAL DEALS ============================================== -->
+
+                    <div class="home-banner outer-top-n" style="margin-bottom: 10px;">
+                        {% if based_ads.search2_ads_active %}
+                            {% if based_ads.search2_ads_image %}
+                                <a href="{{ based_ads.search2_ads_url }}">
+                                    <img class="img-responsive"
+                                         src="{{ based_ads.search2_ads_image|thumbnail_url:'search2_ads_image' }}"
+                                         alt="">
+                                </a>
+                            {% elif based_ads.search2_ads_context %}
+                                {% autoescape off %}
+                                    {{ based_ads.search2_ads_context }}
+                                {% endautoescape %}
+
+                            {% else %}
+                                <img class="img-responsive"
+                                     src="https://placeholdit.co//i/262x262?bg=cccccc"
+                                     alt="">
+                            {% endif %}
+                        {% else %}
+                            <img class="img-responsive"
+                                 src="https://placeholdit.co//i/262x262?bg=cccccc"
+                                 alt="">
+                        {% endif %}
+                    </div>
+                    <div class="sidebar-widget outer-bottom-small wow fadeInUp">
+                        <h3 class="section-title">{% trans 'random_products_or_services' %}</h3>
+                        <div class="sidebar-widget-body outer-top-xs">
+                            <div class="owl-carousel sidebar-carousel special-offer custom-carousel owl-theme outer-top-xs">
+                                <div class="item">
+                                    <div class="products special-product">
+                                        {% for company_product_or_service in based_random_company_products %}
+                                            <div class="product">
+                                                <div class="product-micro">
+                                                    <div class="row product-micro-row">
+                                                        <div class="col col-xs-5">
+                                                            <div class="product-image">
+                                                                <div class="image"><a href="#"> <img
+                                                                        src="{{ company_product_or_service.logo|thumbnail_url:'events_products_services' }}"
+                                                                        alt=""> </a></div>
+                                                                <!-- /.image -->
+
+                                                            </div>
+                                                            <!-- /.product-image -->
+                                                        </div>
+                                                        <!-- /.col -->
+                                                        <div class="col2 col-xs-7">
+                                                            <div class="product-info">
+                                                                <h3 class="name"><a
+                                                                        href="{% url 'company_product_or_service' company_product_or_service.id %}">{{ company_product_or_service.name }}</a>
+                                                                </h3>
+                                                                {#                                                                <div class="rating rateit-small"></div>#}
+                                                                <div class="product-price"><span
+                                                                        class="price">{{ company_product_or_service.currency.nominal }} {{ company_product_or_service.price|floatformat:'-2' }}</span>
+                                                                </div>
+                                                                <!-- /.product-price -->
+
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.col -->
+                                                    </div>
+                                                    <!-- /.product-micro-row -->
+                                                </div>
+                                                <!-- /.product-micro -->
+
+                                            </div>
+                                            {% if forloop.counter|divisibleby:'3' and not forloop.last %}
+                                                </div>
+                                                </div>
+                                                <div class="item">
+                                                <div class="products special-product">
+                                            {% endif %}
+                                        {% endfor %}
+                                        </div>
+                                        </div>
+                            </div>
+                        </div>
+                        <!-- /.sidebar-widget-body -->
+                    </div>
+                    <!-- /.sidebar-widget -->
+                    <!-- ============================================== SPECIAL DEALS : END ============================================== -->
+
+
+                </div>
+                <!-- END OF FILTERS -->
+
+                <!-- LIST CONTENT-->
+                <div class="col-md-9">
+
+                    <div class="hpadding20">
+                        <!-- Top filters -->
+                <div class="hpadding20">
+                    <!-- Top filters -->
+                    <div class="row">
+                        <a href="{% url 'search' 'products-or-services' %}?search={% if search_word %}{{ search_word }}{% endif %}{% if businnes_g %}&businnes={{ businnes_g }}{% endif %}{% if regions_g %}&regions={{ regions_g }}{% endif %}"
+                           class="col-lg-4 col-md-4 col-sm-12 col-xs-12 busness-tab-button{% if search_content == 'products-or-services' %}-active{% endif %}">{% trans 'products_or_services' %}</a>
+                        <a href="{% url 'search' 'events' %}?search={% if search_word %}{{ search_word }}{% endif %}{% if businnes_g %}&businnes={{ businnes_g }}{% endif %}{% if regions_g %}&regions={{ regions_g }}{% endif %}"
+                           class="col-lg-4 col-md-4 col-sm-12 col-xs-12 busness-tab-button{% if search_content == 'events' %}-active{% endif %}">
+                            {% trans 'events' %}
+                        </a>
+                        <a href="{% url 'search' 'companies' %}?search={% if search_word %}{{ search_word }}{% endif %}{% if businnes_g %}&businnes={{ businnes_g }}{% endif %}{% if regions_g %}&regions={{ regions_g }}{% endif %}"
+                           class="col-lg-4 col-md-4 col-sm-12 col-xs-12 busness-tab-button{% if search_content == 'companies' %}-active{% endif %}">
+                            {% trans 'companies' %}
+                        </a>
+                    </div>
+                </div>
+                <!-- End of padding -->
+
+                    </div>
+                    <!-- End of padding -->
+
+                    <br/><br/>
+                    <div class="search-result-container ">
+                        <div id="myTabContent" class="tab-content category-list" style="margin: 10px auto">
+
+                            {% if search_content == 'companies' %}
+                                <div class="tab-pane  active " id="list-container">
+                                    <div class="category-product">
+                                        {% for company in datas %}
+                                            <div class="category-product-inner wow fadeInUp"
+                                                 style="border-bottom: 1px dotted #ccc;">
+                                                <div class="products">
+                                                    <div class="product-list product">
+                                                        <div class="row product-list-row">
+                                                            <div class="col col-sm-4 col-lg-4">
+                                                                <div class="product-image">
+                                                                    <div class="image">
+                                                                        <img src="{{ company.logo|thumbnail_url:'company_list' }}"
+                                                                             alt="">
+                                                                    </div>
+                                                                </div>
+                                                                <!-- /.product-image -->
+                                                            </div>
+                                                            <!-- /.col -->
+                                                            <div class="col col-sm-8 col-lg-8">
+                                                                <div class="product-info">
+                                                                    <h3 class="name">
+                                                                        <a href="{% url 'company' company.id %}">
+                                                                            {{ company.name }}
+                                                                        </a>
+                                                                    </h3>
+                                                                    {#                                                                <div class="rating rateit-small"></div>#}
+                                                                    <div class="product-price">
+                                                                        <span class="price"> {% trans 'products_or_services' %}: {{ company.get_company_product_count }} </span>
+                                                                        <br/>
+                                                                        <span class="price"> {% trans 'event_count' %}: {{ company.get_event_count }} </span>
+                                                                        {#                                                                    <span class="price-before-discount">$ 800</span>#}
+                                                                    </div>
+                                                                    <!-- /.product-price -->
+                                                                    <div class="description m-t-10">
+                                                                        {{ company.practices|truncatechars:'300' }}
+                                                                    </div>
+                                                                    <div class="cart clearfix animate-effect">
+                                                                        <div class="action">
+                                                                            <ul class="list-unstyled">
+                                                                                <li class="add-cart-button btn-group">
+                                                                                    <a class="btn btn-primary icon"
+                                                                                       data-toggle="dropdown"
+                                                                                       href="{% url 'company' company.id %}"><i
+                                                                                            class="fa fa-eye"></i>
+                                                                                    </a>
+                                                                                    <a class="btn btn-primary cart-btn"
+                                                                                       href="{% url 'company' company.id %}">{% trans 'view' %}
+                                                                                    </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                        <!-- /.action -->
+                                                                    </div>
+                                                                    <!-- /.cart -->
+
+                                                                </div>
+                                                                <!-- /.product-info -->
+                                                            </div>
+                                                            <!-- /.col -->
+                                                        </div>
+                                                        <!-- /.product-list-row -->
+                                                        <div class="tag new"><span>new</span></div>
+                                                    </div>
+                                                    <!-- /.product-list -->
+                                                </div>
+                                                <!-- /.products -->
+                                            </div>
+                                            <!-- /.category-product-inner -->
+                                        {% endfor %}
+                                    </div>
+                                    <!-- /.category-product -->
+                                </div>
+                                <!-- /.tab-pane #list-container -->
+                            {% elif search_content == 'events' %}
+                                <div class="tab-pane active " id="grid-container">
+                                    <div class="category-product">
+                                        <div class="row">
+                                            {% for event in datas %}
+                                                <div class="col-sm-4 col-md-4 wow fadeInUp"
+                                                     style="border-bottom: 1px dotted #ccc;border-right: 1px dotted #ccc;">
+                                                    <div class="products">
+                                                        <div class="product">
+                                                            <div class="product-image">
+                                                                <div class="image"><a
+                                                                        href="{% url 'event'  event.id %}">
+                                                                    <img src="{{ event.image|thumbnail_url:'events_products_services' }}"
+                                                                         alt=""></a>
+                                                                </div>
+                                                                <!-- /.image -->
+
+                                                                {#                                                                    <div class="tag new"><span>new</span></div>#}
+                                                            </div>
+                                                            <!-- /.product-image -->
+
+                                                            <div class="product-info text-left">
+                                                                <h3 class="name"><a
+                                                                        href="{% url 'event'  event.id %}">
+                                                                    {{ event.name }}
+                                                                </a></h3>
+                                                                {#                                                                    <div class="rating rateit-small"></div>#}
+                                                                <div class="description"></div>
+                                                                <span class="label {% if event.end_date > now %} label-success {% else %} label-danger {% endif %}">
+                                                                        {% if event.end_date > now %}
+                                                                            {% trans 'continues' %}
+                                                                        {% else %}
+                                                                            {% trans 'finished' %}
+                                                                        {% endif %}
+                                                                    </span>
+                                                                <div class="product-price"><span class="price">
+
+                                                                        {% trans 'start_date' %}:<span
+                                                                        class="font-weight700 green-start_date">{{ event.start_date|date:'d F Y' }}</span>
+                                                                        <br/>
+                                                                        {% trans 'end_date' %}:<span
+                                                                        class="font-weight700 red-end_date">{{ event.end_date|date:'d F Y' }}</span>
+                                                                    </span>
+                                                                    {#                                                                        <span class="price-before-discount">$ 800</span>#}
+                                                                </div>
+                                                                <!-- /.product-price -->
+
+                                                            </div>
+                                                            <!-- /.product-info -->
+                                                            <div class="cart clearfix animate-effect">
+                                                                <div class="action">
+                                                                    <ul class="list-unstyled">
+                                                                        <li class="add-cart-button btn-group">
+                                                                            <button class="btn btn-primary icon"
+                                                                                    data-toggle="dropdown"
+                                                                                    type="button"><i
+                                                                                    class="fa fa-check"></i>
+                                                                            </button>
+                                                                            <button class="btn btn-primary cart-btn"
+                                                                                    type="button">{% trans 'apply' %}
+                                                                            </button>
+                                                                        </li>
+                                                                        <li class="lnk wishlist"><a
+                                                                                class="add-to-cart"
+                                                                                href="{% url 'event'  event.id %}"
+                                                                                title="Wishlist"> <i
+                                                                                class="icon fa fa-heart"></i> </a>
+                                                                        </li>
+                                                                        <li class="lnk"><a class="add-to-cart"
+                                                                                           href="{% url 'event'  event.id %}"
+                                                                                           title="Compare"> <i
+                                                                                class="fa fa-signal"></i> </a></li>
+                                                                    </ul>
+                                                                </div>
+                                                                <!-- /.action -->
+                                                            </div>
+                                                            <!-- /.cart -->
+                                                        </div>
+                                                        <!-- /.product -->
+
+                                                    </div>
+                                                    <!-- /.products -->
+                                                </div>
+                                                {% if forloop.counter|divisibleby:'3' %}
+                                                    <div class="clearfix"></div>
+                                                {% endif %}
+                                            {% endfor %}
+                                            <!-- /.item -->
+                                        </div>
+                                        <!-- /.row -->
+                                    </div>
+                                    <!-- /.category-product -->
+
+                                </div>
+                                <!-- /.tab-pane -->
+                            {% elif search_content == 'products-or-services' %}
+                                <div class="tab-pane active " id="grid-container">
+                                    <div class="category-product">
+                                        <div class="row">
+                                            {% for company_product_or_service in datas %}
+                                                <div class="col-sm-6 col-md-4 wow fadeInUp"
+                                                     style="border-bottom: 1px dotted #ccc;border-right: 1px dotted #ccc;">
+                                                    <div class="products">
+                                                        <div class="product">
+                                                            <div class="product-image">
+                                                                <div class="image"><a
+                                                                        href="{% url 'company_product_or_service'  company_product_or_service.id %}">
+                                                                    <img src="{{ company_product_or_service.logo|thumbnail_url:'events_products_services' }}"
+                                                                         alt=""></a>
+                                                                </div>
+                                                                <!-- /.image -->
+
+                                                                {#                                                                    <div class="tag new"><span>new</span></div>#}
+                                                            </div>
+                                                            <!-- /.product-image -->
+
+                                                            <div class="product-info text-left">
+                                                                <h3 class="name"><a
+                                                                        href="{% url 'company_product_or_service'  company_product_or_service.id %}">
+                                                                    {{ company_product_or_service.name }}
+                                                                </a></h3>
+                                                                {#                                                                    <div class="rating rateit-small"></div>#}
+                                                                <div class="description"></div>
+                                                                <div class="product-price"><span class="price">
+                                                                        {{ company_product_or_service.currency.nominal }}{{ company_product_or_service.price|floatformat:'-2' }}
+                                                                    </span>
+                                                                    {#                                                                        <span class="price-before-discount">$ 800</span>#}
+                                                                </div>
+                                                                <!-- /.product-price -->
+
+                                                            </div>
+                                                            <!-- /.product-info -->
+                                                            <div class="cart clearfix animate-effect">
+                                                                <div class="action">
+                                                                    <ul class="list-unstyled">
+                                                                        <li class="add-cart-button btn-group">
+                                                                            <button class="btn btn-primary icon"
+                                                                                    data-toggle="dropdown"
+                                                                                    type="button"><i
+                                                                                    class="fa fa-shopping-cart"></i>
+                                                                            </button>
+                                                                            <button class="btn btn-primary cart-btn"
+                                                                                    type="button">{% trans 'add_to_cart' %}
+                                                                            </button>
+                                                                        </li>
+                                                                        <li class="lnk wishlist"><a
+                                                                                class="add-to-cart"
+                                                                                href="{% url 'company_product_or_service'  company_product_or_service.id %}"
+                                                                                title="Wishlist"> <i
+                                                                                class="icon fa fa-heart"></i> </a>
+                                                                        </li>
+                                                                        <li class="lnk"><a class="add-to-cart"
+                                                                                           href="{% url 'company_product_or_service'  company_product_or_service.id %}"
+                                                                                           title="Compare"> <i
+                                                                                class="fa fa-signal"></i> </a></li>
+                                                                    </ul>
+                                                                </div>
+                                                                <!-- /.action -->
+                                                            </div>
+                                                            <!-- /.cart -->
+                                                        </div>
+                                                        <!-- /.product -->
+
+                                                    </div>
+                                                    <!-- /.products -->
+                                                </div>
+                                                {% if forloop.counter|divisibleby:'3' %}
+                                                    <div class="clearfix"></div>
+                                                {% endif %}
+                                            {% endfor %}
+                                            <!-- /.item -->
+                                        </div>
+                                        <!-- /.row -->
+                                    </div>
+                                    <!-- /.category-product -->
+
+                                </div>
+                                <!-- /.tab-pane -->
+                            {% else %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+
+
+                    <div class="itemscontainer offset-1">
+
+                        {% for event in events %}
+                            <div class="col-md-4">
+                                <div class="listitem">
+                                    <img src="{{ event.image|thumbnail_url:'main_event_list' }}" alt=""/>
+                                    <div class="liover"></div>
+                                    <a class="book-icon" href="{% url 'event' event.id %}"></a>
+                                </div>
+                                <div class="itemlabel2">
+                                    <div class="labelright">
+                                <span class="label {% if event.end_date > now %} label-success {% else %} label-danger {% endif %}">
+                                    {% if event.end_date > now %}
+                                        {% trans 'continues' %}
+                                    {% else %}
+                                        {% trans 'finished' %}
+                                    {% endif %}
+                                </span>
+                                        <br/>
+                                        <br/>
+                                        {% trans 'start_date' %}<br>
+                                        {{ event.start_date|date:'d F Y' }}
+                                        <br/>
+                                        {{ event.start_date|date:'H:m:s' }}
+                                        <br/>
+                                        <br/>
+                                        {% trans 'end_date' %}<br>
+                                        {{ event.end_date|date:'d F Y' }}
+                                        <br/>
+                                        {{ event.end_date|date:'H:m:s' }}
+                                        <br/>
+                                        <br/>
+                                        <a href="{% url 'event' event.id %}" class="bookbtn mt1">{% trans 'view' %}</a>
+                                    </div>
+                                    <div class="labelleft">
+                                        <b><a href="{% url 'event' event.id %}"><b>{{ event.name }}</b></a></b><br/><br/><br/>
+                                        <p class="grey">{{ event.description }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            {% if forloop.counter|divisibleby:3 and not forloop.last %}
+
+                                <div class="clearfix"></div>
+                                <div class="offset-2">
+                                    <hr class="featurette-divider3"/>
+                                </div>
+                            {% endif %}
+
+                        {% endfor %}
+
+                        <div class="clearfix"></div>
+                        <div class="offset-2">
+                            <hr class="featurette-divider3"/>
+                        </div>
+
+                    </div>
+                    <!-- End of offset1-->
+                    {% if datas %}
+                        <div class="hpadding20">
+
+                            <ul class="pagination right paddingbtm20">
+                                {% if datas.has_previous %}
+                                    <li><a href="?page={{ datas.previous_page_number }}">&laquo;</a></li>
+                                {% endif %}
+                                {% if datas.page_range_data.show_first %}
+                                    <li><a href="?page=1">1</a></li>
+                                    <li><a class="ellipsis">...</a></li>
+                                {% endif %}
+                                {% for i in datas.page_range_data.page_range %}
+                                    {% ifequal i datas.number %}
+                                        <li class="active"><a>{{ i }}</a></li>
+                                    {% else %}
+                                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                    {% endifequal %}
+                                {% endfor %}
+                                {% if datas.page_range_data.show_last %}
+                                    <li><a class="ellipsis">...</a></li>
+                                    <li>
+                                        <a href="?page={{ datas.paginator.num_pages }}">{{ datas.paginator.num_pages }}</a>
+                                    </li>
+                                {% endif %}
+
+                                {% if datas.has_next %}
+                                    <li><a href="?page={{ datas.next_page_number }}">&raquo;</a></li>
+                                {% endif %}
+                            </ul>
+
+                        </div>
+                    {% endif %}
+
+                </div>
+                <!-- END OF LIST CONTENT-->
+
+
+            </div>
+            <!-- END OF container-->
+
+        </div>
+        <!-- END OF CONTENT -->
+    </div>
+
+
+{% endblock %}
+
+
+{% block js_container %}
+
+
+{% endblock %}

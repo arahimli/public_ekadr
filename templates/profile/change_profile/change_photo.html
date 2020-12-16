@@ -1,0 +1,127 @@
+{% extends 'profile_base.html' %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% block head_container %}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+    <link rel="stylesheet" href="{% static 'select2/select2-bootstrap.css' %}">
+    <style>
+        #add_new_product_or_service_div {
+            display: none;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+{% endblock %}
+
+
+{% block base_container %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">perm_identity</i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">{% trans 'change_photo' %} -
+                            <small class="category">{% trans 'form' %}</small>
+                        </h4>
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'image' %}</label>
+                                <div class="col-md-offset-2 col-md-4 col-sm-4">
+                                    <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                        <div class="fileinput-new thumbnail img-circle">
+                                            <img style="height: 100px;width: 100px;" src="{% if user_profile.image %}{{ user_profile.image.url }}{% else %}{% static 'profile/assets/img/image_placeholder.jpg' %}{% endif %}"
+                                                 alt="...">
+                                        </div>
+                                        <div class="fileinput-preview fileinput-exists thumbnail img-circle"></div>
+                                        <div>
+                                                    <span class="btn btn-round btn-rose btn-file">
+                                                        <span class="fileinput-new">{% trans 'select_image' %}</span>
+                                                        <span class="fileinput-exists">{% trans 'change' %}</span>
+                                                        {{ form.image }}
+                                                    </span>
+                                            <br/>
+                                            <a href="#pablo" class="btn btn-danger btn-round fileinput-exists"
+                                               data-dismiss="fileinput"><i class="fa fa-times"></i> {% trans 'remove' %}
+                                            </a>
+                                        </div>
+                                    </div>
+                                    {% if form.image.errors %}
+                                        <div class="alert alert-danger" style="padding: 7px 0;">
+                                            <button style="margin: 5px 10px;" type="button" class="close"
+                                                    data-dismiss="alert" aria-hidden="true">
+                                                ×
+                                            </button>
+                                            <strong>{{ form.image.errors }}</strong>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <button type="submit"
+                                    class="btn btn-rose pull-right">{% trans 'change_profile_photo' %}</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-profile">
+                    <div class="card-avatar">
+                        <a>
+                            <img style="height: 130px;width: 130px;" class="img" src="{% if user_profile.image %}{{ user_profile.image.url }}{% else %}{% static 'profile/assets/img/image_placeholder.jpg' %}{% endif %}"/>
+                        </a>
+                    </div>
+                    <div class="card-content">
+                        <h6 class="category text-gray">@{{ user_profile_base.user.username }}</h6>
+                        <h4 class="card-title">{{ user_profile_base.user.first_name }} {{ user_profile_base.user.last_name }}</h4>
+                        {#                        <a href="#pablo" class="btn btn-rose btn-round">Follow</a>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block js_container %}
+
+    {#    <script src="{% static 'select2/select2.full.js' %}"></script>#}
+    {#    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>#}
+    {#    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>#}
+    <!-- DateTimePicker Plugin -->
+    <script src="{% static 'profile/assets/js/bootstrap-datetimepicker.js' %}"></script>
+    <script>
+        dateTimeOptions = {
+            'format': 'Y-MM-D HH:mm:ss',
+            'autoclose': true,
+            'showMeridian': true
+        };
+        {#widgets = {#}
+        {#    #NOT Use localization and set a default format#}
+        {#    'datetime': DateTimeWidget(options = dateTimeOptions)#}
+        {#    }#}
+    </script>
+    {#    <script>#}
+    {#        $(".select2-single, .select2-multiple").select2({#}
+    {#            theme: "bootstrap",#}
+    {#            placeholder: "Select a State",#}
+    {#            maximumSelectionSize: 6,#}
+    {#            containerCssClass: ':all:'#}
+    {#        });#}
+    {##}
+    {#        $(":checkbox").on("click", function () {#}
+    {#            $(this).parent().nextAll("select").prop("disabled", !this.checked);#}
+    {#        });#}
+    {#    </script>#}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            {#            md.initSliders();#}
+            demo.initFormExtendedDatetimepickers();
+        });
+    </script>
+{% endblock %}

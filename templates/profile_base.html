@@ -1,0 +1,524 @@
+{% load static %}
+{% load i18n %}
+{% get_available_languages as languages %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+
+
+<head>
+    <meta charset="utf-8"/>
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'profile/assets/img/apple-icon.png' %}"/>
+    <link rel="icon" type="image/png" href="{% static 'profile/assets/img/favicon.png' %}"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
+    <meta name="viewport" content="width=device-width"/>
+    <!-- Canonical SEO -->
+
+    {% block head_container %}
+
+    {% endblock %}
+
+    <!-- Bootstrap core CSS     -->
+    <link href="{% static 'profile/assets/css/bootstrap.min.css' %}" rel="stylesheet"/>
+    <!--  Material Dashboard CSS    -->
+    <link href="{% static 'profile/assets/css/material-dashboard.css' %}" rel="stylesheet"/>
+    <!--  CSS for Demo Purpose, don't include it in your project     -->
+    <link href="{% static 'profile/assets/css/demo.css' %}" rel="stylesheet"/>
+    <link href="{% static 'profile/assets/css/custom.css' %}" rel="stylesheet"/>
+    <!--     Fonts and icons     -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"/>
+</head>
+
+<body style="font-family: 'Arial';">
+<div class="wrapper">
+    <div class="sidebar" data-active-color="blue" data-background-color="white"
+         data-image="">
+        <!--
+    Tip 1: You can change the color of active element of the sidebar using: data-active-color="purple | blue | green | orange | red | rose"
+    Tip 2: you can also add an image using data-image tag
+    Tip 3: you can change the color of the sidebar with data-background-color="white | black"
+-->
+        <div class="logo">
+            <a href="{% url 'index' %}" class="simple-text">
+                {% trans 'ekadr' %}
+            </a>
+        </div>
+        <div class="logo logo-mini">
+            <a href="{% url 'index' %}" class="simple-text">
+                {% trans 'ek' %}
+            </a>
+        </div>
+        <div class="sidebar-wrapper">
+            <div class="user">
+                <div class="photo">
+                    <img src="{% if user_profile_base.image %}{{ user_profile_base.image.url }}{% else %}{% static 'profile/assets/img/default-avatar.png' %}{% endif %}"/>
+                </div>
+                <div class="info">
+                    <a data-toggle="collapse" href="#collapseExample" class="collapsed">
+                        {{ user_profile_base.user.first_name }} {{ user_profile_base.user.last_name }}
+                        <b class="caret"></b>
+                    </a>
+                    <div class="collapse" id="collapseExample">
+                        <ul class="nav">
+                            {#                            <li>#}
+                            {#                                <a href="#">{% trans 'edit_profile' %}</a>#}
+                            {#                            </li>#}
+                            <li>
+                                <a href="{% url 'change_profile_data' 'edit' %}">{% trans 'change_profile_data' %}</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'change_photo' %}">{% trans 'change_photo' %}</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'change_password' %}">{% trans 'change_password' %}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <ul class="nav">
+                <li class="active">
+                    <a href="{% url 'dashboard' %}">
+                        <i class="material-icons">perm_identity</i>
+                        <p>{% trans 'dashboard' %}</p>
+                    </a>
+                </li>
+                {% if user_profile_base.type == 'admin-person' %}
+                    <li>
+                        <a data-toggle="collapse" href="#admin">
+                            <i class="material-icons">perm_identity</i>
+                            <p>
+                                {% trans 'admin' %}
+                                <b class="caret"></b>
+                            </p>
+
+                        </a>
+                        <div class="collapse" id="admin">
+                            <ul class="nav">
+                                <li>
+                                    <a href="{% url 'admin_content_section' 'companies' 'all' %}">{% trans 'companies' %}</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'admin_content_section' 'profiles' 'all' %}">{% trans 'profiles' %}</a>
+                                </li>
+                                {#                                <li>#}
+                                {#                                    <a href="{% url 'create_company' %}">{% trans 'create_company' %}</a>#}
+                                {#                                </li>#}
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a data-toggle="collapse" href="#admin-datail-change-confirm">
+                            <i class="material-icons">perm_identity</i>
+                            <p>
+                                {% trans 'profile_changed_confirm' %}
+                                <b class="caret"></b>
+                            </p>
+
+                        </a>
+                        <div class="collapse" id="admin-datail-change-confirm">
+                            <ul class="nav">
+                                <li>
+                                    <a href="{% url 'admin_details_data_change_section' 'profiles' %}">{% trans 'profiles' %}</a>
+                                </li>
+                                {#                                <li>#}
+                                {#                                    <a href="{% url 'create_company' %}">{% trans 'create_company' %}</a>#}
+                                {#                                </li>#}
+                            </ul>
+                        </div>
+                    </li>
+                {% endif %}
+                {% if user_profile_base.type == 'juridical-person' or user_profile_base.type == 'individual-person' %}
+                    <li>
+                        <a data-toggle="collapse" href="#my_companies">
+                            <i class="material-icons">store</i>
+                            <p>
+                                {% trans 'my_companies' %}
+                                <b class="caret"></b>
+                            </p>
+
+                        </a>
+                        <div class="collapse" id="my_companies">
+                            <ul class="nav">
+                                <li>
+                                    <a href="{% url 'my_companies' %}">{% trans 'my_companies' %}</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'create_company' %}">{% trans 'create_company' %}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a data-toggle="collapse" href="#componentsProducts_or_services">
+                            <i class="material-icons">shopping_cart</i>
+                            <p>{% trans 'products_or_services' %}
+                                <b class="caret"></b>
+                            </p>
+                        </a>
+                        <div class="collapse" id="componentsProducts_or_services">
+                            <ul class="nav">
+                                <li>
+                                    <a href="{% url 'product_service_redirect' 'list' %}">{% trans 'product_or_service_list' %}</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'product_service_redirect' 'create' %}">{% trans 'create_product_or_service_service' %}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a data-toggle="collapse" href="#componentsEvents">
+                            <i class="material-icons">apps</i>
+                            <p>{% trans 'events' %}
+                                <b class="caret"></b>
+                            </p>
+                        </a>
+                        <div class="collapse" id="componentsEvents">
+                            <ul class="nav">
+                                <li>
+                                    <a href="{% url 'company_request_event_appeal_redirect' %}">{% trans 'company_appeal_events' %}</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'my_events' %}">{% trans 'all_event_list' %}</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'event_redirect' 'company' %}">{% trans 'company_event_list' %}</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'event_redirect' 'create' %}">{% trans 'create_event' %}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a data-toggle="collapse" href="#componentsRecycleBin">
+                            <i class="material-icons">delete_forever</i>
+                            <p>{% trans 'recycle_bin' %}
+                                <b class="caret"></b>
+                            </p>
+                        </a>
+                        <div class="collapse" id="componentsRecycleBin">
+                            <ul class="nav">
+                                <li>
+                                    <a href="{% url 'recycle_bin'  'products-or-services' %}">{% trans 'products-or-services' %}</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'recycle_bin'  'companies' %}">{% trans 'companies' %}</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'recycle_bin' 'events' %}">{% trans 'events' %}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                {% endif %}
+                <li>
+                    <a data-toggle="collapse" href="#buy-products-or-services">
+                        <i class="material-icons">perm_identity</i>
+                        <p>
+                            {% trans 'products' %}
+                            <b class="caret"></b>
+                        </p>
+
+                    </a>
+                    <div class="collapse" id="buy-products-or-services">
+                        <ul class="nav">
+                            <li>
+                                <a href="{% url 'profile_products_buy_list' %}">{% trans 'products_buy' %}</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'profile_wish_list' %}">{% trans 'wish_list' %}</a>
+                            </li>
+                            {#                                <li>#}
+                            {#                                    <a href="{% url 'create_company' %}">{% trans 'create_company' %}</a>#}
+                            {#                                </li>#}
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a href="{% url 'log_out' %}">
+                        <i class="material-icons">highlight_off</i>
+                        <p>{% trans 'log_out' %}</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="main-panel">
+        <nav class="navbar navbar-transparent navbar-absolute">
+            <div class="container-fluid">
+                <div class="navbar-minimize">
+                    <button id="minimizeSidebar" class="btn btn-round btn-white btn-fill btn-just-icon">
+                        <i class="material-icons visible-on-sidebar-regular">more_vert</i>
+                        <i class="material-icons visible-on-sidebar-mini">view_list</i>
+                    </button>
+                </div>
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{% url 'dashboard' %}"> {% trans 'dashboard' %}</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="material-icons">languages</i>
+                                <span class="notification">{{ LANGUAGE_CODE }}</span>
+                                <p class="hidden-lg hidden-md">
+                                    {{ LANGUAGE_CODE }}
+                                    <b class="caret"></b>
+                                </p>
+                            </a>
+                            <ul class="dropdown-menu">
+                                {% for language in languages %}
+                                    {% if language.0 != LANGUAGE_CODE %}
+                                        <li class="{{ language.0 }}">
+                                            <a href="{% url 'set_language' %}?language={{ language.0 }}&next={{ request.path }}">
+                                                <i class="material-icons">languages</i> {{ language.0 }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="material-icons">notifications</i>
+                                <span class="notification">{{ user_profile_base.get_notifications.count }}</span>
+                                <p class="hidden-lg hidden-md">
+                                    {% trans 'notifications' %}
+                                    <b class="caret"></b>
+                                </p>
+                            </a>
+                            <ul class="dropdown-menu">
+                                {% for user_profile_base_get_notification in user_profile_base.get_notifications %}
+                                    <li>
+                                        <a href="{% url 'notifications' %}"><i
+                                                class="material-icons">notifications</i> {{ user_profile_base_get_notification.title }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                                <li>
+                                    <a href="{% url 'notifications' %}">
+                                        <i class="material- ">notifications</i> {% trans 'all_notifications' %}
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown" data-background-color="blue">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="material-icons">person</i>
+                                <p class="hidden-lg hidden-md">@{{ user_profile_base.user.username }}</p>
+                            </a>
+                            <ul class="dropdown-menu">
+
+                                <li>
+                                    <a href="{% url 'index' %}">{% trans 'home' %}</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'dashboard' %}">{% trans 'dashboard' %}</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'log_out' %}">{% trans 'log_out' %}</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="separator hidden-lg hidden-md"></li>
+                    </ul>
+                    {#                    <form class="navbar-form navbar-right" role="search">#}
+                    {#                        <div class="form-group form-search is-empty">#}
+                    {#                            <input type="text" class="form-control" placeholder="Search">#}
+                    {#                            <span class="material-input"></span>#}
+                    {#                        </div>#}
+                    {#                        <button type="submit" class="btn btn-white btn-round btn-just-icon">#}
+                    {#                            <i class="material-icons">search</i>#}
+                    {#                            <div class="ripple-container"></div>#}
+                    {#                        </button>#}
+                    {#                    </form>#}
+                </div>
+            </div>
+        </nav>
+        <div class="content">
+            {% block base_container %}
+
+
+
+            {% endblock %}
+        </div>
+        <footer class="footer">
+            <div class="container-fluid">
+                <nav class="pull-left">
+                    <ul>
+                        <li>
+                            <a href="{% url 'index' %}">
+                                {% trans 'index' %}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'dashboard' %}">
+                                {% trans 'profile' %}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'faq' %}">
+                                {% trans 'faq' %}
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <p class="copyright pull-right">
+                    &copy;
+                    <script>
+                        document.write(new Date().getFullYear())
+                    </script>
+                    © {% trans 'copyright' %} {{ now.year }} <a
+                        href="{% url 'index' %}">{{ base_company_info.name }}</a>. {% trans 'all_rights_reserved' %}.
+                </p>
+            </div>
+        </footer>
+    </div>
+</div>
+<div class="fixed-plugin">
+    <div class="dropdown show-dropdown">
+        <a href="#" data-toggle="dropdown">
+            <i class="fa fa-cog fa-2x"> </i>
+        </a>
+        <ul class="dropdown-menu">
+            <li class="header-title"> {% trans 'sidebar_filters' %}</li>
+            <li class="adjustments-line">
+                <a href="javascript:void(0)" class="switch-trigger active-color">
+                    <div class="badge-colors text-center">
+                        <span class="badge filter badge-purple" data-color="purple"></span>
+                        <span class="badge filter badge-blue" data-color="blue"></span>
+                        <span class="badge filter badge-green" data-color="green"></span>
+                        <span class="badge filter badge-orange" data-color="orange"></span>
+                        <span class="badge filter badge-red" data-color="red"></span>
+                        <span class="badge filter badge-rose active" data-color="rose"></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </a>
+            </li>
+            <li class="header-title">{% trans 'sidebar_background' %}</li>
+            <li class="adjustments-line">
+                <a href="javascript:void(0)" class="switch-trigger background-color">
+                    <div class="text-center">
+                        <span class="badge filter badge-white  active" data-color="white"></span>
+                        <span class="badge filter badge-black" data-color="black"></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </a>
+            </li>
+            <li class="adjustments-line">
+                <a href="javascript:void(0)" class="switch-trigger">
+                    <p>{% trans 'sidebar_mini' %}</p>
+                    <div class="togglebutton switch-sidebar-mini">
+                        <label>
+                            <input type="checkbox" unchecked="">
+                        </label>
+                    </div>
+                    <div class="clearfix"></div>
+                </a>
+            </li>
+            <li class="adjustments-line">
+                <a href="javascript:void(0)" class="switch-trigger">
+                    <p>{% trans 'sidebar_image' %}</p>
+                    <div class="togglebutton switch-sidebar-image">
+                        <label>
+                            <input type="checkbox" >
+                        </label>
+                    </div>
+                    <div class="clearfix"></div>
+                </a>
+            </li>
+            <li class="header-title">Images</li>
+            <li class="">
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="{% static 'profile/assets/img/sidebar-1.jpg' %}" alt=""/>
+                </a>
+            </li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="{% static 'profile/assets/img/sidebar-2.jpg' %}" alt=""/>
+                </a>
+            </li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="{% static 'profile/assets/img/sidebar-3.jpg' %}" alt=""/>
+                </a>
+            </li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="{% static 'profile/assets/img/sidebar-4.jpg' %}" alt=""/>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+<!--   Core JS Files   -->
+<script src="{% static 'profile/assets/js/jquery-3.1.1.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'profile/assets/js/jquery-ui.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'profile/assets/js/bootstrap.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'profile/assets/js/material.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'profile/assets/js/perfect-scrollbar.jquery.min.js' %}" type="text/javascript"></script>
+<!-- Forms Validations Plugin -->
+<script src="{% static 'profile/assets/js/jquery.validate.min.js' %}"></script>
+<!--  Plugin for Date Time Picker and Full Calendar Plugin-->
+<script src="{% static 'profile/assets/js/moment.min.js' %}"></script>
+<!--  Charts Plugin -->
+<script src="{% static 'profile/assets/js/chartist.min.js' %}"></script>
+<!--  Plugin for the Wizard -->
+<script src="{% static 'profile/assets/js/jquery.bootstrap-wizard.js' %}"></script>
+<!--  Notifications Plugin    -->
+<script src="{% static 'profile/assets/js/bootstrap-notify.js' %}"></script>
+<!--   Sharrre Library    -->
+<script src="{% static 'profile/assets/js/jquery.sharrre.js' %}"></script>
+<!-- DateTimePicker Plugin -->
+<script src="{% static 'profile/assets/js/bootstrap-datetimepicker.js' %}"></script>
+<!-- Vector Map plugin -->
+<script src="{% static 'profile/assets/js/jquery-jvectormap.js' %}"></script>
+<!-- Sliders Plugin -->
+<script src="{% static 'profile/assets/js/nouislider.min.js' %}"></script>
+<!--  Google Maps Plugin    -->
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+<!-- Select Plugin -->
+<script src="{% static 'profile/assets/js/jquery.select-bootstrap.js' %}"></script>
+<!--  DataTables.net Plugin    -->
+<script src="{% static 'profile/assets/js/jquery.datatables.js' %}"></script>
+<!-- Sweet Alert 2 plugin -->
+<script src="{% static 'profile/assets/js/sweetalert2.js' %}"></script>
+<!--	Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
+<script src="{% static 'profile/assets/js/jasny-bootstrap.min.js' %}"></script>
+<!--  Full Calendar Plugin    -->
+<script src="{% static 'profile/assets/js/fullcalendar.min.js' %}"></script>
+<!-- TagsInput Plugin -->
+<script src="{% static 'profile/assets/js/jquery.tagsinput.js' %}"></script>
+<!-- Material Dashboard javascript methods -->
+<script src="{% static 'profile/assets/js/material-dashboard.js' %}"></script>
+<!-- Material Dashboard DEMO methods, don't include it in your project! -->
+<script src="{% static 'profile/assets/js/demo.js' %}"></script>
+
+{% block js_container %}
+
+{% endblock %}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        // Javascript method's body can be found in assets/js/demos.js
+        {#        demo.initDashboardPageCharts();#}
+        {##}
+        {#        demo.initVectorMap();#}
+    });
+</script>
+
+
+</html>

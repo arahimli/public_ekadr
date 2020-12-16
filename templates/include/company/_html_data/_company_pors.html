@@ -1,0 +1,77 @@
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load thumbnail %}
+
+{% with data as company_product_or_service %}
+    <div class="col-sm-6 col-md-4 wow fadeInUp"
+         style="border-bottom: 1px dotted #ccc;border-right: 1px dotted #ccc;">
+        <div class="products">
+            <div class="product">
+                <div class="product-image">
+                    <div class="image"><a
+                            href="{% url 'company_product_or_service'  company_product_or_service.id %}">
+                        <img src="{{ company_product_or_service.logo|thumbnail_url:'events_products_services' }}"
+                             alt=""></a>
+                    </div>
+                    <!-- /.image -->
+
+                    {#                                                                    <div class="tag new"><span>new</span></div>#}
+                </div>
+                <!-- /.product-image -->
+
+                <div class="product-info text-left">
+                    <h3 class="name"><a
+                            href="{% url 'company_product_or_service'  company_product_or_service.id %}">
+                        {{ company_product_or_service.name }}
+                    </a></h3>
+                    {#                                                                    <div class="rating rateit-small"></div>#}
+                    <div class="description">
+
+                    </div>
+                    <div class="product-price"><span class="price">
+                                                                        {{ company_product_or_service.currency.nominal }}{{ company_product_or_service.price|floatformat:'-2' }}
+                                                                    </span>
+                        {#                                                                        <span class="price-before-discount">$ 800</span>#}
+                    </div>
+                    <!-- /.product-price -->
+
+                </div>
+                <!-- /.product-info -->
+                <div class="cart clearfix animate-effect">
+                    <div class="action">
+                        <ul class="list-unstyled">
+                            <li class="add-cart-button btn-group">
+                                <a href="{% url 'company_product_or_service'  company_product_or_service.id %}"
+                                   class="btn btn-primary icon"
+                                   data-toggle="dropdown"
+                                ><i
+                                        class="fa fa-shopping-cart"></i>
+                                </a>
+                                <a href="{% url 'company_product_or_service'  company_product_or_service.id %}"
+                                   class="btn btn-primary cart-btn"
+                                   type="button">{% trans 'add_to_cart' %}
+                                </a>
+                            </li>
+                            <li class="lnk wishlist">
+                                <a class="add-to-cart"
+                                   href="{% url 'company_product_or_service'  company_product_or_service.id %}"
+                                   title="Wishlist">
+                                    {% trans 'add_to_cart' %}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.action -->
+                </div>
+                <!-- /.cart -->
+            </div>
+            <!-- /.product -->
+
+        </div>
+        <!-- /.products -->
+    </div>
+{% endwith %}
+{% if for_datas|divisibleby:'3' %}
+    <div class="clearfix"></div>
+{% endif %}

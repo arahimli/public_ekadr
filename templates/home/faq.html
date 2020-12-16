@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+{% block head_container %}
+
+{% endblock %}
+
+
+{% block base_container %}
+    {#    <style>#}
+    {#        .acordion-faq-contnet {#}
+    {#            padding: 14px 5px;#}
+    {#            text-align: center;#}
+    {#            background: #ffffff;#}
+    {#            color: #02344a;#}
+    {#            border: 2px solid #0677a7 !important;#}
+    {#            outline: 1px dashed #0677a7;#}
+    {#            outline-offset: -10px;#}
+    {#            font-size: 15px;#}
+    {#        }#}
+    {#    </style>#}
+    {#<style>#}
+    {#        .section-title {#}
+    {#            padding: 13px 2px;#}
+    {#            font-size: 20px;#}
+    {#            text-align: center;#}
+    {#            background: #0677a7;#}
+    {#            color: #fff;#}
+    {#            border: 2px solid #fff;#}
+    {#            outline: 1px dashed #fff;#}
+    {#            outline-offset: -10px;#}
+    {#        margin: 7px auto;#}
+    {#            /* font-size: 15px; */#}
+    {#            font-weight: normal;#}
+    {#            margin: 30px auto 10px auto;#}
+    {#        }#}
+    {#        .row-margin{#}
+    {#            margin-top:20px;#}
+    {#            margin-bottom:20px;#}
+    {#            border-bottom: 1px dotted blue;#}
+    {#        }#}
+    {#</style>#}
+
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-inner">
+                <ul class="list-inline list-unstyled">
+                    <li><a href="{% url 'index' %}">{% trans 'home' %}</a></li>
+                    <li class='active'>{% trans 'faq' %}</li>
+                </ul>
+            </div><!-- /.breadcrumb-inner -->
+        </div><!-- /.container -->
+    </div><!-- /.breadcrumb -->
+
+    <div class="body-content">
+        <div class="container">
+            <div class="checkout-box faq-page">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="heading-title">{% trans 'frequently_asked_questions' %}</h2>
+                        <div class="panel-group checkout-steps" id="accordion">
+                            <!-- checkout-step-01  -->
+
+                            {% for faq in faqs %}
+                                <div class="panel panel-default checkout-step-0{{ forloop.counter }}">
+
+                                    <!-- panel-heading -->
+                                    <div class="panel-heading">
+                                        <h4 class="unicase-checkout-title">
+                                            <a data-toggle="collapse" class="" data-parent="#accordion"
+                                               href="#collapseOne">
+                                                <span>{{ forloop.counter }}</span>{{ faq.title }}
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <!-- panel-heading -->
+
+                                    <div id="collapseOne" class="panel-collapse collapse in">
+
+                                        <!-- panel-body  -->
+                                        <div class="panel-body">
+                                            {% autoescape off %}
+                                                {{ faq.context }}
+                                            {% endautoescape %}
+
+                                        </div>
+                                        <!-- panel-body  -->
+
+                                    </div><!-- row -->
+                                </div>
+                                <!-- checkout-step-01  -->
+                            {% endfor %}
+
+                        </div><!-- /.checkout-steps -->
+                    </div>
+                </div><!-- /.row -->
+            </div><!-- /.checkout-box -->
+            <!-- ============================================== BRANDS CAROUSEL ============================================== -->
+
+            {% include 'include/parts/partners.html' %}
+            <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->
+        </div><!-- /.container -->
+    </div><!-- /.body-content -->
+{% endblock %}
+
+
+{% block js_container %}
+
+
+{% endblock %}

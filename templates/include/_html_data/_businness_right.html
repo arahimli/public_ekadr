@@ -1,0 +1,87 @@
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load thumbnail %}
+
+<!-- ============================================== HOT DEALS ============================================== -->
+<div class="sidebar-widget hot-deals wow fadeInUp outer-top-vs">
+    <h3 class="section-title">{% trans 'events' %}</h3>
+    <div class="owl-carousel sidebar-carousel custom-carousel owl-theme outer-top-xs">
+        {% for based_random_event in based_random_events %}
+            <div class="item">
+                <div class="products">
+                    <div class="hot-deal-wrapper">
+                        <div class="image"><img
+                                src="{{ based_random_event.image|thumbnail_url:'events_products_services' }}"
+                                alt=""></div>
+                        <div class="sale-offer-tag"><span>49%<br>off</span></div>
+                        <div class="timing-wrapper">
+                            <div class="box-wrapper">
+                                <div class="date box"><span class="key">120</span> <span
+                                        class="value">DAYS</span></div>
+                            </div>
+                            <div class="box-wrapper">
+                                <div class="hour box"><span class="key">20</span> <span
+                                        class="value">HRS</span></div>
+                            </div>
+                            <div class="box-wrapper">
+                                <div class="minutes box"><span class="key">36</span> <span
+                                        class="value">MINS</span>
+                                </div>
+                            </div>
+                            <div class="box-wrapper hidden-md">
+                                <div class="seconds box"><span class="key">60</span> <span
+                                        class="value">SEC</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.hot-deal-wrapper -->
+
+                    <div class="product-info text-left m-t-20">
+                        <h3 class="name"><a
+                                href="{% url 'event' based_random_event.id %}">{{ based_random_event.name }}</a>
+                        </h3>
+                        <span class="label {% if based_random_event.end_date > now %} label-success {% else %} label-danger {% endif %}">
+                                                                        {% if based_random_event.end_date > now %}
+                                                                            {% trans 'continues' %}
+                                                                        {% else %}
+                                                                            {% trans 'finished' %}
+                                                                        {% endif %}
+                                                                    </span>
+                        <div class="product-price"><span class="price">
+
+                                                                        {% trans 'start_date' %}:<span
+                                class="font-weight700 green-start_date">{{ based_random_event.start_date|date:'d F Y' }}</span>
+                                                                        <br/>
+                                                                        {% trans 'end_date' %}:<span
+                                class="font-weight700 red-end_date">{{ based_random_event.end_date|date:'d F Y' }}</span>
+                                                                    </span>
+                            {
+                            <!-- /.product-price -->
+
+                        </div>
+                        <!-- /.product-info -->
+
+                        <div class="cart clearfix animate-effect">
+                            <div class="action">
+                                <div class="add-cart-button btn-group">
+                                    <button onclick="" href="{% url 'event' based_random_event.id %}" class="btn btn-primary icon" data-toggle="dropdown"
+                                            ><i
+                                            class="fa fa-check"></i></button>
+                                    <button onclick="" href="{% url 'event' based_random_event.id %}" class="btn btn-primary cart-btn" type="button">
+                                        {% trans 'apply' %}
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- /.action -->
+                        </div>
+                        <!-- /.cart -->
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+
+    </div><!-- /.sidebar-widget -->
+</div>
+<!-- ============================================== HOT DEALS: END ============================================== -->

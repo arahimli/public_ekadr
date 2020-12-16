@@ -1,0 +1,74 @@
+{% extends 'profile_base.html' %}
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+{% block head_container %}
+
+{% endblock %}
+
+
+{% block base_container %}
+    <style>
+        .profile-redirect-company-title {
+            margin-bottom: 35px;
+        }
+    </style>
+    <div class="container-fluid">
+        <h3 class="profile-redirect-company-title">{% trans 'my_companies' %}</h3>
+        <br>
+        <div class="row">
+            {% for company in companies %}
+                <div class="col-md-4">
+                    <a href="#">
+                        <div class="card card-product">
+                            <div class="card-image" data-header-animation="true">
+                                <a href="{% url 'my_company' company.id %}">
+                                    <img class="img" src="{{ company.logo|thumbnail_url:'companies_list' }}">
+                                </a>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-actions" style="left: 14px;right: 15px;">
+                                    <a href="{% url 'create_product_service' company.id %}" style="width: 100%;"
+                                       type="button"
+                                       class="col-md-12 btn btn-danger" rel="tooltip"
+                                       data-placement="bottom" title="{% trans 'choose' %}">
+                                        <i class="fa fa-check" aria-hidden="true"></i> {% trans 'choose' %}
+                                    </a>
+                                </div>
+                                {#                            <div class="card-actions">#}
+                                {#                                <button type="button" class="btn btn-danger btn-simple fix-broken-card">#}
+                                {#                                    <i class="material-icons">{% trans 'build' %}</i> {% trans 'fix_header' %}!#}
+                                {#                                </button>#}
+                                {#                                <button type="button" class="btn btn-default btn-simple" rel="tooltip"#}
+                                {#                                        data-placement="bottom" title="{% trans 'view' %}">#}
+                                {#                                    <i class="material-icons">{% trans 'company_product_or_service_list' %}</i>#}
+                                {#                                </button>#}
+                                {#                                <button type="button" class="btn btn-success btn-simple" rel="tooltip"#}
+                                {#                                        data-placement="bottom" title="{% trans 'edit' %}">#}
+                                {#                                    <i class="material-icons">{% trans 'edit' %}</i>#}
+                                {#                                </button>#}
+                                {#                                <button type="button" class="btn btn-danger btn-simple" rel="tooltip"#}
+                                {#                                        data-placement="bottom" title="{% trans 'remove' %}">#}
+                                {#                                    <i class="material-icons">{% trans 'close' %}</i>#}
+                                {#                                </button>#}
+                                {#                            </div>#}
+                                <h4 class="card-title">
+                                    <a href="{% url 'create_product_service' company.id %}">{{ company.name }}</a>
+                                </h4>
+                                <div class="card-description">
+                                    {{ company.practices }}
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% if forloop.counter|divisibleby:3 and not forloop.last %}
+                    </div>
+                    <div class="row">
+
+                {% endif %}
+            {% endfor %}
+            </div>
+    </div>
+
+{% endblock %}

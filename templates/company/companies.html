@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+{% block head_container %}
+
+{% endblock %}
+
+
+{% block base_container %}
+    <style>
+        .company_businnes_type-icon:hover {
+            background: blue;
+            color: #fff;
+        }
+    </style>
+    <!-- CONTENT -->
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-inner">
+                <ul class="list-inline list-unstyled">
+                    <li><a href="{% url 'index' %}">{% trans 'home' %}</a></li>
+                    <li class='active'>{% trans 'companies' %}</li>
+                </ul>
+            </div><!-- /.breadcrumb-inner -->
+        </div><!-- /.container -->
+    </div><!-- /.breadcrumb -->
+    <div class="container">
+        <div class="container pagecontainer offset-0">
+                <div class="col-md-3  sidebar">
+                    <!-- ================================== TOP NAVIGATION ================================== -->
+                    <div class="sidebar-widget product-tag wow fadeInUp outer-top-vs" style="margin-top: 0;">
+                        <h2 class="section-title" style="text-align: center;font-size: 20px;">{% trans 'companies' %}</h2>
+                        <!-- /.sidebar-widget-body -->
+                    </div>
+                    {% include 'include/parts/random_events.html' %}
+                    <!-- /.side-menu -->
+                    <!-- ================================== TOP NAVIGATION : END ================================== -->
+
+
+                </div>
+
+
+            <!-- LIST CONTENT-->
+            <div class="rightcontent col-md-9 offset-0">
+
+                <div class="hpadding20">
+                    <div class="search-result-container ">
+                        <div id="myTabContent" class="tab-content category-list">
+
+                            <div class="tab-pane  active " id="list-container">
+                                <div class="category-product">
+                                    {% for company in companies %}
+                                        <div class="category-product-inner wow fadeInUp" style="border-bottom: 1px dotted #ccc;">
+                                            <div class="products">
+                                                <div class="product-list product">
+                                                    <div class="row product-list-row">
+                                                        <div class="col col-sm-4 col-lg-4">
+                                                            <div class="product-image">
+                                                                <div class="image">
+                                                                    <img src="{{ company.logo|thumbnail_url:'company_list' }}"
+                                                                         alt="">
+                                                                </div>
+                                                            </div>
+                                                            <!-- /.product-image -->
+                                                        </div>
+                                                        <!-- /.col -->
+                                                        <div class="col col-sm-8 col-lg-8">
+                                                            <div class="product-info">
+                                                                <h3 class="name">
+                                                                    <a href="{% url 'company' company.id %}">
+                                                                        {{ company.name }}
+                                                                    </a>
+                                                                </h3>
+{#                                                                <div class="rating rateit-small"></div>#}
+                                                                <div class="product-price">
+                                                                    <span class="price"> {% trans 'products_or_services' %}: {{ company.get_company_product_count }} </span>
+                                                                    <br/>
+                                                                    <span class="price"> {% trans 'event_count' %}: {{ company.get_event_count }} </span>
+{#                                                                    <span class="price-before-discount">$ 800</span>#}
+                                                                </div>
+                                                                <!-- /.product-price -->
+                                                                <div class="description m-t-10">
+                                                                    {{ company.practices|truncatechars:'300' }}
+                                                                </div>
+                                                                <div class="cart clearfix animate-effect">
+                                                                    <div class="action">
+                                                                        <ul class="list-unstyled">
+                                                                            <li class="add-cart-button btn-group">
+                                                                                <a class="btn btn-primary icon"
+                                                                                   data-toggle="dropdown"
+                                                                                   href="{% url 'company' company.id %}"><i
+                                                                                        class="fa fa-eye"></i>
+                                                                                </a>
+                                                                                <a class="btn btn-primary cart-btn"
+                                                                                   href="{% url 'company' company.id %}">{% trans 'view' %}
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <!-- /.action -->
+                                                                </div>
+                                                                <!-- /.cart -->
+
+                                                            </div>
+                                                            <!-- /.product-info -->
+                                                        </div>
+                                                        <!-- /.col -->
+                                                    </div>
+                                                    <!-- /.product-list-row -->
+                                                    <div class="tag new"><span>new</span></div>
+                                                </div>
+                                                <!-- /.product-list -->
+                                            </div>
+                                            <!-- /.products -->
+                                        </div>
+                                        <!-- /.category-product-inner -->
+                                    {% endfor %}
+                                </div>
+                                <!-- /.category-product -->
+                            </div>
+                            <!-- /.tab-pane #list-container -->
+                        </div>
+                        <!-- /.tab-content -->
+                        <div class="clearfix filters-container">
+                            <div class="text-right">
+                                <div class="pagination-container">
+                                    <ul class="list-inline list-unstyled">
+                                        {% if companies.has_previous %}
+                                            <li><a href="?page={{ companies.previous_page_number }}">&laquo;</a></li>
+                                        {% endif %}
+                                        {% if companies.page_range_data.show_first %}
+                                            <li><a href="?page=1">1</a></li>
+                                            <li><a class="ellipsis">...</a></li>
+                                        {% endif %}
+                                        {% for i in companies.page_range_data.page_range %}
+                                            {% ifequal i companies.number %}
+                                                <li class="active"><a>{{ i }}</a></li>
+                                            {% else %}
+                                                <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                            {% endifequal %}
+                                        {% endfor %}
+                                        {% if companies.page_range_data.show_last %}
+                                            <li><a class="ellipsis">...</a></li>
+                                            <li>
+                                                <a href="?page={{ companies.paginator.num_pages }}">{{ companies.paginator.num_pages }}</a>
+                                            </li>
+                                        {% endif %}
+
+                                        {% if companies.has_next %}
+                                            <li><a href="?page={{ companies.next_page_number }}">&raquo;</a></li>
+                                        {% endif %}
+                                    </ul>
+                                    <!-- /.list-inline -->
+                                </div>
+                                <!-- /.pagination-container -->
+                            </div>
+
+                            <!-- /.text-right -->
+
+                        </div>
+                        <!-- /.filters-container -->
+
+                    </div>
+                </div>
+                <!-- End of padding -->
+
+            </div>
+            <!-- END OF LIST CONTENT-->
+
+
+        </div>
+        <!-- END OF container-->
+
+    </div>
+    <!-- END OF CONTENT -->
+
+{% endblock %}
+
+
+{% block js_container %}
+
+
+{% endblock %}

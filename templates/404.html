@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+{% block head_container %}
+
+{% endblock %}
+
+
+{% block base_container %}
+<!-- ============================================== HEADER : END ============================================== -->
+<div class="body-content outer-top-bd">
+	<div class="container">
+		<div class="x-page inner-bottom-sm">
+			<div class="row">
+				<div class="col-md-12 x-text text-center">
+					<h1>404</h1>
+					<p>{% trans 'we_are_sorry,_the_page_you_have_requested_is_not_available' %}</p>
+{#					<form role="form" class="outer-top-vs outer-bottom-xs">#}
+{#                        <input placeholder="Search" autocomplete="off">#}
+{#                        <button class="  btn-default le-button">Go</button>#}
+{#                    </form>#}
+					<a href="{% url 'index' %}"><i class="fa fa-home"></i> {% trans 'go_to_homepage' %}</a>
+				</div>
+			</div><!-- /.row -->
+		</div><!-- /.sigin-in-->
+	</div><!-- /.container -->
+</div><!-- /.body-content -->
+
+{% endblock %}
+
+
+{% block js_container %}
+
+
+{% endblock %}

@@ -1,0 +1,1829 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+{% load embed_video_tags %}
+
+{% block head_container %}
+    <title>{{ site_info.site_name }}</title>
+    <meta name="keywords" content="{{ site_info.meta_keywords }}"/>
+    <meta name="description" content="{{ site_info.meta_description }}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}"/>
+    <meta property="og:type" content="home"/>
+    <meta property="og:title" content="{{ site_info.site_name }}"/>
+    <meta property="og:description" content="{{ site_info.meta_description }}"/>
+    <meta property="og:image" content="{{ site_info.image|thumbnail_url:'facebook_image' }}"/>
+{% endblock %}
+
+{% block css_container %}
+    {% load compress %}
+
+    {% compress css %}
+        {#<link rel="stylesheet" href="/static/css/one.css" type="text/css" charset="utf-8">#}
+    {% endcompress %}
+    {% include 'include/css/_index.html' %}
+{% endblock %}
+
+{% block main_container %}
+    <style>
+        {#.tone-feature--item #}
+        .tone-feature--item .fc-item__kicker {
+            color: #ffffff;
+        }
+
+        .tone-feature--item .u-faux-block-link__cta .fc-item__headline {
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .tone-feature--item h2 .js-headline-text {
+            color: #fff;
+        }
+
+        .tone-news--item.fc-item h2 .js-headline-text span {
+            color: #ab1500;
+        }
+
+        .tone-comment--item.fc-item .fc-item__header .fc-item__byline {
+            color: #46464d;
+            font-weight: 600;
+        }
+
+        .tone-feature--item .fc-item__header .fc-item__byline {
+            color: #fff;
+        }
+
+        .u-responsive-ratio svg {
+        {#            width: 100%;#} height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0
+        }
+
+        @media (min-width: 71.25em) {
+            .fc-container__header__reklam_web {
+                display: block;
+            }
+
+            .fc-container__header__reklam_mobile {
+                display: none;
+            }
+        }
+
+        @media (max-width: 71.25em) {
+            .fc-container__header__reklam_web {
+                display: none;
+            }
+
+            .fc-container__header__reklam_mobile {
+                display: none;
+            }
+        }
+    </style>
+    <div class="l-side-margins">
+        <div class="facia-page" data-link-name="Front | /home" role="main">
+
+
+            <section id="headlines" class="fc-container fc-container--first js-container--first "
+                     data-link-name="container-1 | headlines" data-id="10f21d96-18f6-426f-821b-19df55dfb831"
+                     data-component="headlines" aria-expanded="true">
+                <div class="fc-container__inner">
+                    <div class="fc-container__header
+                js-container__header
+                ">
+                        <div class="fc-container__header__title">
+                            {#                            <span tabindex="0">{% trans 'headlines' %}</span>#}
+                            <div class="fc-today">
+                                <span class="fc-today__dayofweek js-dayofweek">{{ now|date:'l' }}</span>
+                                <span class="u-nobr fc-today__sub"> <span
+                                        class="fc-today__dayofmonth js-dayofmonth">{{ now|date:'d' }}</span> <span
+                                        class="fc-today__month">{{ now|date:'F' }}</span> <span
+                                        class="fc-today__year">{{ now|date:'Y' }}</span> </span>
+                            </div>
+                            {% if base_city %}
+                                <hr>
+                                <div style="    text-align: center;">
+                                    <a href="{% url 'pages' 'weather' %}">
+                                        <span>{{ base_city.name }}</span>
+                                        <div>{{ base_city.low }} / {{ base_city.high }}</div>
+                                        <div><img src="{{ base_city.icon_url }}"/></div>
+                                    </a>
+                                </div>
+                            {% endif %}
+                            {% if base_ads and base_ads.headline_1_ads_active %}
+                                <div class="fc-container__header__reklam_web">
+                                    {% if base_ads.headline_1_ads_script or base_ads.headline_1_ads_image %}
+                                        {% if base_ads.headline_1_ads_script %}
+                                            {{ base_ads.headline_1_ads_script }}
+                                        {% elif base_ads.headline_1_ads_image %}
+                                            <a target="_blank" href="{{ base_ads.headline_1_ads_link }}">
+                                                <img src="{{ base_ads.headline_1_ads_image.url }}">
+                                            </a>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                    <div class="fc-container--rolled-up-hide fc-container__body" data-title="headlines"
+                         data-id="10f21d96-18f6-426f-821b-19df55dfb831">
+                        <div class="fc-slice-wrapper">
+                            <ul class="u-unstyled l-row  l-row--cols-4 fc-slice fc-slice--qqq-q">
+                                <li class="fc-slice__item l-row__item l-row__item--span-3 u-faux-block-link">
+                                    <div class="fc-item fc-item--force-image-upgrade fc-item--has-image fc-item--has-sublinks-3 js-fc-item tone-news--item fc-item--standard-mobile fc-item--three-quarters-tablet js-snappable"
+                                         data-link-name="news | group-2+ | card-1" data-item-visibility="all"
+                                         data-test-id="facia-card"
+                                         data-id=""
+                                         data-loyalty-short-url="/p/672ty">
+                                        <div class="fc-item__container">
+                                            {% for base_slider_news in base_slider_newss|slice:'17' %}
+                                                {% if forloop.counter == 1 %}
+                                                    <div class="fc-item__media-wrapper">
+                                                        <a href="{% url 'news' base_slider_news.id base_slider_news.slug %}">
+                                                            <div class="fc-item__image-container u-responsive-ratio inlined-image">
+                                                                <picture>
+                                                                    <img class="responsive-img" alt=""
+                                                                         src="{{ base_slider_news.image.url }} ">
+                                                                </picture>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="fc-item__content">
+                                                        <div class="fc-item__header">
+                                                            <h1 class="fc-item__title"><a
+                                                                    href="{% url 'news' base_slider_news.id base_slider_news.slug %}"
+                                                                    class="fc-item__link" data-link-name="article">
+                                                                <span style="color: #46464D;"
+                                                                      class="fc-item__kicker">{{ base_slider_news.first_name }}</span>
+                                                                <span class="u-faux-block-link__cta fc-item__headline"> <span
+                                                                        class="js-headline-text">{{ base_slider_news.second_name }}</span></span>
+                                                            </a></h1>
+                                                        </div>
+                                                        <div class="fc-item__standfirst">
+                                                            {{ base_slider_news.short_text|slice:'100' }}
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                                {% if forloop.counter == 2 %}
+                                                    <footer class="fc-item__footer--horizontal">
+                                                    <ul class="fc-sublinks u-unstyled u-faux-block-link__promote">
+                                                {% endif %}
+                                            {% if forloop.counter > 1 and forloop.counter < 5 %}
+                                                <li class="fc-sublink tone-comment--sublink"
+                                                    data-link-name="sublinks | 1"><h3 class="fc-sublink__title"><a
+                                                        href="{% url 'news' base_slider_news.id base_slider_news.slug %}"
+                                                        data-link-name="kicker"
+                                                        class="fc-sublink__kicker"
+                                                        style="color:#464646;">{{ base_slider_news.first_name }}</a>
+                                                    <a style="color:#ab1500;"
+                                                       href="{% url 'news' base_slider_news.id base_slider_news.slug %}"
+                                                       class="fc-sublink__link" data-link-name="article">
+                                                        {{ base_slider_news.second_name }}
+                                                    </a></h3></li>
+                                            {% endif %}
+
+                                            {% if forloop.counter < 5 and forloop.last or forloop.counter == 4 %}
+                                                </div>
+                                                </div>
+                                                </li>
+                                            {% endif %}
+                                                {% if forloop.counter == 5 %}
+                                                    <li class="fc-slice__item l-row__item l-row__item--span-1 u-faux-block-link">
+                                                        <div class="fc-item fc-item--force-image-upgrade fc-item--has-image fc-item--has-sublinks-1 js-fc-item tone-news--item fc-item--list-media-mobile fc-item--standard-tablet js-snappable"
+                                                             data-link-name="news | group-2 | card-2"
+                                                             data-item-visibility="all"
+                                                             data-test-id="facia-card"
+                                                             data-id="{% url 'news' base_slider_news.id base_slider_news.slug %}">
+                                                            <div class="fc-item__container">
+                                                                <div class="fc-item__media-wrapper">
+                                                                    <div class="fc-item__image-container u-responsive-ratio inlined-image">
+                                                                        <picture>
+                                                                            <img class="responsive-img" alt=""
+                                                                                 src="{{ base_slider_news.image.url }}"/>
+                                                                        </picture>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="fc-item__content">
+                                                                    <div class="fc-item__header">
+                                                                        <h2 class="fc-item__title"><a
+                                                                                href="{% url 'news' base_slider_news.id base_slider_news.slug %}"
+                                                                                class="fc-item__link"
+                                                                                data-link-name="article"><span
+                                                                                class="fc-item__kicker">{{ base_slider_news.first_name }}</span>
+                                                                            <span
+                                                                                    class="u-faux-block-link__cta fc-item__headline"> <span
+                                                                                    class="js-headline-text">{{ base_slider_news.second_name }}</span></span>
+                                                                        </a></h2>
+                                                                    </div>
+                                                                    <div class="fc-item__standfirst">
+                                                                        {% if base_slider_news.short_text %}
+                                                                            {{ base_slider_news.short_text|slice:'60' }}{% else %}
+                                                                            {{ base_slider_news.full_text|striptags|safe|slice:'60' }}{% endif %}
+                                                                    </div>
+                                                                    <div class="fc-item__footer--vertical"
+                                                                         aria-hidden="true">
+                                                                    </div>
+                                                                    <aside class="fc-item__meta js-item__meta">
+                                                                    </aside>
+                                                                </div>
+                                                                <footer class="fc-item__footer--horizontal">
+                                                                    <ul class="fc-sublinks u-unstyled u-faux-block-link__promote">
+                                                                        <li class="fc-sublink tone-news--sublink"
+                                                                            data-link-name="sublinks | 1">
+                                                                            <h3 class="fc-sublink__title"><a
+                                                                                    href="{% url 'news' base_slider_news.id base_slider_news.slug %}"
+                                                                                    class="fc-sublink__link"
+                                                                                    data-link-name="article"><span
+                                                                                    class="fc-sublink__kicker">{{ base_slider_news.first_name }}</span>
+                                                                                {{ base_slider_news.second_name }}</a>
+                                                                            </h3></li>
+                                                                    </ul>
+                                                                </footer>
+                                                                <a href="{% url 'news' base_slider_news.id base_slider_news.slug %}"
+                                                                   class="u-faux-block-link__overlay js-headline-text"
+                                                                   data-link-name="article"
+                                                                   tabindex="-1" style="color: #464646">
+                                                                    {{ base_slider_news.first_name }} <span
+                                                                        style="color: #ab1500">{{ base_slider_news.second_name }}</span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                {% endif %}
+                                                {% if forloop.counter < 6 and forloop.last or forloop.counter == 5 %}
+                                                    </ul>
+                                                    </div>
+                                                {% endif %}
+                                                {% if forloop.counter == 6 %}
+                                                    <div class="fc-slice-wrapper">
+                                                    <ul class="u-unstyled l-row  l-row--cols-4 fc-slice fc-slice--h-q_ql2-ql4">
+                                                    <li class="fc-slice__item l-row__item l-row__item--span-2 u-faux-block-link">
+                                                    <div class="fc-item fc-item--force-image-upgrade fc-item--has-image fc-item--has-sublinks-2 js-fc-item tone-news--item fc-item--list-media-mobile fc-item--half-tablet js-snappable"
+                                                         data-link-name="news | group-1+ | card-3"
+                                                         data-item-visibility="all"
+                                                         data-test-id="facia-card"
+                                                         data-id="{% url 'news' base_slider_news.id base_slider_news.slug %}"
+                                                         data-loyalty-short-url="/p/67yx2">
+                                                    <div class="fc-item__container">
+                                                {% endif %}
+                                            {% if forloop.counter > 5 and forloop.counter < 7 %}
+                                                <div class="fc-item__media-wrapper">
+
+                                                    <a href="{% url 'news' base_slider_news.id base_slider_news.slug %}">
+                                                        <div class="fc-item__image-container u-responsive-ratio inlined-image">
+                                                            <picture>
+                                                                <img class="responsive-img" alt=""
+                                                                     src="{{ base_slider_news.image.url }}"/>
+                                                            </picture>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="fc-item__content">
+                                                <div class="fc-item__header">
+                                                    <h2 class="fc-item__title"><a
+                                                            href="{% url 'news' base_slider_news.id base_slider_news.slug %}"
+                                                            class="fc-item__link" data-link-name="article"><span
+                                                            class="fc-item__kicker">{{ base_slider_news.first_name }}</span>
+                                                        <span
+                                                                class="u-faux-block-link__cta fc-item__headline"> <span
+                                                                class="js-headline-text">{{ base_slider_news.second_name }}</span></span>
+                                                    </a></h2>
+                                                </div>
+                                                <div class="fc-item__standfirst">
+                                                    {{ base_slider_news.short_text }}
+                                                    <br>
+                                                </div>
+                                            {% endif %}
+                                            {% if forloop.counter == 7 %}
+                                                <div class="fc-item__footer--vertical" aria-hidden="true">
+                                                <ul class="fc-sublinks u-unstyled u-faux-block-link__promote">
+                                            {% endif %}
+                                            {% if forloop.counter > 6 and forloop.counter < 9 %}
+                                                <li class="fc-sublink tone-news--sublink"
+                                                    data-link-name="sublinks | 1"><h3 class="fc-sublink__title">
+                                                    <a
+                                                            href="{% url 'news' base_slider_news.id base_slider_news.slug %}"
+                                                            class="fc-sublink__link"
+                                                            data-link-name="article"><span
+                                                            class="fc-sublink__kicker"
+                                                            style="color: #4b4b5c;">{{ base_slider_news.first_name }}</span>
+                                                        {{ base_slider_news.second_name }}
+                                                    </a></h3>
+                                                </li>
+                                            {% endif %}
+                                            {% if forloop.counter == 8  or forloop.last %}
+                                                </ul>
+                                                </div>
+                                                <aside class="fc-item__meta js-item__meta">
+                                                </aside>
+
+                                                </div>
+                                                </div>
+                                                </div>
+                                                </li>
+                                            {% endif %}
+                                                {% if forloop.counter == 9 %}
+                                                    <li class="fc-slice__item l-row__item l-row__item--span-1">
+                                                    <ul class="u-unstyled l-list l-list--columns-1 l-list--rows-3">
+                                                {% endif %}
+                                            {% if forloop.counter > 8 and forloop.counter < 12 %}
+                                                {% if forloop.counter == 9 %}
+                                                    <li class="fc-slice__item l-list__item l-row__item l-row__item--span-1 u-faux-block-link">
+                                                        <div class="fc-item fc-item--force-image-upgrade fc-item--has-image js-fc-item tone-news--item fc-item--list-media-mobile fc-item--standard-tablet js-snappable"
+                                                             data-link-name="news | group-1 | card-4"
+                                                             data-item-visibility="all"
+                                                             data-test-id="facia-card"
+                                                             data-id="{% url 'news' base_slider_news.id base_slider_news.slug %}">
+                                                            <div class="fc-item__container">
+                                                                <div class="fc-item__media-wrapper">
+                                                                    <div class="fc-item__image-container u-responsive-ratio inlined-image">
+                                                                        <picture>
+                                                                            <img class="responsive-img" alt=""
+                                                                                 src="{{ base_slider_news.image.url }}">
+                                                                        </picture>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="fc-item__content">
+                                                                    <div class="fc-item__header">
+                                                                        <h2 class="fc-item__title"><a
+                                                                                href="{% url 'news' base_slider_news.id base_slider_news.slug %}"
+                                                                                class="fc-item__link"
+                                                                                data-link-name="article"> <span
+                                                                                class="u-faux-block-link__cta fc-item__headline"> <span
+                                                                                class="js-headline-text"
+                                                                                style="color: #000">{{ base_slider_news.first_name }}<span
+                                                                                style="color: #ab1500">{{ base_slider_news.second_name }}</span></span></span>
+                                                                        </a></h2>
+                                                                    </div>
+                                                                    <div class="fc-item__standfirst">
+                                                                        {{ base_slider_news.short_text|slice:'70' }}
+                                                                        <br>
+                                                                    </div>
+                                                                    <aside class="fc-item__meta js-item__meta">
+                                                                    </aside>
+                                                                </div>
+                                                                <a href="{% url 'news' base_slider_news.id base_slider_news.slug %}"
+                                                                   class="u-faux-block-link__overlay js-headline-text"
+                                                                   data-link-name="article" tabindex="-1"
+                                                                   style="color: #000">{{ base_slider_news.first_name }}<span
+                                                                        style="color: #ab1500">{{ base_slider_news.second_name }}</span></a>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                {% else %}
+                                                    <li class="fc-slice__item l-list__item l-row__item l-row__item--span-1 u-faux-block-link">
+                                                        <div class="fc-item fc-item--force-image-upgrade fc-item--has-image js-fc-item tone-news--item fc-item--list-mobile fc-item--list-tablet js-snappable"
+                                                             data-link-name="news | group-0 | card-9"
+                                                             data-item-visibility="all"
+                                                             data-test-id="facia-card"
+                                                             data-id="{% url 'news' base_slider_news.id base_slider_news.slug %}"
+                                                             data-loyalty-short-url="/p/67mv9">
+                                                            <div class="fc-item__container">
+                                                                <div class="fc-item__content">
+                                                                    <div class="fc-item__header">
+                                                                        <h2 class="fc-item__title"><a
+                                                                                href="{% url 'news' base_slider_news.id base_slider_news.slug %}"
+                                                                                class="fc-item__link"
+                                                                                data-link-name="article"><span
+                                                                                class="fc-item__kicker"
+                                                                                style="color: #000">{{ base_slider_news.first_name }}</span>
+                                                                            <span
+                                                                                    class="u-faux-block-link__cta fc-item__headline"> <span
+                                                                                    class="js-headline-text"
+                                                                                    style="color: #ab1500">{{ base_slider_news.second_name }}</span></span>
+                                                                        </a></h2>
+                                                                    </div>
+                                                                    <aside class="fc-item__meta js-item__meta">
+                                                                    </aside>
+                                                                </div>
+                                                                <a href="{% url 'news' base_slider_news.id base_slider_news.slug %}"
+                                                                   class="u-faux-block-link__overlay js-headline-text"
+                                                                   data-link-name="article" tabindex="-1"
+                                                                   style="color: #000">{{ base_slider_news.first_name }}
+                                                                    <span style="color: #ab1500">{{ base_slider_news.second_name }}</span></a>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+
+                                                {% endif %}
+                                            {% endif %}
+
+                                            {% if forloop.counter == 11 or forloop.last %}
+                                                </ul>
+                                                </li>
+                                            {% endif %}
+                                                {% if forloop.counter == 12 %}
+                                                    <li class="fc-slice__item l-row__item l-row__item--span-1">
+                                                    <ul class="u-unstyled l-list l-list--columns-1 l-list--rows-5">
+                                                {% endif %}
+                                            {% if forloop.counter > 11 and forloop.counter < 17 %}
+                                                <li class="fc-slice__item l-list__item l-row__item l-row__item--span-1 u-faux-block-link">
+                                                    <div class="fc-item fc-item--force-image-upgrade fc-item--has-image js-fc-item tone-news--item fc-item--list-mobile fc-item--list-tablet js-snappable"
+                                                         data-link-name="news | group-0 | card-7"
+                                                         data-item-visibility="all"
+                                                         data-test-id="facia-card"
+                                                         data-id="{% url 'news' base_slider_news.id base_slider_news.slug %}"
+                                                         data-loyalty-short-url="/p/67mag">
+                                                        <div class="fc-item__container">
+                                                            <div class="fc-item__content">
+                                                                <div class="fc-item__header">
+                                                                    <h2 class="fc-item__title"><a
+                                                                            href="{% url 'news' base_slider_news.id base_slider_news.slug %}"
+                                                                            class="fc-item__link"
+                                                                            data-link-name="article"><span
+                                                                            class="fc-item__kicker">{{ base_slider_news.first_name }}</span>
+                                                                        <span
+                                                                                class="u-faux-block-link__cta fc-item__headline"> <span
+                                                                                class="js-headline-text">{{ base_slider_news.second_name }}</span></span>
+                                                                    </a></h2>
+                                                                </div>
+                                                                <aside class="fc-item__meta js-item__meta">
+                                                                </aside>
+                                                            </div>
+                                                            <a href="{% url 'news' base_slider_news.id base_slider_news.slug %}"
+                                                               class="u-faux-block-link__overlay js-headline-text"
+                                                               data-link-name="article"
+                                                               tabindex="-1">{{ base_slider_news.first_name }}
+                                                                <span>{{ base_slider_news.second_name }}</span></a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+
+                                            {% endif %}
+                                            {% if forloop.counter == 16 or forloop.last %}
+                                                </ul>
+                                                </li>
+                                            {% endif %}
+                                            {% endfor %}
+                                            </ul>
+                                            </div>
+                    </div>
+                </div>
+            </section>
+
+
+            {% for base_category in base_categorys %}
+                {% with base_category.get_recent_news as base_category_get_recent_news %}
+
+                    {% if forloop.counter == 1 %}
+                        {% if base_category_get_recent_news  %}
+                            <section id="spotlight" class="fc-container js-container--toggle "
+                                     data-link-name="container-2 | spotlight" data-component="{{ base_category.slug }}"
+                                     aria-expanded="true">
+                                <div class="fc-container__inner">
+                                    <div class="fc-container__header js-container__header">
+                                        <div class="fc-container__header__title">
+                                            <span tabindex="0">{{ base_category.name }}</span>
+                                        </div>
+                                        {% if base_ads %}
+                                            <div class="fc-container__header__reklam_web">
+                                                {% if base_ads.headline_1_ads_script or base_ads.headline_1_ads_image %}
+                                                    {% if base_ads.headline_1_ads_script %}
+                                                        {{ base_ads.headline_1_ads_script }}
+                                                    {% elif base_ads.headline_1_ads_image %}
+                                                        <a target="_blank" href="{{ base_ads.headline_1_ads_link }}">
+                                                            <img src="{{ base_ads.headline_1_ads_image.url }}">
+                                                        </a>
+                                                    {% endif %}
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="fc-container--rolled-up-hide fc-container__body" data-title="spotlight">
+                                        <div class="fc-slice-wrapper">
+                                            <ul class="u-unstyled l-row  l-row--cols-2 fc-slice fc-slice--hl4-h">
+                                                <li class="fc-slice__item l-row__item l-row__item--span-1 u-faux-block-link">
+                                                    {% for base_category_get_recent_news in base_category_get_recent_news |slice:'5' %}
+                                                        {% if forloop.counter == 1 %}
+                                                            <div class="fc-item fc-item--has-image fc-item--has-metadata fc-item--is-commentable js-fc-item tone-feature--item fc-item--standard-mobile fc-item--half-tablet js-snappable"
+                                                                 data-discussion-closed="false"
+                                                                 data-discussion-url="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}#comments"
+                                                                 data-link-name="feature | group-1 | card-1"
+                                                                 data-item-visibility="all"
+                                                                 data-test-id="facia-card"
+                                                                 data-id="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}">
+                                                                <div class="fc-item__container">
+                                                                    <div class="fc-item__media-wrapper">
+                                                                        <div class="fc-item__image-container u-responsive-ratio ">
+                                                                            <picture>
+                                                                                <img class="responsive-img" alt=""
+                                                                                     src="{% thumbnail base_category_get_recent_news.image 320x180 %}">
+                                                                            </picture>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="fc-item__content">
+                                                                        <div class="fc-item__header">
+                                                                            <h2 class="fc-item__title"><a
+                                                                                    href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                                    class="fc-item__link"
+                                                                                    data-link-name="article"><span
+                                                                                    class="fc-item__kicker">{{ base_category_get_recent_news.first_name }}</span>
+                                                                                <span class="u-faux-block-link__cta fc-item__headline"> <span
+                                                                                        class="js-headline-text">{{ base_category_get_recent_news.second_name }}</span></span>
+                                                                            </a></h2>
+                                                                        </div>
+                                                                        <aside class="fc-item__meta js-item__meta">
+                                                                        </aside>
+                                                                    </div>
+                                                                    <a href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                       class="u-faux-block-link__overlay js-headline-text"
+                                                                       data-link-name="article"
+                                                                       tabindex="-1">{{ base_category_get_recent_news.second_name }}</a>
+                                                                </div>
+                                                            </div>
+                                                            </li>
+                                                        {% endif %}
+                                                        {% if forloop.counter == 2 %}
+                                                            <li class="fc-slice__item l-row__item l-row__item--span-1">
+                                                            <ul class="u-unstyled l-list l-list--columns-1 l-list--rows-4">
+                                                        {% endif %}
+                                                        {% if forloop.counter > 1 and forloop.counter < 6 %}
+                                                            {% if forloop.counter|divisibleby:2 %}
+                                                                <li class="fc-slice__item l-list__item l-row__item l-row__item--span-1 u-faux-block-link">
+                                                                    <div class="fc-item fc-item--has-image fc-item--has-metadata fc-item--is-commentable js-fc-item tone-news--item fc-item--list-media-mobile fc-item--list-media-tablet js-snappable"
+                                                                         data-discussion-closed="false"
+                                                                         data-discussion-url="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}#comments"
+                                                                         data-link-name="news | group-0 | card-5"
+                                                                         data-item-visibility="all"
+                                                                         data-test-id="facia-card"
+                                                                         data-id="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                         data-loyalty-short-url="/p/5qf48">
+                                                                        <div class="fc-item__container">
+                                                                            <div class="fc-item__media-wrapper">
+                                                                                <div class="fc-item__image-container u-responsive-ratio ">
+                                                                                    <picture>
+                                                                                        <img class="responsive-img"
+                                                                                             alt=""
+                                                                                             src="{% thumbnail base_category_get_recent_news.image 320x180 %}"/>
+                                                                                    </picture>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="fc-item__content">
+                                                                                <div class="fc-item__header">
+                                                                                    <h2 class="fc-item__title"><a
+                                                                                            href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                                            class="fc-item__link"
+                                                                                            data-link-name="article"><span
+                                                                                            class="fc-item__kicker">{{ base_category_get_recent_news.first_name }}</span>
+                                                                                        <span
+                                                                                                class="u-faux-block-link__cta fc-item__headline"> <span
+                                                                                                class="js-headline-text">{{ base_category_get_recent_news.second_name }}</span></span>
+                                                                                    </a></h2>
+                                                                                </div>
+                                                                                <aside class="fc-item__meta js-item__meta">
+                                                                                </aside>
+                                                                            </div>
+                                                                            <a href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                               class="u-faux-block-link__overlay js-headline-text"
+                                                                               data-link-name="article"
+                                                                               tabindex="-1"
+                                                                               style="color: #464646">{{ base_category_get_recent_news.first_name }}
+                                                                                <span style="color: #ab1500"></span>{{ base_category_get_recent_news.second_name }}
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="fc-slice__item l-list__item l-row__item l-row__item--span-1 u-faux-block-link">
+                                                                    <div class="fc-item fc-item--has-image js-fc-item tone-feature--item fc-item--list-media-mobile fc-item--list-media-tablet js-snappable"
+                                                                         data-link-name="feature | group-0 | card-3"
+                                                                         data-item-visibility="all"
+                                                                         data-test-id="facia-card"
+                                                                         data-id="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}">
+                                                                        <div class="fc-item__container">
+                                                                            <div class="fc-item__media-wrapper">
+                                                                                <div class="fc-item__image-container u-responsive-ratio ">
+                                                                                    <picture>
+                                                                                        <img class="responsive-img"
+                                                                                             alt=""
+                                                                                             src="{% thumbnail base_category_get_recent_news.image 320x180 %}"/>
+                                                                                    </picture>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="fc-item__content">
+                                                                                <div class="fc-item__header">
+                                                                                    <h2 class="fc-item__title"><a
+                                                                                            href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                                            class="fc-item__link"
+                                                                                            data-link-name="article"><span
+                                                                                            class="fc-item__kicker">{{ base_category_get_recent_news.first_name }}</span>
+                                                                                        <span
+                                                                                                class="u-faux-block-link__cta fc-item__headline"> <span
+                                                                                                class="js-headline-text">{{ base_category_get_recent_news.second_name }}</span></span>
+                                                                                    </a></h2>
+                                                                                </div>
+                                                                                <aside class="fc-item__meta js-item__meta">
+                                                                                </aside>
+                                                                            </div>
+                                                                            <a href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                               class="u-faux-block-link__overlay js-headline-text"
+                                                                               data-link-name="article"
+                                                                               tabindex="-1">{{ base_category_get_recent_news.first_name }}
+                                                                                <span>{{ base_category_get_recent_news.second_name }}</span>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    {% if forloop.counter == 5 or forloop.counter < 5 and forloop.last %}
+                                                        </ul>
+                                                        </li>
+                                                    {% endif %}
+
+
+                                            </ul>
+                                        </div>
+                                        <div class="js-show-more-placeholder"></div>
+                                        <a href="{% url 'category' base_category.slug %}"
+                                           class="button button--medium button--primary button--show-more collection__show-more js-show-more-button"
+                                           data-test-id="show-more" data-link-name="more"> <span
+                                                class="inline-plus inline-icon ">
+                                            <svg width="18" height="18" viewbox="0 0 18 18"
+                                                 class="inline-plus__svg inline-icon__svg">
+                                            <path d="M8.2 0h1.6l.4 7.8 7.8.4v1.6l-7.8.4-.4 7.8H8.2l-.4-7.8L0 9.8V8.2l7.8-.4.4-7.8z"/>
+                                            </svg> </span> <span class="inline-minus inline-icon ">
+                                            <svg width="32" height="32" viewbox="0 0 32 32"
+                                                 class="inline-minus__svg inline-icon__svg">
+                                            <path d="M5 15h22v3H5z"/>
+                                            </svg> </span> <span class="js-button-text">{% trans 'more_news' %}</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </section>
+                        {% endif %}
+                    {% elif forloop.counter|divisibleby:7 %}
+                        {% if base_category_get_recent_news  %}
+                            <section id="{{ base_category.slug }}"
+                                     class="fc-container fc-container--has-show-more fc-container--lazy-load js-container--lazy-load js-container--toggle "
+                                     data-link-name="container-10 | {{ base_category.slug }}"
+                                     data-id="7b297ef5-a3f9-45e5-b915-b54951d7f6ec"
+                                     data-component="{{ base_category.slug }}" aria-expanded="true">
+                                <div class="fc-container__inner">
+                                    <div class="fc-container__header
+                        js-container__header
+                        ">
+                                        <div class="fc-container__header__title">
+                                            <span tabindex="0">{{ base_category.name }}</span>
+                                        </div>
+                                        {% if base_ads.home_category_vertical_ads_7_active %}
+                                            {% if base_ads.home_category_vertical_ads_7_script %}
+                                                {% autoescape off %}
+                                                    {{ base_ads.home_category_vertical_ads_7_script }}
+                                                {% endautoescape %}
+                                            {% elif base_ads.home_category_vertical_ads_7_image %}
+                                                <a target="_blank"
+                                                   href="{{ base_ads.home_category_vertical_ads_7_link }}">
+                                                    <img src="{{ base_ads.home_category_vertical_ads_7_image.url }}">
+                                                </a>
+                                            {% else %}
+                                                <div class="fc-container__header__reklam_web">
+                                                    <img src="http://placehold.it/150x372">
+                                                </div>
+                                                <div class="fc-container__header__reklam_mobile">
+                                                    <img src="http://placehold.it/150x372">
+                                                </div>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                    <div class="fc-container--rolled-up-hide fc-container__body fc-show-more--hidden js-container--fc-show-more"
+                                         data-title="{{ base_category.slug }}"
+                                         data-id="7b297ef5-a3f9-45e5-b915-b54951d7f6ec">
+                                        <div class="fc-slice-wrapper">
+                                            <ul class="u-unstyled l-row  l-row--cols-3 fc-slice fc-slice--t-tl-mpu">
+                                                {% for base_category_get_recent_news in base_category_get_recent_news |slice:'4' %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <li class="fc-slice__item l-row__item l-row__item--span-1 u-faux-block-link">
+                                                            <div class="fc-item fc-item--has-image fc-item--has-metadata fc-item--is-commentable js-fc-item tone-analysis--item fc-item--list-media-mobile fc-item--third-tablet js-snappable"
+                                                                 data-discussion-closed="false"
+                                                                 data-discussion-url="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}#comments"
+                                                                 data-link-name="analysis | group-0 | card-1"
+                                                                 data-item-visibility="all"
+                                                                 data-test-id="facia-card"
+                                                                 data-id="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                 data-loyalty-short-url="/p/5qfce">
+                                                                <div class="fc-item__container">
+                                                                    <div class="fc-item__media-wrapper">
+                                                                        <div class="fc-item__image-container u-responsive-ratio ">
+                                                                            <picture>
+                                                                                <img class="responsive-img" alt=""
+                                                                                     src="{% thumbnail base_category_get_recent_news.image 320x180 %}"/>
+                                                                            </picture>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="fc-item__content">
+                                                                        <div class="fc-item__header">
+                                                                            <h2 class="fc-item__title"><a
+                                                                                    href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                                    class="fc-item__link"
+                                                                                    data-link-name="article"><span
+                                                                                    class="fc-item__kicker">{{ base_category_get_recent_news.first_name }}</span>
+                                                                                <span class="u-faux-block-link__cta fc-item__headline"> <span
+                                                                                        class="js-headline-text">{{ base_category_get_recent_news.second_name }}</span></span>
+                                                                            </a></h2>
+                                                                        </div>
+                                                                        <aside class="fc-item__meta js-item__meta">
+                                                                        </aside>
+                                                                    </div>
+                                                                    <a href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                       class="u-faux-block-link__overlay js-headline-text"
+                                                                       data-link-name="article"
+                                                                       tabindex="-1">{{ base_category_get_recent_news.second_name }}</a>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    {% endif %}
+                                                    {% if forloop.counter == 2 %}
+                                                        <li class="fc-slice__item l-row__item l-row__item--span-1">
+                                                        <ul class="u-unstyled l-list l-list--columns-1 l-list--rows-3">
+                                                    {% endif %}
+                                                {% if forloop.counter > 1 and forloop.counter < 5 %}
+                                                    <li class="fc-slice__item l-list__item l-row__item l-row__item--span-1 u-faux-block-link">
+                                                        <div class="fc-item fc-item--has-image fc-item--has-metadata fc-item--is-commentable js-fc-item tone-feature--item fc-item--list-mobile fc-item--list-tablet js-snappable"
+                                                             data-discussion-closed="false"
+                                                             data-discussion-url="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}#comments"
+                                                             data-link-name="feature | group-0 | card-2"
+                                                             data-item-visibility="all"
+                                                             data-test-id="facia-card"
+                                                             data-id="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}">
+                                                            <div class="fc-item__container">
+                                                                <div class="fc-item__content">
+                                                                    <div class="fc-item__header">
+                                                                        <h2 class="fc-item__title"><a
+                                                                                href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                                class="fc-item__link"
+                                                                                data-link-name="article"><span
+                                                                                class="fc-item__kicker">{{ base_category_get_recent_news.first_name }}</span>
+                                                                            <span class="u-faux-block-link__cta fc-item__headline"> <span
+                                                                                    class="js-headline-text">{{ base_category_get_recent_news.second_name }}</span></span>
+                                                                        </a></h2>
+                                                                    </div>
+                                                                    <aside class="fc-item__meta js-item__meta">
+                                                                    </aside>
+                                                                </div>
+                                                                <a href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                   class="u-faux-block-link__overlay js-headline-text"
+                                                                   data-link-name="article"
+                                                                   tabindex="-1">{{ base_category_get_recent_news.first_name }}
+                                                                    <span>{{ base_category_get_recent_news.second_name }}</span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                {% endif %}
+                                                {% if forloop.counter > 1 and forloop.counter < 5 and forloop.last or forloop.counter == 4 %}
+                                                    </ul>
+                                                    </li>
+                                                {% endif %}
+                                                {% endfor %}
+
+                                                <li class="fc-slice__item l-row__item l-row__item--span-1 js-fc-slice-mpu-candidate fc-slice__item--mpu-candidate fc-slice__item--no-mpu"></li>
+                                            </ul>
+                                        </div>
+                                        <div class="js-show-more-placeholder"></div>
+                                        <a href="{% url 'category' base_category.slug %}"
+                                           class="button button--medium button--primary button--show-more collection__show-more js-show-more-button"
+                                           data-test-id="show-more" data-link-name="more"> <span
+                                                class="inline-plus inline-icon ">
+                        <svg width="18" height="18" viewbox="0 0 18 18" class="inline-plus__svg inline-icon__svg">
+                        <path d="M8.2 0h1.6l.4 7.8 7.8.4v1.6l-7.8.4-.4 7.8H8.2l-.4-7.8L0 9.8V8.2l7.8-.4.4-7.8z"/>
+                        </svg> </span> <span class="inline-minus inline-icon ">
+                        <svg width="32" height="32" viewbox="0 0 32 32" class="inline-minus__svg inline-icon__svg">
+                        <path d="M5 15h22v3H5z"/>
+                        </svg> </span> <span class="js-button-text">{% trans 'more_news' %}</span></a>
+                                    </div>
+                                </div>
+                            </section>
+                        {% endif %}
+                    {% elif forloop.counter|divisibleby:5 %}
+                        {% if base_category_get_recent_news  %}
+                            <section id="opinion" class="fc-container fc-container--has-show-more js-container--toggle "
+                                     data-link-name="container-4 | opinion"
+                                     data-id="ee3386bb-9430-4a6d-8bca-b99d65790f3b"
+                                     data-component="opinion" aria-expanded="true">
+                                <div class="fc-container__inner">
+                                    <div class="fc-container__header js-container__header ">
+                                        <div class="fc-container__header__title">
+                                            <span tabindex="0">{{ base_category.name }}</span>
+                                        </div>
+                                        {% if base_ads.home_category_vertical_ads_5_active %}
+                                            {% if base_ads.home_category_vertical_ads_5_script %}
+                                                {% autoescape off %}
+                                                    {{ base_ads.home_category_vertical_ads_5_script }}
+                                                {% endautoescape %}
+                                            {% elif base_ads.home_category_vertical_ads_5_image %}
+                                                <a target="_blank"
+                                                   href="{{ base_ads.home_category_vertical_ads_5_link }}">
+                                                    <img src="{{ base_ads.home_category_vertical_ads_5_image.url }}">
+                                                </a>
+                                            {% else %}
+                                                <div class="fc-container__header__reklam_web">
+                                                    <img src="http://placehold.it/150x372">
+                                                </div>
+                                                <div class="fc-container__header__reklam_mobile">
+                                                    <img src="http://placehold.it/150x372">
+                                                </div>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                    <div class="fc-container--rolled-up-hide fc-container__body fc-show-more--hidden js-container--fc-show-more"
+                                         data-title="opinion" data-id="ee3386bb-9430-4a6d-8bca-b99d65790f3b">
+                                        <div class="fc-slice-wrapper">
+                                            <ul class="u-unstyled l-row  l-row--cols-4 fc-slice fc-slice--q-q-hl3">
+                                                {% for base_category_get_recent_news in base_category_get_recent_news |slice:'5' %}
+                                                    {% if forloop.counter > 0 and forloop.counter < 3 %}
+                                                        <li class="fc-slice__item l-row__item l-row__item--span-1 u-faux-block-link">
+                                                            <div class="fc-item fc-item--has-image fc-item--has-metadata fc-item--is-commentable js-fc-item tone-comment--item fc-item--list-media-mobile fc-item--standard-tablet js-snappable"
+                                                                 data-discussion-closed="false"
+                                                                 data-discussion-url="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}#comments"
+                                                                 data-link-name="comment | group-0 | card-1"
+                                                                 data-item-visibility="all"
+                                                                 data-test-id="facia-card"
+                                                                 data-id="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}">
+                                                                <div class="fc-item__container">
+                                                                    <div class="fc-item__media-wrapper">
+                                                                        <div class="fc-item__image-container u-responsive-ratio ">
+                                                                            <picture>
+                                                                                <img class="responsive-img" alt=""
+                                                                                     src="{% thumbnail base_category_get_recent_news.image 320x180 %}"/>
+                                                                            </picture>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="fc-item__content">
+                                                                        <div class="fc-item__header">
+                                                                            <h2 class="fc-item__title fc-item__title--quoted">
+                                                                                <a
+                                                                                        href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                                        class="fc-item__link"
+                                                                                        data-link-name="article"> <span
+                                                                                        class="u-faux-block-link__cta fc-item__headline">  <span
+                                                                                        class="js-headline-text"
+                                                                                        style="color: #000">{{ base_category_get_recent_news.first_name }}</span></span>
+                                                                                </a>
+                                                                            </h2>
+                                                                            <div class="fc-item__byline"
+                                                                                 style="color: #ab1500">
+                                                                                {{ base_category_get_recent_news.second_name }}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="fc-item__standfirst">
+                                                                            {{ base_category_get_recent_news.short_text }}
+                                                                        </div>
+                                                                        <aside class="fc-item__meta js-item__meta">
+                                                                        </aside>
+                                                                    </div>
+                                                                    <a href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                       class="u-faux-block-link__overlay js-headline-text"
+                                                                       data-link-name="article"
+                                                                       tabindex="-1"
+                                                                       style="color: #000">{{ base_category_get_recent_news.first_name }}
+                                                                        <span style="color: #ab1500">{{ base_category_get_recent_news.second_name }}</span></a>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    {% endif %}
+                                                    {% if forloop.counter == 3 %}
+                                                        <li class="fc-slice__item l-row__item l-row__item--span-2">
+                                                        <ul class="u-unstyled l-list l-list--columns-1 l-list--rows-3">
+                                                    {% endif %}
+                                                    {% if forloop.counter > 2 and forloop.counter < 6 %}
+                                                        <li class="fc-slice__item l-list__item l-row__item l-row__item--span-1 u-faux-block-link">
+                                                            <div class="fc-item fc-item--has-image fc-item--has-metadata fc-item--is-commentable js-fc-item tone-comment--item fc-item--list-mobile fc-item--list-media-tablet js-snappable"
+
+                                                                 data-discussion-closed="false"
+                                                                 data-discussion-url="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}#comments"
+                                                                 data-link-name="comment | group-0 | card-5"
+                                                                 data-item-visibility="all"
+                                                                 data-test-id="facia-card"
+                                                                 data-id="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}">
+                                                                <div class="fc-item__container">
+                                                                    <div class="fc-item__media-wrapper">
+                                                                        <div class="fc-item__image-container u-responsive-ratio ">
+                                                                            <picture>
+                                                                                <img class="responsive-img" alt=""
+                                                                                     src="{% thumbnail base_category_get_recent_news.image 320x180 %}"/>
+                                                                            </picture>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="fc-item__content">
+                                                                        <div class="fc-item__header">
+                                                                            <h2 class="fc-item__title fc-item__title--quoted">
+                                                                                <a
+                                                                                        href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                                        class="fc-item__link"
+                                                                                        data-link-name="article"> <span
+                                                                                        class="u-faux-block-link__cta fc-item__headline"> <span
+                                                                                        class="js-headline-text"
+                                                                                        style="color: #000">{{ base_category_get_recent_news.first_name }}</span></span>
+                                                                                </a></h2>
+                                                                            <div class="fc-item__byline"
+                                                                                 style="color: #ab1500">
+                                                                                {{ base_category_get_recent_news.second_name }}
+                                                                            </div>
+                                                                        </div>
+                                                                        <aside class="fc-item__meta js-item__meta">
+                                                                        </aside>
+                                                                    </div>
+                                                                    <a href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                       class="u-faux-block-link__overlay js-headline-text"
+                                                                       data-link-name="article" tabindex="-1"
+                                                                       style="color: #000">
+                                                                        {{ base_category_get_recent_news.first_name }}
+                                                                        <span
+                                                                                style="color: #ab1500">{{ base_category_get_recent_news.second_name }}</span>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                {% if forloop.counter > 2 and forloop.counter < 6 and forloop.last or forloop.counter == 5 %}
+                                                    </ul>
+                                                    </li>
+                                                {% endif %}
+                                            </ul>
+                                        </div>
+                                        <div class="js-show-more-placeholder"></div>
+                                        <a href="{% url 'category' base_category.slug %}"
+                                           class="button button--medium button--primary button--show-more collection__show-more js-show-more-button"
+                                           data-test-id="show-more" data-link-name="more"> <span
+                                                class="inline-plus inline-icon ">
+                                    <svg width="18" height="18" viewbox="0 0 18 18"
+                                         class="inline-plus__svg inline-icon__svg">
+                                    <path d="M8.2 0h1.6l.4 7.8 7.8.4v1.6l-7.8.4-.4 7.8H8.2l-.4-7.8L0 9.8V8.2l7.8-.4.4-7.8z"/>
+                                    </svg> </span> <span class="inline-minus inline-icon ">
+                                    <svg width="32" height="32" viewbox="0 0 32 32"
+                                         class="inline-minus__svg inline-icon__svg">
+                                    <path d="M5 15h22v3H5z"/>
+                                    </svg> </span> <span class="js-button-text">{% trans 'more_news' %}</span></a>
+                                    </div>
+                                </div>
+                            </section>
+                        {% endif %}
+                    {% elif forloop.counter|divisibleby:4 %}
+                        {% if base_category_get_recent_news  %}
+                            <section id="{{ base_category.slug }}"
+                                     class="fc-container fc-container--dynamic-slow-mpu fc-container--has-show-more js-container--toggle "
+                                     data-link-name="container-3 | {{ base_category.slug }}"
+                                     data-id="da673281-d002-4406-9c75-d0bbdecc124f"
+                                     data-component="{{ base_category.slug }}" aria-expanded="true">
+                                <div class="fc-container__inner">
+                                    <div class="fc-container__header
+                js-container__header
+                ">
+                                        <div class="fc-container__header__title">
+                                            <a data-link-name="section heading"
+                                               href="{% url 'category' base_category.slug %}"> <span
+                                                    class="fc-container__title__text">{{ base_category.name }}</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="fc-container--rolled-up-hide fc-container__body fc-show-more--hidden js-container--fc-show-more"
+                                         data-title="{{ base_category.name }}"
+                                         data-id="da673281-d002-4406-9c75-d0bbdecc124f">
+                                        <div class="fc-slice-wrapper">
+                                            <ul class="u-unstyled l-row  l-row--cols-4 fc-slice fc-slice--h-q-q">
+                                                {% for base_category_get_recent_news in base_category_get_recent_news |slice:'9' %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <li class="fc-slice__item l-row__item l-row__item--span-2 u-faux-block-link">
+                                                            <div class="fc-item fc-item--has-image fc-item--has-metadata fc-item--is-commentable js-fc-item tone-feature--item fc-item--standard-mobile fc-item--half-tablet js-snappable"
+                                                                 data-discussion-id="/p/5qf9b"
+                                                                 data-discussion-closed="false"
+                                                                 data-discussion-url="https://www.theguardian.com/sport/blog/2017/feb/09/f1-rule-changes-mercedes-mark-webber-patrick-head#comments"
+                                                                 data-link-name="feature | group-1 | card-1"
+                                                                 data-item-visibility="all"
+                                                                 data-test-id="facia-card"
+                                                                 data-id="sport/blog/2017/feb/09/f1-rule-changes-mercedes-mark-webber-patrick-head"
+                                                                 data-loyalty-short-url="/p/5qf9b">
+                                                                <div class="fc-item__container">
+                                                                    <div class="fc-item__media-wrapper">
+                                                                        <div class="fc-item__image-container u-responsive-ratio ">
+                                                                            <picture>
+                                                                                <img class="responsive-img" alt=""
+                                                                                     src="{% thumbnail base_category_get_recent_news.image 320x180 %}"/>
+                                                                            </picture>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="fc-item__content">
+                                                                        <div class="fc-item__header">
+                                                                            <h2 class="fc-item__title fc-item__title--quoted">
+                                                                                <a
+                                                                                        href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                                        class="fc-item__link"
+                                                                                        data-link-name="article"> <span
+                                                                                        class="u-faux-block-link__cta fc-item__headline">  <span
+                                                                                        class="js-headline-text">{{ base_category_get_recent_news.first_name }}</span></span>
+                                                                                </a></h2>
+                                                                            <div class="fc-item__byline">
+                                                                                {{ base_category_get_recent_news.second_name }}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="fc-item__standfirst">
+                                                                            {{ base_category_get_recent_news.short_text }}
+                                                                        </div>
+                                                                        <aside class="fc-item__meta js-item__meta">
+                                                                        </aside>
+                                                                    </div>
+                                                                    <a href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                       class="u-faux-block-link__overlay js-headline-text"
+                                                                       data-link-name="article"
+                                                                       tabindex="-1">{{ base_category_get_recent_news.first_name }}
+                                                                        <span>{{ base_category_get_recent_news.second_name }}</span>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    {% elif forloop.counter > 1 and forloop.counter < 4 %}
+                                                        <li class="fc-slice__item l-row__item l-row__item--span-1 u-faux-block-link">
+                                                            <div class="fc-item fc-item--has-image js-fc-item tone-news--item fc-item--list-media-mobile fc-item--standard-tablet js-snappable"
+                                                                 data-link-name="news | group-1 | card-2"
+                                                                 data-item-visibility="all"
+                                                                 data-test-id="facia-card"
+                                                                 data-id="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}">
+                                                                <div class="fc-item__container">
+                                                                    <div class="fc-item__media-wrapper">
+                                                                        <div class="fc-item__image-container u-responsive-ratio ">
+                                                                            <picture>
+                                                                                <img class="responsive-img" alt=""
+                                                                                     src="{% thumbnail base_category_get_recent_news.image 320x180 %}"/>
+                                                                            </picture>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="fc-item__content">
+                                                                        <div class="fc-item__header">
+                                                                            <h2 class="fc-item__title"><a
+                                                                                    href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                                    class="fc-item__link"
+                                                                                    data-link-name="article"><span
+                                                                                    class="fc-item__kicker">{{ base_category_get_recent_news.first_name }}</span>
+                                                                                <span
+                                                                                        class="u-faux-block-link__cta fc-item__headline"> <span
+                                                                                        class="js-headline-text">{{ base_category_get_recent_news.second_name }}</span></span>
+                                                                            </a></h2>
+                                                                        </div>
+                                                                        <div class="fc-item__standfirst">
+                                                                            {{ base_category_get_recent_news.short_text }}
+                                                                        </div>
+                                                                        <aside class="fc-item__meta js-item__meta">
+                                                                        </aside>
+                                                                    </div>
+                                                                    <a href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                       class="u-faux-block-link__overlay js-headline-text"
+                                                                       data-link-name="article"
+                                                                       tabindex="-1">{{ base_category_get_recent_news.first_name }}
+                                                                        : {{ base_category_get_recent_news.second_name }}</a>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    {% endif %}
+                                                    {% if forloop.counter > 1 and forloop.counter < 4 and forloop.last or forloop.counter == 3 %}
+                                                        </ul>
+                                                        </div>
+                                                    {% endif %}
+                                                    {% if forloop.counter == 4 %}
+                                                        <div class="fc-slice-wrapper">
+                                                        <ul class="u-unstyled l-row  l-row--cols-3 fc-slice fc-slice--tl-tl-mpu">
+                                                        <li class="fc-slice__item l-row__item l-row__item--span-2">
+                                                        <ul class="u-unstyled l-list l-list--columns-2 l-list--rows-3">
+                                                    {% endif %}
+                                                {% if forloop.counter > 3 and forloop.counter < 10 %}
+                                                    <li class="fc-slice__item l-list__item l-row__item l-row__item--span-1 u-faux-block-link">
+                                                        <div class="fc-item fc-item--has-image fc-item--has-metadata fc-item--is-commentable js-fc-item tone-comment--item fc-item--list-mobile fc-item--list-media-tablet js-snappable"
+
+                                                             data-discussion-closed="false"
+                                                             data-discussion-url="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}#comments"
+                                                             data-link-name="comment | group-0 | card-5"
+                                                             data-item-visibility="all"
+                                                             data-test-id="facia-card"
+                                                             data-id="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}">
+                                                            <div class="fc-item__container">
+                                                                <div class="fc-item__media-wrapper">
+                                                                    <div class="fc-item__image-container u-responsive-ratio ">
+                                                                        <picture>
+                                                                            <img class="responsive-img" alt=""
+                                                                                 src="{% thumbnail base_category_get_recent_news.image 320x180 %}"/>
+                                                                        </picture>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="fc-item__content">
+                                                                    <div class="fc-item__header">
+                                                                        <h2 class="fc-item__title fc-item__title--quoted">
+                                                                            <a
+                                                                                    href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                                    class="fc-item__link"
+                                                                                    data-link-name="article"> <span
+                                                                                    class="u-faux-block-link__cta fc-item__headline"> <span
+                                                                                    class="js-headline-text"
+                                                                                    style="color: #000">{{ base_category_get_recent_news.first_name }}</span></span>
+                                                                            </a></h2>
+                                                                        <div class="fc-item__byline"
+                                                                             style="color: #ab1500">
+                                                                            {{ base_category_get_recent_news.second_name }}
+                                                                        </div>
+                                                                    </div>
+                                                                    <aside class="fc-item__meta js-item__meta">
+                                                                    </aside>
+                                                                </div>
+                                                                <a href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                   class="u-faux-block-link__overlay js-headline-text"
+                                                                   data-link-name="article" tabindex="-1"
+                                                                   style="color: #000">
+                                                                    {{ base_category_get_recent_news.first_name }} <span
+                                                                        style="color: #ab1500">{{ base_category_get_recent_news.second_name }}</span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                {% endif %}
+                                                {% if forloop.counter > 3 and forloop.counter < 10 and forloop.last or forloop.counter == 9 %}
+                                                    </ul>
+                                                    </li>
+                                                    <li class="fc-slice__item l-row__item l-row__item--span-1 js-fc-slice-mpu-candidate fc-slice__item--mpu-candidate fc-slice__item--no-mpu"></li>
+                                                    </ul>
+                                                    </div>
+                                                {% endif %}
+                                                {% endfor %}
+
+
+                                        <div class="js-show-more-placeholder"></div>
+                                        <a href="{% url 'category' base_category.slug %}"
+                                           class="button button--medium button--primary button--show-more collection__show-more js-show-more-button"
+                                           data-test-id="show-more" data-link-name="more"> <span
+                                                class="inline-plus inline-icon ">
+                        <svg width="18" height="18" viewbox="0 0 18 18" class="inline-plus__svg inline-icon__svg">
+                        <path d="M8.2 0h1.6l.4 7.8 7.8.4v1.6l-7.8.4-.4 7.8H8.2l-.4-7.8L0 9.8V8.2l7.8-.4.4-7.8z"/>
+                        </svg> </span> <span class="inline-minus inline-icon ">
+                        <svg width="32" height="32" viewbox="0 0 32 32" class="inline-minus__svg inline-icon__svg">
+                        <path d="M5 15h22v3H5z"/>
+                        </svg> </span> <span class="js-button-text">{% trans 'more_news' %}</span></a>
+                                    </div>
+                                </div>
+                            </section>
+                        {% endif %}
+                    {% elif forloop.counter|divisibleby:3 %}
+                        {% if base_category_get_recent_news  %}
+                            <section id="news" class="fc-container fc-container--has-show-more js-container--toggle "
+                                     data-link-name="container-2 | news" data-id="a542deb1-832d-4507-a1e7-49b05545a2c8"
+                                     data-component="news" aria-expanded="true">
+                                <div class="fc-container__inner">
+                                    <div class="fc-container__header
+                js-container__header
+                ">
+                                        <div class="fc-container__header__title">
+                                            <span tabindex="0">{{ base_category.name }}</span>
+                                        </div>
+                                        {% if base_ads and forloop.counter == 2 %}
+                                            <div class="fc-container__header__reklam_web">
+                                                {% if base_ads.headline_2_ads_script or base_ads.headline_2_ads_image %}
+                                                    {% if base_ads.headline_2_ads_script %}
+                                                        {{ base_ads.headline_2_ads_script }}
+                                                    {% elif base_ads.headline_2_ads_image %}
+                                                        <a target="_blank" href="{{ base_ads.headline_2_ads_link }}">
+                                                            <img src="{{ base_ads.headline_2_ads_image.url }}">
+                                                        </a>
+                                                    {% endif %}
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="fc-container--rolled-up-hide fc-container__body fc-show-more--hidden js-container--fc-show-more"
+                                         data-title="news" data-id="a542deb1-832d-4507-a1e7-49b05545a2c8">
+                                        <div class="fc-slice-wrapper">
+                                            <ul class="u-unstyled l-row  l-row--cols-3 fc-slice fc-slice--t-t-t">
+                                                {% for base_category_get_recent_news in base_category_get_recent_news |slice:'9' %}
+                                                    {% if forloop.counter > 0 and forloop.counter < 4 %}
+                                                        {% if forloop.counter|divisibleby:2 %}
+                                                            <li class="fc-slice__item l-row__item l-row__item--span-1 u-faux-block-link">
+                                                                <div class="fc-item fc-item--has-image fc-item--has-metadata fc-item--is-commentable js-fc-item tone-feature--item fc-item--list-media-mobile fc-item--third-tablet js-snappable"
+                                                                     data-discussion-closed="false"
+                                                                     data-discussion-url="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}#comments"
+                                                                     data-link-name="feature | group-0 | card-2"
+                                                                     data-item-visibility="all"
+                                                                     data-test-id="facia-card"
+                                                                     data-id="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}">
+                                                                    <div class="fc-item__container">
+                                                                        <div class="fc-item__media-wrapper">
+                                                                            <div class="fc-item__image-container u-responsive-ratio ">
+                                                                                <picture>
+                                                                                    <img class="responsive-img" alt=""
+                                                                                         src="{% thumbnail base_category_get_recent_news.image 320x180 %}"/>
+                                                                                </picture>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="fc-item__content">
+                                                                            <div class="fc-item__header">
+                                                                                <h2 class="fc-item__title"><a
+                                                                                        href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                                        class="fc-item__link"
+                                                                                        data-link-name="article"> <span
+                                                                                        class="u-faux-block-link__cta fc-item__headline"> <span
+                                                                                        class="js-headline-text">{{ base_category_get_recent_news.first_name }} <span>{{ base_category_get_recent_news.second_name }}</span></span></span>
+                                                                                </a></h2>
+                                                                            </div>
+                                                                            <aside class="fc-item__meta js-item__meta">
+                                                                            </aside>
+                                                                        </div>
+                                                                        <a href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                           class="u-faux-block-link__overlay js-headline-text"
+                                                                           data-link-name="article"
+                                                                           tabindex="-1">{{ base_category_get_recent_news.first_name }}
+                                                                            <span>{{ base_category_get_recent_news.second_name }}</span></a>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        {% else %}
+                                                            <li class="fc-slice__item l-row__item l-row__item--span-1 u-faux-block-link">
+                                                                <div class="fc-item fc-item--has-image fc-item--has-metadata fc-item--is-commentable js-fc-item tone-news--item fc-item--standard-mobile fc-item--third-tablet js-snappable"
+
+                                                                     data-discussion-closed="false"
+                                                                     data-discussion-url="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                     data-link-name="news | group-0 | card-1"
+                                                                     data-item-visibility="all"
+                                                                     data-test-id="facia-card"
+                                                                     data-id="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                     data-loyalty-short-url="/p/5qadm">
+                                                                    <div class="fc-item__container">
+                                                                        <div class="fc-item__media-wrapper">
+                                                                            <div class="fc-item__image-container u-responsive-ratio ">
+                                                                                <picture>
+                                                                                    <img class="responsive-img" alt=""
+                                                                                         src="{% thumbnail base_category_get_recent_news.image 320x180 %}"/>
+                                                                                </picture>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="fc-item__content">
+                                                                            <div class="fc-item__header">
+                                                                                <h2 class="fc-item__title">
+                                                                                    <a href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                                       class="fc-item__link"
+                                                                                       data-link-name="article">
+                                                                                    <span class="u-faux-block-link__cta fc-item__headline">
+                                                                                        <span class="js-headline-text"
+                                                                                              style="color: #000;">
+                                                                                            {{ base_category_get_recent_news.first_name }}
+                                                                                            <span style="color: #ab1500;">{{ base_category_get_recent_news.second_name }}
+                                                                                                </span>
+                                                                                            </span>
+                                                                                            </span>
+                                                                                    </a>
+                                                                                </h2>
+                                                                            </div>
+                                                                            <div class="fc-item__standfirst">
+                                                                                {{ base_category_get_recent_news.short_text }}
+                                                                            </div>
+                                                                            <aside class="fc-item__meta js-item__meta">
+                                                                            </aside>
+                                                                        </div>
+                                                                        <a href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                           class="u-faux-block-link__overlay js-headline-text"
+                                                                           data-link-name="article"
+                                                                           tabindex="-1" style="color: #000">
+                                                                            {{ base_category_get_recent_news.first_name }}
+                                                                            <span style="color: #ab1500">{{ base_category_get_recent_news.second_name }}</span>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                    {% if forloop.counter > 0 and forloop.counter < 4 and forloop.last or forloop.counter == 3 %}
+                                                        </ul>
+                                                        </div>
+                                                    {% endif %}
+                                                    {% if forloop.counter == 4 %}
+                                                        <div class="fc-slice-wrapper">
+                                                        <ul class="u-unstyled l-row  l-row--cols-3 fc-slice fc-slice--tl-tl-mpu">
+                                                        <li class="fc-slice__item l-row__item l-row__item--span-2">
+                                                        <ul class="u-unstyled l-list l-list--columns-2 l-list--rows-3">
+                                                    {% endif %}
+                                                {% if forloop.counter > 3 and forloop.counter < 10 %}
+                                                    <li class="fc-slice__item l-list__item l-row__item l-row__item--span-1 u-faux-block-link">
+                                                        <div class="fc-item fc-item--has-image fc-item--has-metadata fc-item--is-commentable js-fc-item tone-comment--item fc-item--list-mobile fc-item--list-media-tablet js-snappable"
+
+                                                             data-discussion-closed="false"
+                                                             data-discussion-url="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}#comments"
+                                                             data-link-name="comment | group-0 | card-5"
+                                                             data-item-visibility="all"
+                                                             data-test-id="facia-card"
+                                                             data-id="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}">
+                                                            <div class="fc-item__container">
+                                                                <div class="fc-item__media-wrapper">
+                                                                    <div class="fc-item__image-container u-responsive-ratio ">
+                                                                        <picture>
+                                                                            <img class="responsive-img" alt=""
+                                                                                 src="{% thumbnail base_category_get_recent_news.image 320x180 %}"/>
+                                                                        </picture>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="fc-item__content">
+                                                                    <div class="fc-item__header">
+                                                                        <h2 class="fc-item__title fc-item__title--quoted">
+                                                                            <a
+                                                                                    href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                                    class="fc-item__link"
+                                                                                    data-link-name="article"> <span
+                                                                                    class="u-faux-block-link__cta fc-item__headline"> <span
+                                                                                    class="js-headline-text"
+                                                                                    style="color: #000">{{ base_category_get_recent_news.first_name }}</span></span>
+                                                                            </a></h2>
+                                                                        <div class="fc-item__byline"
+                                                                             style="color: #ab1500">
+                                                                            {{ base_category_get_recent_news.second_name }}
+                                                                        </div>
+                                                                    </div>
+                                                                    <aside class="fc-item__meta js-item__meta">
+                                                                    </aside>
+                                                                </div>
+                                                                <a href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                   class="u-faux-block-link__overlay js-headline-text"
+                                                                   data-link-name="article" tabindex="-1"
+                                                                   style="color: #000">
+                                                                    {{ base_category_get_recent_news.first_name }} <span
+                                                                        style="color: #ab1500">{{ base_category_get_recent_news.second_name }}</span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                {% endif %}
+                                                {% if forloop.counter > 3 and forloop.counter < 10 and forloop.last or forloop.counter == 9 %}
+                                                    </ul>
+                                                    </li>
+                                                    <li class="fc-slice__item l-row__item l-row__item--span-1 js-fc-slice-mpu-candidate fc-slice__item--mpu-candidate fc-slice__item--no-mpu"></li>
+                                                    </ul>
+                                                    </div>
+                                                {% endif %}
+                                                {% endfor %}
+
+                                        <div class="js-show-more-placeholder"></div>
+                                        <a href="{% url 'category' base_category.slug %}"
+                                           class="button button--medium button--primary button--show-more collection__show-more js-show-more-button"
+                                           data-test-id="show-more" data-link-name="more"> <span
+                                                class="inline-plus inline-icon ">
+                        <svg width="18" height="18" viewbox="0 0 18 18" class="inline-plus__svg inline-icon__svg">
+                        <path d="M8.2 0h1.6l.4 7.8 7.8.4v1.6l-7.8.4-.4 7.8H8.2l-.4-7.8L0 9.8V8.2l7.8-.4.4-7.8z"/>
+                        </svg> </span> <span class="inline-minus inline-icon ">
+                        <svg width="32" height="32" viewbox="0 0 32 32" class="inline-minus__svg inline-icon__svg">
+                        <path d="M5 15h22v3H5z"/>
+                        </svg> </span> <span class="js-button-text">{% trans 'more_news' %}</span></a>
+                                    </div>
+                                </div>
+                            </section>
+                        {% endif %}
+                    {% else %}
+                        {% if base_category_get_recent_news  %}
+                            <section id="{{ base_category.slug }}"
+                                     class="fc-container fc-container--has-show-more js-container--toggle "
+                                     data-link-name="container-5 | {{ base_category.slug }}"
+                                     data-id="f6f08c9d-b14b-44f8-bba0-c82475c9ecb2"
+                                     data-component="{{ base_category.slug }}" aria-expanded="true">
+                                <div class="fc-container__inner">
+                                    <div class="fc-container__header js-container__header ">
+                                        <div class="fc-container__header__title">
+                                            <a data-link-name="section heading"
+                                               href="{% url 'category' base_category.slug %}"> <span
+                                                    class="fc-container__title__text">{{ base_category.name }}  </span>
+                                            </a>
+                                        </div>
+                                        {% if forloop.counter == 2 %}
+                                            {% if base_ads.home_category_vertical_ads_1_active %}
+                                                {% if base_ads.home_category_vertical_ads_1_script %}
+                                                    {% autoescape off %}
+                                                        {{ base_ads.home_category_vertical_ads_1_script }}
+                                                    {% endautoescape %}
+                                                {% elif base_ads.home_category_vertical_ads_1_image %}
+                                                    <a target="_blank"
+                                                       href="{{ base_ads.home_category_vertical_ads_1_link }}">
+                                                        <img src="{{ base_ads.home_category_vertical_ads_1_image.url }}">
+                                                    </a>
+                                                {% else %}
+                                                    <div class="fc-container__header__reklam_web">
+                                                        <img src="http://placehold.it/150x372">
+                                                    </div>
+                                                    <div class="fc-container__header__reklam_mobile">
+                                                        <img src="http://placehold.it/150x372">
+                                                    </div>
+                                                {% endif %}
+                                            {% endif %}
+
+                                        {% endif %}
+                                    </div>
+                                    <div class="fc-container--rolled-up-hide fc-container__body fc-show-more--hidden js-container--fc-show-more"
+                                         data-title="around the world" data-id="f6f08c9d-b14b-44f8-bba0-c82475c9ecb2">
+                                        <div class="fc-slice-wrapper">
+                                            <ul class="u-unstyled l-row  l-row--cols-4 fc-slice fc-slice--q-q-ql-ql">
+                                                {% for base_category_get_recent_news in base_category_get_recent_news |slice:'8' %}
+                                                    {% if forloop.counter < 3 %}
+                                                        <li class="fc-slice__item l-row__item l-row__item--span-1 u-faux-block-link">
+                                                            <div class="fc-item fc-item--has-image fc-item--has-metadata fc-item--is-commentable js-fc-item tone-news--item fc-item--list-media-mobile fc-item--standard-tablet js-snappable"
+                                                                 data-discussion-id="/p/5qfkt"
+                                                                 data-discussion-closed="false"
+                                                                 data-discussion-url="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}#comments"
+                                                                 data-link-name="news | group-0 | card-1"
+                                                                 data-item-visibility="all"
+                                                                 data-test-id="facia-card"
+                                                                 data-id="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                 data-loyalty-short-url="/p/5qfkt">
+                                                                <div class="fc-item__container">
+                                                                    <div class="fc-item__media-wrapper">
+                                                                        <div class="fc-item__image-container u-responsive-ratio ">
+                                                                            <picture>
+                                                                                <img class="responsive-img" alt=""
+                                                                                     src="{% thumbnail base_category_get_recent_news.image 320x180 %}"/>
+                                                                            </picture>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="fc-item__content">
+                                                                        <div class="fc-item__header">
+                                                                            <h2 class="fc-item__title"><a
+                                                                                    href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                                    class="fc-item__link"
+                                                                                    data-link-name="article"><span
+                                                                                    class="fc-item__kicker">{{ base_category_get_recent_news.first_name }}</span>
+                                                                                <span
+                                                                                        class="u-faux-block-link__cta fc-item__headline"> <span
+                                                                                        class="js-headline-text">{{ base_category_get_recent_news.second_name }}</span></span>
+                                                                            </a></h2>
+                                                                        </div>
+                                                                        <div class="fc-item__standfirst">
+                                                                            {{ base_category_get_recent_news.short_text|slice:'50' }}
+                                                                        </div>
+                                                                        <aside class="fc-item__meta js-item__meta">
+                                                                        </aside>
+                                                                    </div>
+                                                                    <a href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                       class="u-faux-block-link__overlay js-headline-text"
+                                                                       data-link-name="article"
+                                                                       tabindex="-1">
+                                                                        {{ base_category_get_recent_news.first_name }}
+                                                                        <span>{{ base_category_get_recent_news.second_name }}</span>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    {% endif %}
+                                                    {% if forloop.counter == 3 %}
+                                                        <li class="fc-slice__item l-row__item l-row__item--span-2">
+                                                        <ul class="u-unstyled l-list l-list--columns-2 l-list--rows-3">
+                                                    {% endif %}
+                                                {% if forloop.counter > 2 and forloop.counter < 9 %}
+                                                    <li class="fc-slice__item l-list__item l-row__item l-row__item--span-1 u-faux-block-link">
+                                                        <div class="fc-item fc-item--has-image js-fc-item tone-news--item fc-item--list-mobile fc-item--list-tablet js-snappable"
+                                                             data-link-name="news | group-0 | card-3"
+                                                             data-item-visibility="all"
+                                                             data-test-id="facia-card"
+                                                             data-id="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}">
+                                                            <div class="fc-item__container">
+                                                                <div class="fc-item__content">
+                                                                    <div class="fc-item__header">
+                                                                        <h2 class="fc-item__title"><a
+                                                                                href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                                class="fc-item__link"
+                                                                                data-link-name="article"><span
+                                                                                class="fc-item__kicker">{{ base_category_get_recent_news.first_name }} </span>
+                                                                            <span
+                                                                                    class="u-faux-block-link__cta fc-item__headline"> <span
+                                                                                    class="js-headline-text">{{ base_category_get_recent_news.second_name }}</span></span>
+                                                                        </a></h2>
+                                                                    </div>
+                                                                    <aside class="fc-item__meta js-item__meta">
+                                                                    </aside>
+                                                                </div>
+                                                                <a href="{% url 'news' base_category_get_recent_news.id base_category_get_recent_news.slug %}"
+                                                                   class="u-faux-block-link__overlay js-headline-text"
+                                                                   data-link-name="article"
+                                                                   tabindex="-1">{{ base_category_get_recent_news.first_name }}
+                                                                    <span>{{ base_category_get_recent_news.second_name }}</span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                {% endif %}
+                                                {% if forloop.counter == 8 or forloop.counter > 2 and forloop.counter < 9 and forloop.last %}
+                                                    </ul>
+                                                    </li>
+                                                {% endif %}
+
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                        <div class="js-show-more-placeholder"></div>
+                                        <a href="{% url 'category' base_category.slug %}"
+                                           class="button button--medium button--primary button--show-more collection__show-more js-show-more-button"
+                                           data-test-id="show-more" data-link-name="more"> <span
+                                                class="inline-plus inline-icon ">
+                                    <svg width="18" height="18" viewbox="0 0 18 18"
+                                         class="inline-plus__svg inline-icon__svg">
+                                    <path d="M8.2 0h1.6l.4 7.8 7.8.4v1.6l-7.8.4-.4 7.8H8.2l-.4-7.8L0 9.8V8.2l7.8-.4.4-7.8z"/>
+                                    </svg> </span> <span class="inline-minus inline-icon ">
+                                    <svg width="32" height="32" viewbox="0 0 32 32"
+                                         class="inline-minus__svg inline-icon__svg">
+                                    <path d="M5 15h22v3H5z"/>
+                                    </svg> </span> <span class="js-button-text">{% trans 'more_news' %}</span></a>
+                                    </div>
+                                </div>
+                            </section>
+                        {% endif %}
+                    {% endif %}
+
+                {% endwith %}
+            {% endfor %}
+
+
+            {% if home_multimedia %}
+                <section id="the-big-picture"
+                         class="fc-container js-container--lazy-load fc-container--has-toggle"
+                         data-link-name="container-13 | the-big-picture" data-id="16334b89-a4b1-4db8-8f39-7a364326bc0a"
+                         data-component="the-big-picture" aria-expanded="true" style="margin-bottom: 0;">
+                    <div class="fc-container__inner" style="border-top: 0.0625rem solid #d0b160;background: #fff;">
+                        <div class="fc-container__header
+                js-container__header
+                " style="    display: block;">
+                            <div class="fc-container__header__title">
+                                <span tabindex="0">{% trans 'day_of_picture' %}</span>
+                            </div>
+                        </div>
+                        <div style="    " class="fc-container--rolled-up-hide fc-container__body"
+                             data-title="the big picture"
+                             data-id="16334b89-a4b1-4db8-8f39-7a364326bc0a">
+                            <div class="fc-slice-wrapper">
+                                <ul class="u-unstyled l-row  l-row--cols-1 fc-slice fc-slice--f">
+                                    <li class="fc-slice__item l-row__item l-row__item--span-1 u-faux-block-link">
+                                        <div class="fc-item fc-item--gallery fc-item--has-image fc-item--is-media-link js-fc-item tone-media--item fc-item--standard-mobile fc-item--full-media-75-tablet js-snappable"
+                                             data-link-name="media | group-0 | card-1" data-item-visibility="all"
+                                             data-test-id="facia-card"
+                                             data-id="{% url 'gallery' home_multimedia.id home_multimedia.slug %}"
+                                             data-loyalty-short-url="/p/5qbpa">
+                                            <div class="fc-item__container">
+                                                <div class="fc-item__media-wrapper">
+                                                    <div class="fc-item__image-container u-responsive-ratio ">
+                                                        <picture>
+                                                            <img class="responsive-img" alt=""
+                                                                 src="{{ home_multimedia.image.url }}"/>
+                                                        </picture>
+                                                    </div>
+                                                </div>
+                                                <div class="fc-item__content">
+                                                    <div class="fc-item__header">
+                                                        <h2 class="fc-item__title"><a
+                                                                href="{% url 'gallery' home_multimedia.id home_multimedia.slug %}"
+                                                                class="fc-item__link" data-link-name="article"><span
+                                                                class="fc-item__kicker">{{ home_multimedia.first_name }}</span>
+                                                            <span
+                                                                    class="u-faux-block-link__cta fc-item__headline"> <span
+                                                                    class="inline-camera inline-icon ">
+                                                        <svg width="18" height="13" viewbox="0 0 18 13"
+                                                             class="inline-camera__svg inline-icon__svg">
+                                                        <path d="M18 3.5v8L16.5 13h-15L0 11.5v-8L1.5 2H5l2-2h4l2 2h3.5L18 3.5zM9 11c1.9 0 3.5-1.6 3.5-3.5S10.9 4 9 4 5.5 5.6 5.5 7.5 7.1 11 9 11z"/>
+                                                        </svg> </span> <span
+                                                                    class="js-headline-text">{{ home_multimedia.second_name }}
+                                                    </span></span>
+                                                        </a></h2>
+                                                    </div>
+                                                    <div class="fc-item__standfirst">
+                                                        {{ home_multimedia.short_text }}
+                                                    </div>
+                                                    <aside class="fc-item__meta js-item__meta">
+                                                    </aside>
+                                                </div>
+                                                <a href="{% url 'gallery' home_multimedia.id home_multimedia.slug %}"
+                                                   class="u-faux-block-link__overlay js-headline-text"
+                                                   data-link-name="article"
+                                                   tabindex="-1">{{ home_multimedia.first_name }} {{ home_multimedia.second_name }}</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            {% endif %}
+            {% if home_multimedia_video %}
+                <section id="videos"
+                         class="fc-container fc-container--video js-container--lazy-load"
+                         data-link-name="container-11 | videos" data-id="6a001562-c027-43ee-a3bd-737ef2813614"
+                         data-component="videos" aria-expanded="true">
+                    <div class="gs-container">
+                        <div class="fc-container__inner">
+                            <h2 class="video-title fc-container__header__title"><a href="{% url 'videos' %}"
+                                                                                   data-link-name="video-container-title videos">videos</a>
+                            </h2>
+                        </div>
+                        <div class="video-playlist video-playlist--start js-video-playlist" data-number-of-videos="6"
+                             data-component="video-playlist">
+                            <div class="video-playlist__control video-playlist__control--prev js-video-playlist-prev"
+                                 data-link-name="video-container-prev">
+                        <span class="inline-chevron-left inline-icon video-playlist__icon">
+                        <svg width="6" height="12" viewbox="0 0 6 12"
+                             class="video-playlist__icon__svg inline-chevron-left__svg inline-icon__svg">
+                        <path d="M6 .5L5.5 0 0 5.8v.5L5.5 12l.5-.5L1.5 6 6 .5z"/>
+                        </svg> </span>
+                            </div>
+
+                            <ul class="u-unstyled video-playlist__inner js-video-playlist-inner">
+                                <li class="video-playlist__item video-title video-title--leftcol fc-container__header__title">
+                                    <a
+                                            class="video-title__link" href="{% url 'videos' %}"
+                                            data-link-name="video-container-title videos"> <span
+                                            class="inline-guardian-video-logo inline-logo ">
+                                <svg width="160" height="80" viewbox="0 0 160 80"
+                                     class="inline-guardian-video-logo__svg inline-logo__svg">
+                                <circle opacity=".8" fill="#FB0" cx="40" cy="40" r="40"/>
+                                <path fill="#FFF"
+                                      d="M120 1c21.5 0 39 17.5 39 39s-17.5 39-39 39-39-17.5-39-39S98.5 1 120 1m0-1C97.9 0 80 17.9 80 40s17.9 40 40 40 40-17.9 40-40-17.9-40-40-40zM27.3 30l-2.7 2.9v14.3l2.8 2.9h16.1V30H27.3m26.1.9l-7.4 7v4.3l7.4 7h2.1V30.9h-2.1"/>
+                                <path class="inline-guardian-video-logo__title" fill="#FB0"
+                                      d="M94.2 44.5l2-6.2-1.2-.6v-1h4.4v1l-1.2.6-3.4 9.6h-3.2l-3.3-9.6-1.2-.6v-1h6.5v1l-1.2.6 1.8 6.2zm10.8-8.1h.3v9.9l1.2.6v1h-6.1v-1l1.2-.6v-7.6l-1.3-.6v-1l4.7-.7zm.3-2.6c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm9 .4l-1.2-.6v-1l4.7-.7h.3V46l1.2.7v1l-4.4.5h-.3V47h-.1c-.5.6-1.4 1.2-2.8 1.2-2 0-4.5-1.3-4.5-5.6 0-4.5 2.5-6.1 5.5-6.1.6 0 1.3.1 1.8.5l-.2-2.8zm0 4.2c-.3-.2-.6-.4-1.3-.4-1.2 0-2.1 1.1-2.1 4.2 0 2.8.7 4 2.2 4 .6 0 .9-.1 1.1-.2v-7.6zm9.2 4.3c.2 2.2 1.2 3.2 3.3 3.2 1.4 0 2.2-.1 3-.4v1.1c-.5.7-2.2 1.6-4.3 1.6-3.8 0-5.8-2.1-5.8-5.9 0-3.7 2.2-5.8 5.5-5.8 3.4 0 5 1.5 5 6.2h-6.7zm-.1-1.4l3.1-.2c0-3-.5-3.5-1.4-3.5-1 .1-1.6.7-1.7 3.7zm19.7 1c0 3.8-2.3 5.9-5.7 5.9-3.4 0-5.7-2.1-5.7-5.9 0-3.8 2.3-5.9 5.7-5.9 3.4 0 5.7 2.1 5.7 5.9zm-3.9 0c0-3.7-.6-4.3-1.8-4.3-1.2 0-1.9.6-1.9 4.3 0 3.7.6 4.3 1.9 4.3  5.2v-3h1.6l.6 1.9c.3.2 1.2.4 1.8.4 1.1 0 1.8-.2 1.8-1.1 0-.8-.3-1.2-1.5-1.4l-1.4-.3c-2.1-.5-3-2.1-3-3.8 0-2.1 1.5-3.7 4.8-3.7 1.3 0 2.7.2 3.5.6v2.8h-1.6l-.5-1.5c-.3-.1-1-.3-1.6-.3-.9 0-1.5.4-1.5 1.1 0 .7.3 1.1 1.5 1.3l1.3.3c2.2.5 3 1.9 3 3.6 0 2.3-1.5 3.9-5 3.9-1.1-.1-2.7-.3-3.8-.8z"/>
+                                </svg> </span> </a>
+                                </li>
+                                <li class="video-playlist__item js-video-playlist-item-0 video-playlist__item--active video-playlist__item--first">
+                                    <div class="fc-item__media-wrapper u-faux-block-link__promote media__container--hidden js-video-player video-playlist__item__player">
+                                        <div class="fc-item__video-container">
+                                            <div class="gu-media-wrapper gu-media-wrapper--video">
+                                                <div class="u-responsive-ratio u-responsive-ratio--hd">
+                                                    {#                                            <video controls class="gu-media gu-media--video"#}
+                                                    {#                                                   data-title="The Iraqi girls who escaped from Isis"#}
+                                                    {#                                                   data-auto-play="false" data-show-end-slate="false"#}
+                                                    {#                                                   data-duration="352" data-media-id="gu-video-589c59ade4b0e78a1131d8e2"#}
+                                                    {#                                                   data-end-slate="/world/video/2017/feb/09/the-iraqi-girls-who-escaped-from-isis-video"#}
+                                                    {#                                                   data-block-video-ads="false" data-embeddable="false" preload="none"#}
+                                                    {#                                                   data-canonical-url="world/video/2017/feb/09/the-iraqi-girls-who-escaped-from-isis-video">#}
+                                                    {#                                                <source src="https://cdn.theguardian.tv/HLS/2017/02/09/170209YazidiGirls.m3u8"#}
+                                                    {#                                                        type="video/m3u8">#}
+                                                    {#                                                <source src="https://cdn.theguardian.tv/mainwebsite/2017/02/09/170209YazidiGirls_desk.mp4"#}
+                                                    {#                                                        type="video/mp4">#}
+                                                    {#                                                <source src="https://cdn.theguardian.tv/webM/2017/02/09/170209YazidiGirls_WebM.webm"#}
+                                                    {#                                                        type="video/webm">#}
+                                                    {#                                            </video>#}
+                                                    <div class="video-overlay">
+                                                        <div class="video-overlay__headline">
+                                                            <h1 class="fc-item__title"><a
+                                                                    href="{% url 'video'  home_multimedia_video.id home_multimedia_video.slug %}"
+                                                                    class="fc-item__link" data-link-name="article"><span
+                                                                    class="fc-item__kicker">{{ home_multimedia_video.first_name }}</span>
+                                                                <span class="u-faux-block-link__cta fc-item__headline"> <span
+                                                                        class="inline-video-icon inline-icon ">
+<svg width="36" height="23" viewbox="0 0 36 23" class="inline-video-icon__svg inline-icon__svg">
+<path d="M3.2 0L0 3.3v16.4L3.3 23H22V0H3.2m30.4 1L25 9v5l8.6 8H36V1h-2.4"/>
+</svg> </span> <span class="js-headline-text">{{ home_multimedia_video.second_name }}</span></span> </a></h1>
+                                                        </div>
+                                                        {#                                                <span class="video-overlay__duration"> 5:52 </span>#}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="fc-item__video-fallback media__placeholder--active js-video-placeholder gu-media__fallback">
+                                        <a href="{% url 'video'  home_multimedia_video.id home_multimedia_video.slug %}">
+                                            <div style="    display: block !important;"
+                                                 data-link-name="video-play-button-overlay"
+                                                 class="fc-item__video-play js-video-play-button media__placeholder--hidden vjs-big-play-button">
+                                                <span class="vjs-control-text"></span>
+                                            </div>
+                                        </a>
+                                        <div class="fc-item__media-wrapper">
+                                            <div class="fc-item__image-container u-responsive-ratio inlined-image">
+                                                <img src="{{ home_multimedia_video.image.url }}"
+                                                     class="js-video-playlist-image js-video-playlist-image--0">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            {% endif %}
+
+            <section id="most-viewed-in-world-news"
+                     class="fc-container fc-container--lazy-load js-container--lazy-load js-container--toggle "
+                     data-link-name="container-12 | most-viewed-in-world-news" data-id="558b-3b8b-3485-d9ff"
+                     data-component="most-viewed-in-world-news" aria-expanded="true">
+                <div class="fc-container__inner">
+                    <div class="fc-container__header js-container__header">
+                        <div class="fc-container__header__title">
+                            <span tabindex="0"> {% trans 'most viewed' %} </span>
+                        </div>
+                    </div>
+                    <div class="fc-container__body fc-container--rolled-up-hide js-popular-trails">
+                        <div id="popular-trails" class="fc-slice fc-slice--popular" data-link-name="most popular Test"
+                             data-test-id="popular-in">
+                            <div class="tabs tabs--mostpop u-cf">
+                                <ol class="tabs__container js-tabs" id="js-popular-tabs" role="tablist">
+                                    <li class="tabs__tab tabs__tab--selected tone-colour tone-accent-border" role="tab"
+                                        id="tabs-popular-1-tab" aria-selected="true" aria-controls="tabs-popular-1"><a
+                                            href="#tabs-popular-1"
+                                            data-link-name="tab 1 most viewed in world news"><span
+                                            class="u-h">{% trans 'most_viewed' %} </span>{% trans 'most_viewed_in_site' %}
+                                    </a></li>
+                                    {#                                    <li class="tabs__tab" role="tab" id="tabs-popular-2-tab"#}
+                                    {#                                        aria-controls="tabs-popular-2">#}
+                                    {#                                        <a href="#tabs-popular-2" data-link-name="tab 2 across the guardian"><span#}
+                                    {#                                                class="u-h">Most viewed </span>across the guardian</a></li>#}
+                                </ol>
+                                <div class="tabs__content js-tabs-content">
+                                    <div id="tabs-popular-1" class="js-tab-1  tabs__pane u-cf" role="tabpanel"
+                                         aria-labelledby="tabs-popular-1-tab" data-link-name="most viewed in world news"
+                                         data-link-context="most-read/most viewed">
+                                        <ul class="u-unstyled headline-list headline-list--large headline-column headline-column--tablet headline-column--desktop">
+                                            {% for most_read_news in most_read_newss %}
+                                                <li class="headline-list__item headline-column__item headline-column--tablet__item headline-column--desktop__item tone-feature--most-popular">
+                                                    <div class="headline-list__link" data-link-name="10 | text">
+                                                        <p class="headline-list__count">{{ forloop.counter }}</p>
+                                                        <div class="headline-list__text">
+                                                            <h2 class="fc-item__title"><a
+                                                                    href="{% url 'news' most_read_news.id most_read_news.slug %}"
+                                                                    class="fc-item__link"
+                                                                    data-link-name="article"> <span
+                                                                    class="headline-list__body fc-item__headline"> <span
+                                                                    class="js-headline-text">{{ most_read_news.first_name }} {{ most_read_news.second_name }}</span></span>
+                                                            </a></h2>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    <div id="tabs-popular-2" class="js-tab-2 modern-hidden tabs__pane u-cf"
+                                         role="tabpanel"
+                                         aria-labelledby="tabs-popular-2-tab" data-link-name="across the guardian"
+                                         data-link-context="most-read/most viewed">
+                                        <ul class="u-unstyled headline-list headline-list--large headline-column headline-column--tablet headline-column--desktop">
+                                        </ul>
+                                    </div>
+                                    <div class="fc-slice__popular-mpu js-fc-slice-mpu-candidate fc-slice__item--mpu-candidate fc-slice__item--no-mpu"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="js-front-bottom"></div>
+            <section id="site-info"
+                     class="fc-container fc-container--has-show-more fc-container--lazy-load js-container--lazy-load js-container--toggle "
+                     data-link-name="container-10 | site-info"
+                     data-id="7b297ef5-a3f9-45e5-b915-b54951d7f6ec"
+                     data-component="site-info" aria-expanded="true">
+                <div class="fc-container__inner">
+                    <div class="fc-container__header
+                        js-container__header
+                        ">
+                        <div class="fc-container__header__title">
+                            <span tabindex="0"></span>
+                        </div>
+                    </div>
+                    <div class="fc-container--rolled-up-hide fc-container__body fc-show-more--hidden js-container--fc-show-more"
+                         data-title=""
+                         data-id="7b297ef5-a3f9-45e5-b915-b54951d7f6ec">
+                        <div class="fc-slice-wrapper">
+                            <p style="margin-bottom: 0.3rem;"><span style=" padding-bottom: 0.3rem;">Qaynar xətt: +994 050 400 67 67</span>
+                            </p>
+                            <p style="margin-bottom: 0.3rem;"><span style=" padding-bottom: 0.3rem;">E-mail: goldnews@gmail.com</span>
+                            </p>
+                            <p style="margin-bottom: 0.3rem;"><span style=" padding-bottom: 0.3rem;">Əhməd Rəcəbli 198, Comərd iş mərkəzi 5-ci mərtəbə</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="js-front-bottom"></div>
+            <section class="fc-container__inner fc-trending-topics" data-component="trending-topics">
+                <div class="submeta" data-link-name="keywords">
+                    <hr>
+                    <h2 class="submeta__head">{% trans 'topics' %}</h2>
+                    <ul class="keyword-list inline-list">
+                        {% for base_tag in base_tags|slice:'20' %}
+                            {% if forloop.counter < 10 %}
+                                <li class="inline-list__item "><a
+                                        class="  button button--small button--tag button--secondary"
+                                        href="{% url 'tag' 'news' base_tag.slug %}"
+                                        data-link-name="keyword: world/europe-news"
+                                        itemprop="keywords">
+                                    {{ base_tag.title }}</a></li>
+                            {% else %}
+                                <li class="inline-list__item modern-hidden modern-hidden-tag"><a
+                                        class="  button button--small button--tag button--secondary"
+                                        href="{% url 'tag' 'news' base_tag.slug %}"
+                                        data-link-name="keyword: world/isis"
+                                        itemprop="keywords"> {{ base_tag.title }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </section>
+
+            <div class="fc-container fc-container--commercial">
+                <div id="dfp-ad--merchandising"
+                     class="js-ad-slot ad-slot ad-slot--merchandising ad-slot--commercial-component "
+                     data-link-name="ad slot merchandising" data-test-id="ad-slot-merchandising"
+                     data-name="merchandising"
+                     data-label="false" data-refresh="false" data-mobile="1,1|2,2|88,88|fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'profile_base.html' %}
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+{% block head_container %}
+
+{% endblock %}
+
+
+{% block base_container %}
+
+    <div class="container-fluid">
+        <h3>{% trans 'my_companies' %}</h3>
+        <br>
+        <div class="row">
+            {% for company in companies %}
+                <div class="col-md-4">
+                    <a href="#">
+                        <div class="card card-product">
+                            <div class="card-image" data-header-animation="true">
+                                <a href="{% url 'my_company' company.id %}">
+                                    <img class="img" src="{{ company.logo|thumbnail_url:'companies_list' }}">
+                                </a>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-actions" style="left: 14px;right: 15px;">
+                                    <a href="{% url 'my_company_request_events' company.id %}" style="    width: 100%;" type="button"
+                                            class="col-md-12 btn btn-danger" rel="tooltip"
+                                            data-placement="bottom" title="{% trans 'choose' %}">
+                                        <i class="fa fa-check" aria-hidden="true"></i> {% trans 'choose' %}
+                                    </a>
+                                </div>
+                                <h4 class="card-title">
+                                    <a href="{% url 'my_company_request_events' company.id %}">{{ company.name }}</a>
+                                </h4>
+                                <div class="card-description">
+                                    {{ company.practices }}
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% if forloop.counter|divisibleby:3 and not forloop.last %}
+                    </div>
+                    <div class="row">
+
+                {% endif %}
+            {% endfor %}
+            </div>
+    </div>
+
+{% endblock %}

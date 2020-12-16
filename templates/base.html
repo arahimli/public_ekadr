@@ -1,0 +1,528 @@
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+{% get_available_languages as languages %}
+{% get_current_language as LANGUAGE_CODE %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <meta name="robots" content="all">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="{% static 'main/assets/css/bootstrap.min.css' %}">
+
+    <!-- Customizable CSS -->
+    <link rel="stylesheet" href="{% static 'main/assets/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'main/assets/css/blue.css' %}">
+    <link rel="stylesheet" href="{% static 'main/assets/css/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'main/assets/css/owl.transitions.css' %}">
+    <link rel="stylesheet" href="{% static 'main/assets/css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'main/assets/css/rateit.css' %}">
+    <link rel="stylesheet" href="{% static 'main/assets/css/bootstrap-select.min.css' %}">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+    <link rel="stylesheet" href="{% static 'select2/select2-bootstrap.css' %}">
+    <!-- Icons/Glyphs -->
+    {#    <link rel="stylesheet" href="{% static 'main/assets/css/font-awesome.css' %}">#}
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,600italic,700,700italic,800'
+          rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+</head>
+<body class="cnt-home" style="font-family: Arial">
+<style>
+    input:focus, select:focus {
+        outline: none;
+    }
+
+    .top-bar .cnt-block .list-inline > li > a .value {
+        color: #000000;
+    }
+
+    .top-bar .cnt-block ul li a .caret {
+        color: #000000;
+    }
+    @media (max-width:425px) {
+        #search-form-businnes-search-button{
+            width: 20%;
+        }
+        #search-form-businnes-select-input{
+            width: 25%;
+        }
+        #search-form-businnes-search-field{
+            width: 55%;
+        }
+    }
+    @media (min-width:321px) and (max-width:635px)  {
+        #search-form-businnes-search-button{
+            width: 15%;
+        }
+        #search-form-businnes-select-input{
+            width: 25%;
+        }
+        #search-form-businnes-search-field{
+            width: 60%;
+        }
+    }
+    @media (min-width:636px) and (max-width:835px) {
+        #search-form-businnes-search-button{
+            width: 10%;
+        }
+        #search-form-businnes-select-input{
+            width: 30%;
+        }
+        #search-form-businnes-search-field{
+            width: 60%;
+        }
+    }
+    @media (min-width:836px) and (max-width:991px){
+        #search-form-businnes-search-button{
+            width: 8%;
+        }
+        #search-form-businnes-select-input{
+            width: 32%;
+        }
+        #search-form-businnes-search-field{
+            width: 60%;
+        }
+    }
+    @media (min-width:992px) {
+        #search-form-businnes-search-button{
+            width: 10%;
+        }
+        #search-form-businnes-select-input{
+            width: 26%;
+        }
+        #search-form-businnes-search-field{
+            width: 64%;
+        }
+    }
+{#    @media (max-width:768px) and (min-width:768px) {}#}
+{#    @media (max-width:768px) and (min-width:768px) {}#}
+</style>
+<!-- ============================================== HEADER ============================================== -->
+<header class="header-style-1" style="background: #fff;">
+
+    <!-- ============================================== TOP MENU ============================================== -->
+    <div class="top-bar animate-dropdown">
+        <div class="container">
+            <div class="header-top-inner">
+
+                <div class="cnt-block">
+                    <ul class="list-unstyled list-inline">
+                        <li class="dropdown dropdown-small">
+                            <a href="#" class="dropdown-toggle" data-hover="dropdown"
+                               data-toggle="dropdown">
+                                <span class="value">
+                                    {% if request.user.is_authenticated %}
+                                        {% trans 'my_account' %}
+                                    {% else %}
+                                        {% trans 'sign_in' %}
+                                    {% endif %}
+                                </span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                {% if request.user.is_authenticated %}
+                                    <li><a href="{% url 'dashboard' %}">{% trans 'profile' %}</a></li>
+                                    <li><a href="{% url 'log_out' %}">{% trans 'log_out' %}</a></li>
+                                {% else %}
+                                    <li>
+                                        <a href="{% url 'sign_in' %}?next_url={{ request.path }}">
+                                            {% trans 'sign_in' %}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'sign_up' %}">
+                                            {% trans 'sign_up' %}
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                        <li class="dropdown dropdown-small">
+                            <a href="#" class="dropdown-toggle" data-hover="dropdown"
+                               data-toggle="dropdown">
+                                <span class="value">{{ LANGUAGE_CODE }}</span><b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                {% for language in languages %}
+                                    {% if language.0 != LANGUAGE_CODE %}
+                                        <li class="{{ language.0 }}">
+                                            <a href="{% url 'set_language' %}?language={{ language.0 }}&next={{ request.path }}">
+                                                {{ language.0 }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- /.list-unstyled -->
+                </div>
+                <!-- /.cnt-cart -->
+                <div class="clearfix"></div>
+            </div>
+            <!-- /.header-top-inner -->
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /.header-top -->
+    <!-- ============================================== TOP MENU : END ============================================== -->
+    <div class="main-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-3 logo-holder">
+                    <!-- ============================================================= LOGO ============================================================= -->
+                    <div class="logo"><a href="{% url 'index' %}"> <img style="height: 36px;"
+                                                                        src="{% static 'main/assets/images/logo.png' %}"
+                                                                        alt="logo"> </a></div>
+                    <!-- /.logo -->
+                    <!-- ============================================================= LOGO : END ============================================================= -->
+                </div>
+                <!-- /.logo-holder -->
+
+                <div class="col-xs-12 col-sm-12 col-md-7 top-search-holder">
+                    <!-- /.contact-row -->
+                    <!-- ============================================================= SEARCH AREA ============================================================= -->
+                    <div class="search-area">
+                        <form method="get" action="{% url 'search' 'products-or-services' %}">
+                            <div class="control-group">
+                                <select name="businnes" id="search-form-businnes-select-input"
+                                        style="float: left;color: #000000;border: 1px solid #ddd;border-right: none;-webkit-border-radius: 5px 0 0 5px;-moz-border-radius: 5px 0 0 5px;border-radius: 5px 0 0 5px;padding: 12.2px;background: rgba(221, 221, 221, 0.15);">
+                                        <option value="">{% trans 'all' %}</option>
+                                    {% for based_busines in based_busineses %}
+                                        <option value="{{ based_busines.id }}">{{ based_busines.name }}</option>
+                                        {% if based_busines.get_parent_business %}
+                                            {% for based_busines_get_parent_business in based_busines.get_parent_business %}
+
+                                                <option value="{{ based_busines.id }}">
+                                                    --- {{ based_busines_get_parent_business.name }}</option>
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                                <input name="search" required id="search-form-businnes-search-field" class="search-field" placeholder="{% trans 'search' %}..."
+                                       style="float: left;border: 1px solid #ddd;    border-radius: 0 0 0 0;padding: 11.7px;"/>
+                                <button id="search-form-businnes-search-button" type="submit" class="search-button" style="float: left;">
+
+                                </button>
+
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.search-area -->
+                    <!-- ============================================================= SEARCH AREA : END ============================================================= -->
+                </div>
+                <!-- /.top-search-holder -->
+
+                <div class="col-xs-12 col-sm-12 col-md-2 animate-dropdown top-cart-row">
+                    <!-- ============================================================= SHOPPING CART DROPDOWN ============================================================= -->
+
+                    <div class="dropdown dropdown-cart"><a href="#" class="dropdown-toggle lnk-cart"
+                                                           data-toggle="dropdown">
+                        <div class="items-cart-inner">
+                            <div class="basket"><i class="fa fa-money" aria-hidden="true"></i></div>
+                            <div class="basket-item-count"><span class="count">$</span></div>
+                            <div class="total-price-basket"><span class="lbl">{{ currencies_today.first.code }} -</span>
+                                <span
+                                        class="total-price"> <span class="sign"></span><span
+                                        class="value">{{ currencies_today.first.rate }}</span> </span></div>
+                        </div>
+                    </a>
+                        <ul class="dropdown-menu" style="padding: 14px 22px;">
+                            <li>
+                                {% for currency_today in currencies_today %}
+                                    <div class="cart-item product-summary">
+                                        <div class="row">
+                                            <div class="col-xs-1"></div>
+                                            <div class="col-xs-3">
+                                                <div class="image">
+                                                    {{ currency_today.code }}
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-7">
+                                                <div class="image">
+                                                    {{ currency_today.rate }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if not forloop.last %}
+
+                                        <hr style="margin-top: 6px;margin-bottom: 6px;"/>
+                                    {% endif %}
+                                {% endfor %}
+
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-menu-->
+                    </div>
+                    <!-- /.dropdown-cart -->
+
+                    <!-- ============================================================= SHOPPING CART DROPDOWN : END============================================================= -->
+                </div>
+                <!-- /.top-cart-row -->
+            </div>
+            <!-- /.row -->
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.main-header -->
+
+    <!-- ============================================== NAVBAR ============================================== -->
+    <div class="header-nav animate-dropdown">
+        <div class="container">
+            <div class="yamm navbar navbar-default" role="navigation">
+                <div class="navbar-header">
+                    <button data-target="#mc-horizontal-menu-collapse" data-toggle="collapse"
+                            class="navbar-toggle collapsed" type="button">
+                        <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span
+                            class="icon-bar"></span> <span class="icon-bar"></span></button>
+                </div>
+                <div class="nav-bg-class">
+                    <div class="navbar-collapse collapse" id="mc-horizontal-menu-collapse">
+                        <div class="nav-outer">
+                            <ul class="nav navbar-nav">
+                                {% for based_busines in based_busineses %}
+                                    <li class="dropdown mega-menu">
+                                        <a href="{% url 'busines' based_busines.id 'products-or-services' %}"
+                                           data-hover="dropdown" class="dropdown-toggle"
+                                                {% if based_busines.get_parent_business %}
+                                           data-toggle="dropdown" {% endif %}>{{ based_busines.name }}
+                                        </a>
+                                        {% if based_busines.get_parent_business %}
+                                            <ul class="dropdown-menu container">
+                                                <li>
+                                                    <div class="yamm-content">
+                                                        <div class="row">
+                                                            <div class="col-xs-12 col-sm-12 col-md-2 col-menu">
+                                                                <ul class="links">
+                                                                    {% for based_busines_get_parent_busines in based_busines.get_parent_business %}
+                                                                        <li>
+                                                                            <a href="{% url 'busines' based_busines_get_parent_busines.id 'products-or-services' %}">{{ based_busines_get_parent_busines.name }}</a>
+                                                                        </li>
+                                                                        {% if forloop.counter|divisibleby:'8' %}
+
+                                                                            </ul>
+                                                                            </div>
+                                                                            <!-- /.col -->
+                                                                            <div class="col-xs-12 col-sm-12 col-md-2 col-menu">
+                                                                            <ul class="links">
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                    </ul>
+                                                                    </div>
+{#                                                            {% if based_busines.get_parent_business.count < 7 %}#}
+{#                                                                <div class="col-xs-12 col-sm-12 col-md-2 col-menu"></div>#}
+{#                                                                <div class="col-xs-12 col-sm-12 col-md-2 col-menu"></div>#}
+{#                                                                <div class="col-xs-12 col-sm-12 col-md-2 col-menu"></div>#}
+{#                                                            {% if based_busines.get_parent_business.count > 6 and based_busines.get_parent_business.count < 13 %}#}
+{#                                                                <div class="col-xs-12 col-sm-12 col-md-2 col-menu"></div>#}
+{#                                                                <div class="col-xs-12 col-sm-12 col-md-2 col-menu"></div>#}
+{#                                                                <div class="col-xs-12 col-sm-12 col-md-2 col-menu"></div>#}
+{#                                                            {% elif based_busines.get_parent_business.count > 12 and based_busines.get_parent_business.count < 19 %}#}
+{#                                                                <div class="col-xs-12 col-sm-12 col-md-2 col-menu"></div>#}
+{#                                                                <div class="col-xs-12 col-sm-12 col-md-2 col-menu"></div>#}
+{#                                                            {% endif %}#}
+                                                            {% if based_busines.image %}
+                                                                <div class="col-xs-12 col-sm-12 col-md-4 col-menu custom-banner" style="float: right;">
+                                                                    <a href="{% url 'busines' based_busines.id 'products-or-services' %}">
+                                                                        <img class="img-responsive" src="{{ based_busines.image|thumbnail_url:'business_header_image' }}">
+                                                                    </a>
+                                                                </div>
+                                                            {% endif %}
+                                                        </div>
+                                                        <!-- /.row -->
+                                                    </div>
+                                                    <!-- /.yamm-content --> </li>
+                                            </ul>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                                {#                                <li class="dropdown  navbar-right special-menu"><a href="#">Todays offer</a></li>#}
+                            </ul>
+                            <!-- /.navbar-nav -->
+                            <div class="clearfix"></div>
+                        </div>
+                        <!-- /.nav-outer -->
+                    </div>
+                    <!-- /.navbar-collapse -->
+
+                </div>
+                <!-- /.nav-bg-class -->
+            </div>
+            <!-- /.navbar-default -->
+        </div>
+        <!-- /.container-class -->
+
+    </div>
+    <!-- /.header-nav -->
+    <!-- ============================================== NAVBAR : END ============================================== -->
+
+</header>
+
+{% block base_container %}
+
+
+{% endblock %}
+
+<!-- ============================================================= FOOTER ============================================================= -->
+<footer id="footer" class="footer color-bg">
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    <div class="module-heading">
+                        <h4 class="module-title">Contact Us</h4>
+                    </div>
+                    <!-- /.module-heading -->
+
+                    <div class="module-body">
+                        <ul class="toggle-footer" style="">
+                            <li class="media">
+                                <div class="pull-left"><span class="icon fa-stack fa-lg"> <i
+                                        class="fa fa-map-marker fa-stack-1x fa-inverse"></i> </span></div>
+                                <div class="media-body">
+                                    <p>{{ base_company_info.main_address }}</p>
+                                </div>
+                            </li>
+                            <li class="media">
+                                <div class="pull-left"><span class="icon fa-stack fa-lg"> <i
+                                        class="fa fa-mobile fa-stack-1x fa-inverse"></i> </span></div>
+                                <div class="media-body">
+                                    <p>{{ base_company_info.main_phone }}</p>
+                                </div>
+                            </li>
+                            <li class="media">
+                                <div class="pull-left"><span class="icon fa-stack fa-lg"> <i
+                                        class="fa fa-envelope fa-stack-1x fa-inverse"></i> </span></div>
+                                <div class="media-body"><span><a href="#">{{ base_company_info.main_email }}</a></span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.module-body -->
+                </div>
+                <!-- /.col -->
+
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    <div class="module-heading">
+                        <h4 class="module-title">{% trans 'useful_links' %}</h4>
+                    </div>
+                    <!-- /.module-heading -->
+
+                    <div class="module-body">
+                        <ul class='list-unstyled'>
+                            {% for base_useful_link in base_useful_links|slice:'18' %}
+                                <li class="{% if forloop.counter == 1 %}first {% endif %}"><a {% if base_useful_link.new_blank %} target="_blank" {% endif %}href="{{ base_useful_link.url }}" title="Contact us">{{ base_useful_link.title }}</a></li>
+                                {% if forloop.counter|divisibleby:'6' %}
+                                    </ul>
+                                    </div>
+                                    <!-- /.module-body -->
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
+                                    <div class="module-heading">
+                                        <h4 class="module-title">{% trans 'useful_links' %}</h4>
+                                    </div>
+                                    <!-- /.module-heading -->
+
+                                    <div class="module-body">
+                                    <ul class='list-unstyled'>
+                                {% endif %}
+                            {% endfor %}
+                            </ul>
+                            </div>
+                            <!-- /.module-body -->
+                            </div>
+                <!-- /.col -->
+                {% if base_useful_links.count < 7 %}
+                    <div class="col-xs-12 col-sm-6 col-md-3"></div>
+                    <div class="col-xs-12 col-sm-6 col-md-3"></div>
+                {% endif %}
+                {% if base_useful_links.count < 13 %}
+                    <div class="col-xs-12 col-sm-6 col-md-3"></div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="copyright-bar">
+        <div class="container">
+            <div class="col-xs-12 col-sm-6 no-padding social">
+                <ul class="link">
+                    {% for base_social_item in base_social %}
+                        <li class="{{ base_social_item.color }} pull-left">
+                            <a target="_blank" rel="nofollow" href="{{ base_social_item.url }}"
+                               title="{{ base_social_item.title }}">
+                                <i class="{{ base_social_item.icon }}" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-xs-12 col-sm-6 no-padding">
+                <div class="clearfix payment-methods">
+                    <ul>
+                        <li><img src="{% static 'main/assets/images/payments/1.png' %}" alt=""></li>
+                        <li><img src="{% static 'main/assets/images/payments/2.png' %}" alt=""></li>
+                        <li><img src="{% static 'main/assets/images/payments/3.png' %}" alt=""></li>
+                        <li><img src="{% static 'main/assets/images/payments/4.png' %}" alt=""></li>
+                        <li><img src="{% static 'main/assets/images/payments/5.png' %}" alt=""></li>
+                    </ul>
+                </div>
+                <!-- /.payment-methods -->
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- ============================================================= FOOTER : END============================================================= -->
+
+<!-- For demo purposes – can be removed on production -->
+
+<!-- For demo purposes – can be removed on production : End -->
+
+<!-- JavaScripts placed at the end of the document so the pages load faster -->
+<script src="{% static 'main/assets/js/jquery-1.11.1.min.js' %}"></script>
+<script src="{% static 'main/assets/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'main/assets/js/bootstrap-hover-dropdown.min.js' %}"></script>
+<script src="{% static 'main/assets/js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'main/assets/js/echo.min.js' %}"></script>
+<script src="{% static 'main/assets/js/jquery.easing-1.3.min.js' %}"></script>
+<script src="{% static 'main/assets/js/bootstrap-slider.min.js' %}"></script>
+<script src="{% static 'main/assets/js/jquery.rateit.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'main/assets/js/lightbox.min.js' %}"></script>
+<script src="{% static 'main/assets/js/bootstrap-select.min.js' %}"></script>
+<script src="{% static 'main/assets/js/wow.min.js' %}"></script>
+<script src="{% static 'main/assets/js/scripts.js' %}"></script>
+<script src="{% static 'select2/select2.full.js' %}"></script>
+
+<script>
+    $(".select2-single, .select2-multiple").select2({
+        theme: "bootstrap",
+        placeholder: "Select a State",
+        maximumSelectionSize: 6,
+        containerCssClass: ':all:'
+    });
+
+    $(":checkbox").on("click", function () {
+        $(this).parent().nextAll("select").prop("disabled", !this.checked);
+    });
+</script>
+{% block js_container %}
+{% endblock %}
+</body>
+
+
+</html>
+

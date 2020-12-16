@@ -1,0 +1,67 @@
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load thumbnail %}
+
+<!-- ============================================== HOT DEALS ============================================== -->
+<div class="sidebar-widget hot-deals wow fadeInUp outer-top-vs">
+    <h3 class="section-title">{% trans 'events' %}</h3>
+    <div class="owl-carousel sidebar-carousel custom-carousel owl-theme outer-top-xs">
+        {% for based_random_company_product in based_random_company_products %}
+            <div class="item">
+                <div class="products">
+                    <div class="hot-deal-wrapper">
+                        <div class="image"><img
+                                src="{{ based_random_company_product.image|thumbnail_url:'events_products_services' }}"
+                                alt=""></div>
+                    </div>
+                    <!-- /.hot-deal-wrapper -->
+
+                    <div class="product-info text-left m-t-20">
+                        <h3 class="name"><a
+                                href="{% url 'company_product_or_service' based_random_company_product.id %}">{{ based_random_company_product.name }}</a>
+                        </h3>
+                        <span class="label {% if based_random_company_product.end_date > now %} label-success {% else %} label-danger {% endif %}">
+                                                                        {% if based_random_company_product.end_date > now %}
+                                                                            {% trans 'continues' %}
+                                                                        {% else %}
+                                                                            {% trans 'finished' %}
+                                                                        {% endif %}
+                                                                    </span>
+                        <div class="product-price"><span class="price">
+
+                                                                        {% trans 'start_date' %}:<span
+                                class="font-weight700 green-start_date">{{ based_random_company_product.start_date|date:'d F Y' }}</span>
+                                                                        <br/>
+                                                                        {% trans 'end_date' %}:<span
+                                class="font-weight700 red-end_date">{{ based_random_company_product.end_date|date:'d F Y' }}</span>
+                                                                    </span>
+                            <!-- /.product-price -->
+
+                        </div>
+                        <!-- /.product-info -->
+
+                        <div class="cart clearfix animate-effect">
+                            <div class="action">
+                                <div class="add-cart-button btn-group">
+                                    <button class="btn btn-primary icon" data-toggle="dropdown"
+                                            type="button"><i
+                                            class="fa fa-check"></i></button>
+                                    <button class="btn btn-primary cart-btn" type="button">
+                                        {% trans 'apply' %}
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- /.action -->
+                        </div>
+                        <!-- /.cart -->
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+
+    </div><!-- /.sidebar-widget -->
+</div>
+<!-- ============================================== HOT DEALS: END ============================================== -->
+

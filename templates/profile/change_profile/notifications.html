@@ -1,0 +1,145 @@
+{% extends 'profile_base.html' %}
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+{% block head_container %}
+
+    <title>{{ base_company_info.name }} | {% trans 'notifications' %}</title>
+    <link rel="canonical" href="{% url 'notifications' %}"/>
+    <!--  Social tags      -->
+    <meta name="keywords"
+          content="">
+    <meta name="description"
+          content="">
+    <!-- Schema.org markup for Google+ -->
+    <meta itemprop="name" content="{{ base_company_info.name }} | {% trans 'notifications' %}">
+    <meta itemprop="description"
+          content="">
+    <meta itemprop="image" content="{{ base_company_info.social_image|thumbnail_url:'facebook_image' }}">
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="image">
+    <meta name="twitter:site" content="@twitter_user">
+    <meta name="twitter:title" content="{{ base_company_info.name }} | {% trans 'notifications' %}">
+    <meta name="twitter:description"
+          content="">
+    <meta name="twitter:creator" content="@creativetim">
+    <meta name="twitter:image"
+          content="{{ base_company_info.social_image|thumbnail_url:'facebook_image' }}">
+    <!-- Open Graph data -->
+    <meta property="fb:app_id" content="fb_id">
+    <meta property="og:title" content="| {% trans 'notifications' %}"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:url" content="{% url 'notifications' %}"/>
+    <meta property="og:image"
+          content="{{ base_company_info.social_image|thumbnail_url:'facebook_image' }}"/>
+    <meta property="og:description"
+          content=""/>
+    <meta property="og:site_name" content="{{ base_company_info.name }}"/>
+
+
+{% endblock %}
+
+
+{% block base_container %}
+
+    <div class="container-fluid">
+        <h3>{% trans 'notifications' %}</h3>
+        <br>
+        <div class="row">
+
+            {% if notifications %}
+                <div class="col-md-9">
+                    <ul class="timeline timeline-simple">
+                        {% for notification in notifications %}
+                            <li class="timeline-inverted">
+                                <div class="timeline-badge info">
+                                    <i class="material-icons">notifications</i>
+                                </div>
+                                <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                        <span class="label label-info">{{ notification.title }}</span>
+                                    </div>
+                                    <div class="timeline-body">
+                                        <p>
+                                            {% autoescape off %}
+                                                {{ notification.content }}
+                                            {% endautoescape %}
+
+                                        </p>
+                                        <hr>
+                                        {% if notification.event %}
+                                            <h6>
+                                                <a href="{% url 'event' notification.event.id %}"
+                                                   class="btn btn-rose btn-round">
+                                                    <i class="material-icons">visibility_on</i> {{ notification.event.name }}
+                                                </a>
+                                            </h6>
+                                            <hr>
+                                        {% endif %}
+                                        {% if notification.company_product_or_service %}
+                                            <h6>
+                                                <a href="{% url 'event' notification.company_product_or_service.id %}"
+                                                   class="btn btn-rose btn-round">
+                                                    <i class="material-icons">visibility_on</i> {{ notification.company_product_or_service.name }}
+                                                </a>
+                                            </h6>
+                                            <hr>
+                                        {% endif %}
+
+                                        <h6>
+                                            <i class="ti-time"></i> {{ notification.date }}
+                                        </h6>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% else %}
+                <div class="col-md-9" style="background: #FFFFFF">
+                    <img src=""/>
+                    <div class="have-not-data">
+                        <strong>
+                            {% trans 'have_not_registired' %}
+                        </strong>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <br>
+        {% if notifications %}
+            <div id="products" class="row list-group">
+                <div class="col-md-12" style="    background: #fff;text-align: center;">
+                    <ul class="pagination pagination-info" style="    background: #fff;">
+                        {% if notifications.has_previous %}
+                            <li><a href="?page={{ notifications.previous_page_number }}">{% trans 'previous' %}</a></li>
+                        {% endif %}
+                        {% if notifications.page_range_data.show_first %}
+                            <li><a href="?page=1">1</a></li>
+                            <li><a class="ellipsis">...</a></li>
+                        {% endif %}
+                        {% for i in notifications.page_range_data.page_range %}
+                            {% ifequal i notifications.number %}
+                                <li class="active"><a>{{ i }}</a></li>
+                            {% else %}
+                                <li><a href="?page={{ i }}">{{ i }}</a></li>
+                            {% endifequal %}
+                        {% endfor %}
+                        {% if notifications.page_range_data.show_last %}
+                            <li><a class="ellipsis">...</a></li>
+                            <li>
+                                <a href="?page={{ notifications.paginator.num_pages }}">{{ notifications.paginator.num_pages }}</a>
+                            </li>
+                        {% endif %}
+
+                        {% if notifications.has_next %}
+                            <li><a href="?page={{ notifications.next_page_number }}">{% trans 'next' %}</a></li>
+                        {% endif %}
+
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load thumbnail %}
+
+<!-- HOTELS TAB -->
+
+<div class="bookfilters hpadding20">
+<br/>
+    <div class="hotelstab2">
+        <span class="opensans size13">{% trans 'search_word' %}</span>
+        <input type="text" class="form-control" placeholder="{% trans 'search' %}"/>
+
+    </div>
+
+
+<br/>
+    <div class="w100percent">
+        {% for based_busines in based_busineses %}
+            <div class="radio">
+                <label>
+                    <input type="radio" name="business-name" id="business-{{ based_busines.id }}"
+                           value="{{ based_busines.id }}"
+                           checked=""/>
+                    <span class="hotel-ico"></span> {{ based_busines.name }}
+                </label>
+            </div>
+            {% if forloop.counter|divisibleby:'6' and not forloop.last %}
+                </div>
+                <div class="w100percentlast">
+            {% endif %}
+        {% endfor %}
+        </div>
+
+    <div class="clearfix"></div>
+    <br/>
+
+
+    <!-- Price range -->
+    <button type="button" class="collapsebtn" data-toggle="collapse" data-target="#collapse2">
+        {% trans 'price_range' %} <span class="collapsearrow"></span>
+    </button>
+
+    <div id="collapse2" class="collapse in">
+        <div class="padding20">
+            <div class="layout-slider wh100percent">
+                            <span class="cstyle09"><input id="Slider1" type="slider" name="price"
+                                                          value="400;700"/></span>
+            </div>
+            <script type="text/javascript">
+                jQuery("#Slider1").slider({
+                    from: 100,
+                    to: 1000,
+                    step: 5,
+                    smooth: true,
+                    round: 0,
+                    dimension: "&nbsp;$",
+                    skin: "round"
+                });
+            </script>
+        </div>
+    </div>
+    <!-- End of Price range -->
+    <br/>
+<button type="submit" class="btn-search3 ">{% trans 'filter' %}</button>
+</div>
+<!-- END OF BOOK FILTERS -->
+

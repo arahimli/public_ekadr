@@ -1,0 +1,261 @@
+{% extends 'profile_base.html' %}
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+{% block head_container %}
+
+{% endblock %}
+
+
+{% block base_container %}
+    <style>
+        .txt_algn_cntr {
+            text-align: center !important;
+        }
+    </style>
+    <div class="container-fluid">
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="purple">
+                        <i class="material-icons">assignment</i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">
+                            {{ company.name }} - {{ event.name }}</h4>
+                        <div class="toolbar">
+                            <!--        Here you can write extra buttons/actions for the toolbar              -->
+                        </div>
+                        <div class="material-datatables">
+                            <table id="datatables" class="table table-striped table-no-bordered table-hover"
+                                   cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th>{% trans 'company_image' %}</th>
+                                    <th>{% trans 'company_name' %}</th>
+                                    <th>{% trans 'offer_price' %} </th>
+                                    <th>{% trans 'view_detail' %} </th>
+                                    <th>{% trans 'date' %}</th>
+                                    <th class="text-right">{% trans 'confirm' %}</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>{% trans 'company_image' %}</th>
+                                    <th>{% trans 'company_name' %}</th>
+                                    <th>{% trans 'offer_price' %} </th>
+                                    <th>{% trans 'view_detail' %}</th>
+                                    <th>{% trans 'date' %}</th>
+                                    <th class="text-right">{% trans 'confirm' %}</th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                {% for event_appeal in event_appeals %}
+                                    <tr>
+                                        <td style="font-size: 20px;"><img style="width: 80px;height: 80px;"
+                                                                          src="{{ event_appeal.company.logo|thumbnail_url:'event_appeal_company' }}"/>
+                                        </td>
+                                        <td style="font-size: 20px;">{{ event_appeal.company.name }}</td>
+                                        <td style="font-size: 20px;">{{ event_appeal.price|floatformat:'-2' }}</td>
+                                        <td style="font-size: 20px;">
+                                            <button type="button" class="btn btn-info" data-toggle="modal"
+                                                    data-target="#myModal-{{ event_appeal.id }}">{% trans 'view_detail' %}</button>
+                                        </td>
+                                        <td style="">{{ event_appeal.date }}</td>
+                                        <td class="td-actions text-right">
+                                            <button id="event-appeal-id-{{ event_appeal.id }}"
+                                                    onclick="eventAppeal('{% url 'my_company_event_appeal_confirm' event.company.id event.id event_appeal.id %}',{{ event_appeal.id }})"
+                                                    style="padding: 20px 20px;" type="button" rel="tooltip"
+                                                    class="btn btn-danger btn-lg btn-round">
+                                                <i class="material-icons">check</i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="myModal-{{ event_appeal.id }}" role="dialog">
+                                        <div class="modal-dialog">
+
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;
+                                                    </button>
+                                                    <h4 class="txt_algn_cntr modal-title">
+                                                        <strong>{% trans 'appeal_deatils' %}</strong></h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p style="text-align: center;">
+                                                        <a target="_blank"
+                                                           href="{% url 'company' event_appeal.company.id %}">
+                                                            <img style="max-height: 200px;"
+                                                                 src="{{ event_appeal.company.logo|thumbnail_url:'event_appeal_company' }}"/>
+                                                        </a>
+                                                    </p>
+                                                    <h4 style="text-align: center;">
+                                                        <a target="_blank"
+                                                           href="{% url 'company' event_appeal.company.id %}"><strong>{{ event_appeal.company.name }}</strong></a>
+                                                    </h4>
+                                                    <hr>
+                                                    <div class="list-group">
+                                                        <div class="txt_algn_cntr list-group-item active">
+                                                            <strong>{% trans 'offer_price' %}
+                                                                : </strong>{{ event_appeal.currency.nominal }} {{ event_appeal.price }}
+                                                        </div>
+                                                        <div class="list-group-item list-group-item-action">
+                                                            <strong>{% trans 'company_name' %}</strong>
+                                                            : <a target="_blank"
+                                                                 href="{% url 'company' event_appeal.company.id %}"><strong>{{ event_appeal.company.name }}</strong></a>
+                                                        </div>
+                                                        <div class="list-group-item list-group-item-action">
+                                                            <strong>{% trans 'offer_price' %}
+                                                                : </strong>{{ event_appeal.currency.nominal }} {{ event_appeal.price }}
+                                                        </div>
+                                                        <div class="list-group-item list-group-item-action">
+                                                            <strong>{% trans 'appeal_date' %}</strong>
+                                                            : {{ event_appeal.date }}
+                                                        </div>
+                                                        <div class="list-group-item list-group-item-action disabled">
+                                                            <strong>{% trans 'appeal_attachments' %}
+                                                                : </strong>
+                                                            {% for event_appeal_attachment in event_appeal.get_attachments %}
+                                                                <a target="_blank"
+                                                                   href="{{ event_appeal_attachment.file.url }}"
+                                                                   class="btn btn-danger"
+                                                                   download>
+                                                                <i class="fa fa-download" aria-hidden="true"></i> &nbsp;
+                                                                    {% trans 'document' %} {{ forloop.counter }}
+                                                                </a>
+                                                            {% endfor %}
+                                                        </div>
+                                                        <div class="list-group-item list-group-item-action">
+                                                            <strong>{% trans 'confirm' %}
+                                                                : </strong>
+
+                                                            <button id="event-appeal-id-{{ event_appeal.id }}"
+                                                                    onclick="eventAppeal('{% url 'my_company_event_appeal_confirm' event.company.id event.id event_appeal.id %}',{{ event_appeal.id }})"
+                                                                    style="padding: 20px 20px;" type="button"
+                                                                    rel="tooltip"
+                                                                    class="btn btn-danger btn-lg btn-round">
+                                                                <i class="material-icons">check</i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                        {% trans 'close' %}
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- end content-->
+                </div>
+                <!--  end card  -->
+            </div>
+            <!-- end col-md-12 -->
+        </div>
+        <!-- end row -->
+    </div>
+
+{% endblock %}
+{% block js_container %}
+    <script type="text/javascript">
+        {#        $(document).ready(function () {#}
+        function eventAppeal($url, $id) {
+            $.ajax({
+                url: $url, // the endpoint,commonly same url
+                dataType: "json",
+                type: "GET",
+                data: {
+                    success: 'success'
+                },
+                success: function (result) {
+                    if (result['message_code'] == 1) {
+                        var event_appeal_id = $('#event-appeal-id-' + $id);
+                        event_appeal_id.removeClass('btn-danger').addClass('btn-success');
+                    } else if (result['message_code'] == 2) {
+                        var event_appeal_id = $('#event-appeal-id-' + $id);
+                        event_appeal_id.removeClass('btn-success').addClass('btn-danger');
+                    } else if (result['message_code'] == 0) {
+                        swal({
+                            title: '',
+                            text: result['message'],
+                            type: 'error',
+                            confirmButtonClass: "btn btn-info",
+                            buttonsStyling: false
+                        })
+                    }
+                    //alert('success');
+                    // register_form_button.show(1000)
+                },
+                // handle a non-successful response
+                error: function (xhr, errmsg, err) {
+                    //{#                 console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console#}
+                    product_or_service_message.removeClass('alert').removeClass('alert-success').addClass('alert').addClass('alert-danger');
+                    product_or_service_message.html('<strong>' + 'error' + '</strong>').show();
+                    setTimeout(function () {
+                        product_or_service_message.fadeOut();
+                        product_or_service_button.show(1000);
+                    }, 4000);
+
+//{#                 $(".signup-message").show();#}
+//                $('#signup-loader-image').hide();
+//                 $('#register-form-button').show(1000);
+                }
+            });
+        }
+        {#        });#}
+    </script>
+    <script src="{% static 'profile/assets/js/jquery.datatables.js' %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#datatables').DataTable({
+                "pagingType": "full_numbers",
+                "lengthMenu": [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "{% trans 'all' %}"]
+                ],
+                responsive: true,
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "{% trans 'search_records' %}",
+                }
+
+            });
+
+
+            var table = $('#datatables').DataTable();
+
+            // Edit record
+            table.on('click', '.edit', function () {
+                $tr = $(this).closest('tr');
+
+                var data = table.row($tr).data();
+                alert('You press on Row: ' + data[0] + ' ' + data[1] + ' ' + data[2] + '\'s row.');
+            });
+
+            // Delete a record
+            table.on('click', '.remove', function (e) {
+                $tr = $(this).closest('tr');
+                table.row($tr).remove().draw();
+                e.preventDefault();
+            });
+
+            //Like record
+            table.on('click', '.like', function () {
+                alert('You clicked on Like button');
+            });
+
+            $('.card .material-datatables label').addClass('form-group');
+        });
+    </script>
+{% endblock %}

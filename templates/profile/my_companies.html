@@ -1,0 +1,163 @@
+{% extends 'profile_base.html' %}
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+{% block head_container %}
+
+{% endblock %}
+
+
+{% block base_container %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header" data-background-color="orange">
+                        <i class="material-icons">store</i>
+                    </div>
+                    <div class="card-content">
+                        <p class="category">{% trans 'my_companies' %}</p>
+                        <h3 class="card-title">{{ companies.count }}</h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons text-danger">list</i>
+                            <a href="{% url 'my_companies' %}">{% trans 'all_companies' %}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h3>
+            {% trans 'my_companies' %}
+            <a class="btn btn-info" href="{% url 'create_company' %}">
+                <i class="fa fa-plus" aria-hidden="true"></i> {% trans 'create_company' %}
+            </a>
+        </h3>
+        <br>
+        <div class="row">
+            {% for company in companies %}
+                <div class="col-md-4">
+                    <div class="card card-product">
+                        <div class="card-image" data-header-animation="true">
+                            <a href="{% url 'my_company' company.id %}">
+                                <img class="img" src="{{ company.logo|thumbnail_url:'companies_list' }}">
+                            </a>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-actions">
+                                <button type="button" class="btn btn-danger btn-simple fix-broken-card">
+                                    <i class="material-icons">{% trans 'build' %}</i> {% trans 'fix_header' %}!
+                                </button>
+                                <a href="{% url 'my_company' company.id %}" class="btn btn-default btn-simple"
+                                   rel="tooltip"
+                                   data-placement="bottom" title="{% trans 'view' %}">
+                                    <i class="material-icons">art_track</i>
+                                </a>
+                                <a href="{% url 'edit_company' company.id %}" type="button"
+                                   class="btn btn-success btn-simple" rel="tooltip"
+                                   data-placement="bottom" title="{% trans 'edit' %}">
+                                    <i class="material-icons">edit</i>
+                                </a>
+                                <button onclick="removeCompany('{{ company.id }}','{% url 'deleted_company' company.id %}?next_url={% url 'dashboard' %}')"
+                                        type="button" class="btn btn-danger btn-simple" rel="tooltip"
+                                        data-placement="bottom" title="{% trans 'remove' %}">
+                                    <i class="material-icons">close</i>
+                                </button>
+                            </div>
+                            <h4 class="card-title">
+                                <a href="{% url 'my_company' company.id %}">{{ company.name }}</a>
+                            </h4>
+                            <div class="card-description">
+                                {{ company.practices }}
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            {% if not company.is_active %}
+                                <div class="alert-danger"
+                                     style="width: 100%;text-align: center;background: #f33636;color: #fff;border-radius: 8px;border: 2px solid #00bcd4;">
+                                    <h4>{% trans 'is_not_active' %}</h4>
+                                </div>
+                            {% else %}
+                                <div class="stats pull-right">
+                                    <p class="category"><i
+                                            class="material-icons">place</i> {{ company.region.name }}</p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% if forloop.counter|divisibleby:3 and not forloop.last %}
+                    </div>
+                    <div class="row">
+
+                {% endif %}
+            {% endfor %}
+            </div>
+    </div>
+
+{% endblock %}
+
+{% block js_container %}
+{% if messages_spec %}
+<script>
+$( document ).ready(function() {
+swal({
+{#  title: 'Good job!',#}
+  type: 'success',
+  title: '{% trans 'good_job' %}!',
+  text: '{{ messages_spec }}',
+  timer: 3000,
+  showCloseButton: true,
+  showCancelButton: true,
+  cancelButtonText:
+    '{% trans 'cancel' %}',
+  confirmButtonText:
+    '{% trans 'okay' %}'
+}).then(
+  function () {},
+  // handling the promise rejection
+  function (dismiss) {
+    if (dismiss === 'timer') {
+{#      console.log('I was closed by the timer')#}
+    }
+  }
+);
+});
+
+</script>
+{% endif %}
+
+    <script>
+        function removeCompany($id, $url) {
+            swal({
+                title: '{% trans 'are_you_sure' %}?',
+                text: "{% trans 'are_you_sure_delete_company' %}!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '{% trans 'yes_delete_it_company' %}!',
+                cancelButtonText: '{% trans 'no_cancel' %}!',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false
+            }).then(function () {
+                window.location.replace($url);
+            }, function (dismiss) {
+                // dismiss can be 'cancel', 'overlay',
+                // 'close', and 'timer'
+                if (dismiss === 'cancel') {
+                    swal(
+                        '{% trans 'cancelled' %}',
+                        '{% trans 'cancelled_deleted' %} :)',
+                        'error'
+                    )
+                }
+            })
+        }
+    </script>
+
+{% endblock %}
+

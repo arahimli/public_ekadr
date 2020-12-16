@@ -1,0 +1,244 @@
+{% extends 'profile_base.html' %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% block head_container %}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+    <link rel="stylesheet" href="{% static 'select2/select2-bootstrap.css' %}">
+    <style>
+        #add_new_product_or_service_div {
+            display: none;
+        }
+
+        .old-data-div {
+            padding: 8px 5px;
+            background: antiquewhite;
+            margin: 2px auto;
+            border: 1px solid #e4b575;
+        }
+
+        .new-data-div {
+            padding: 8px 5px;
+            background: #bbffbe;
+            margin: 2px auto;
+            border: 1px solid #00c509;
+        }
+
+        .same-data-div {
+            padding: 8px 5px;
+            background: aliceblue;
+            margin: 2px auto;
+            border: 1px solid #99bfe0;
+        }
+
+        .txt-algn-cntr {
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+
+
+{% block base_container %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <form id="" class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="card-header card-header-text" data-background-color="rose">
+                            <h4 class="card-title">
+                                {{ profile_o.user.first_name }} {{ profile_o.user.last_name }}
+                            </h4>
+                        </div>
+                        <div class="card-content">
+                            <div class="row txt-algn-cntr">
+                                {#                                {{ admin_profile_form.is_confirm }}#}
+                                <h3 class="col-sm-12 "
+                                    style="text-align: center;">{% trans 'confirm_or_reject_profile_changes' %}</h3>
+                                <div class="col-md-offset-2 col-md-4 col-sm-6 checkbox-radios">
+                                    <div class="radio">
+                                        <label>
+                                            <input id="id_is_confirm_0" name="is_confirm" type="radio"
+                                                   value="confirm"><span
+                                                class="circle"></span><span class="check"></span> {% trans 'confirm' %}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6 checkbox-radios">
+                                    <div class="radio">
+                                        <label>
+                                            <input id="id_is_confirm_1" name="is_confirm" type="radio" value="reject"
+                                            ><span class="circle"></span><span
+                                                class="check"></span> {% trans 'reject' %}
+                                        </label>
+                                    </div>
+                                </div>
+                                {% if admin_profile_form.is_confirm.errors %}
+                                    <div class="col-md-8 col-md-offset-2 col-sm-12" style="margin-top: 10px;">
+                                        <div class="alert alert-danger" style="padding: 7px 0;">
+                                            <button style="margin: 5px 10px;" type="button" class="close"
+                                                    data-dismiss="alert" aria-hidden="true">
+                                                ×
+                                            </button>
+                                            <strong>{{ admin_profile_form.is_confirm.errors }}</strong>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="card-footer text-center">
+                                <input type="submit" class="btn btn-rose btn-fill" value="{% trans 'save_changes' %}"/>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'name' %}</label>
+                                <div class="col-sm-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+                                        {% if profile_o.user.first_name != profile_changed_o.first_name or profile_o.user.last_name != profile_changed_o.last_name %}
+                                            <div class="old-data-div">{{ profile_o.user.first_name }} {{ profile_o.user.last_name }}</div>
+                                            <div class="new-data-div">{{ profile_changed_o.first_name }} {{ profile_changed_o.last_name }}</div>
+                                        {% else %}
+                                            <div class="same-data-div">{{ profile_o.user.first_name }} {{ profile_o.user.last_name }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'photo' %}</label>
+                                <div class="col-md-offset-2 col-md-4 col-sm-4">
+                                    <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                        <div class="fileinput-new thumbnail">
+                                            <img src="
+
+
+
+
+                                                    {% if profile_o.image %}{{ profile_o.image.url }}{% else %}{% static 'profile/assets/img/default-avatar.png' %}{% endif %}"
+                                                 alt="...">
+                                        </div>
+                                        <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'email' %}</label>
+                                <div class="col-sm-6 ">
+                                    <div class="form-group label-floating column-sizing">
+                                        <label class="control-label"></label>
+                                        <div class="same-data-div">{{ profile_o.user.email }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'voen' %}</label>
+                                <div class="col-sm-6 ">
+                                    <div class="form-group label-floating column-sizing">
+                                        <label class="control-label"></label>
+                                        {% if profile_o.voen != profile_changed_o.voen %}
+                                            <div class="old-data-div">{{ profile_o.voen }}</div>
+                                            <div class="new-data-div">{{ profile_changed_o.voen }}</div>
+                                        {% else %}
+                                            <div class="same-data-div">{{ profile_o.voen }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'bank_account' %}</label>
+                                <div class="col-sm-6 ">
+                                    <div class="form-group label-floating column-sizing">
+                                        <label class="control-label"></label>
+                                        {% if profile_o.bank_account != profile_changed_o.bank_account %}
+                                            <div class="old-data-div">{{ profile_o.bank_account }}</div>
+                                            <div class="new-data-div">{{ profile_changed_o.bank_account }}</div>
+                                        {% else %}
+                                            <div class="same-data-div">{{ profile_changed_o.bank_account }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'region' %}</label>
+                                <div class="col-sm-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+                                        {% if profile_o.region.name != profile_changed_o.region.name %}
+                                            <div class="old-data-div">{{ profile_o.region.name }}</div>
+                                            <div class="new-data-div">{{ profile_changed_o.region.name }}</div>
+                                        {% else %}
+                                            <div class="same-data-div">{{ profile_o.region.name }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'address' %}</label>
+                                <div class="col-sm-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+                                        {% if profile_o.address != profile_changed_o.address %}
+                                            <div class="old-data-div">{{ profile_o.address }}</div>
+                                            <div class="new-data-div">{{ profile_changed_o.address }}</div>
+                                        {% else %}
+                                            <div class="same-data-div">{{ profile_o.address }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'businnes_type' %}</label>
+                                <div class="col-sm-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+                                        <div>
+                                            {% for profile_o_businnes_type in profile_o.businnes_type.all %}
+                                                <button class="btn btn-success btn-round">{{ profile_o_businnes_type.name }}</button>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'practices' %}</label>
+                                <div class="col-sm-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+                                        {% if profile_o.practices != profile_changed_o.practices %}
+                                            <div class="old-data-div">{{ profile_o.practices }}</div>
+                                            <div class="new-data-div">{{ profile_changed_o.practices }}</div>
+                                        {% else %}
+                                            <div class="same-data-div">{{ profile_o.practices }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block js_container %}
+    {% if success_messages %}
+
+        <script>
+            $(document).ready(function () {
+                swal({
+                    title: "{% trans 'success' %}",
+                    text: "{{ success_messages }}",
+                    buttonsStyling: false,
+                    confirmButtonClass: "btn btn-success",
+                    type: "success"
+                });
+            });
+
+        </script>
+
+    {% endif %}
+{% endblock %}

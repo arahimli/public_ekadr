@@ -1,0 +1,516 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+{% load widget_tweaks %}
+{% get_current_language as LANGUAGE_CODE %}
+{% block head_container %}
+
+{% endblock %}
+
+
+{% block base_container %}
+    <script src="https://www.google.com/recaptcha/api.js?hl={{ LANGUAGE_CODE }}" async defer></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.5/sweetalert2.min.css"
+          type="text/css"/>
+    <link rel="stylesheet" href="{% static 'select2/select2-bootstrap.css' %}">
+    <style>
+        .errorlist {
+            list-style: none !important;
+            margin-bottom: 0;
+        }
+
+        .red {
+            color: red;
+        }
+    </style>
+
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-inner">
+                <ul class="list-inline list-unstyled">
+                    <li><a href="{% url 'index' %}">{% trans 'home' %}</a></li>
+                    <li class='active'>{% trans 'sign_up' %}</li>
+                </ul>
+            </div><!-- /.breadcrumb-inner -->
+        </div><!-- /.container -->
+    </div><!-- /.breadcrumb -->
+
+    <!-- CONTENT -->
+    <div class="body-content">
+        <div class="container">
+            <div class="sign-in-page">
+                <div class="row">
+                    <!-- Sign-in -->
+                    <div class="col-md-10 col-sm-12 col-md-offset-1 sign-in">
+                        {% if message_code %}
+                            <div style="text-align: center;"
+                                 class="{% if message_code == 1 %} alert alert-success {% else %} alert alert-danger {% endif %}">
+                                <strong>{{ message }}</strong>
+                            </div>
+                        {% endif %}
+{#                        {{ sign_up_form.errors }}#}
+                        <form method="post" action="{% url 'sign_up' %}" id="sign_up-form">
+                            {% csrf_token %}
+                            <div class="padding30 grey">
+
+
+                                <h3 class="size16px bold dark left">{% trans 'sign_up' %} </h3>
+                                {#                        <div class="roundstep active right">1</div>#}
+                                <div class="clearfix"></div>
+                                <div class="line4"></div>
+
+                                <br/>
+                                <div class="col-md-3 textright">
+                                    <div class="margtop15"><span class="dark">{% trans 'first_name' %}: </span><span
+                                            class="red">* </span></div>
+                                </div>
+                                <div class="col-md-6">
+                                    {{ sign_up_form.first_name|add_class:'form-control mt10' }}
+                                    {% if sign_up_form.first_name.errors %}
+                                        <div class="alert alert-danger">
+                                            <button type="button" class="close" data-dismiss="alert">×
+                                            </button>
+                                            <strong>{{ sign_up_form.first_name.errors }}</strong>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-3 textleft margtop15">
+                                </div>
+                                <div class="clearfix"></div>
+
+                                <br/>
+                                <div class="col-md-3 textright">
+                                    <div class="margtop15"><span class="dark">{% trans 'last_name' %}: </span><span
+                                            class="red">* </span></div>
+                                </div>
+                                <div class="col-md-6">
+                                    {{ sign_up_form.last_name|add_class:'form-control mt10' }}
+                                    {% if sign_up_form.last_name.errors %}
+                                        <div class="alert alert-danger">
+                                            <button type="button" class="close" data-dismiss="alert">×
+                                            </button>
+                                            <strong>{{ sign_up_form.last_name.errors }}</strong>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-3 textleft margtop15">
+                                </div>
+                                <div class="clearfix"></div>
+
+                                <br/>
+                                <div class="col-md-3 textright">
+                                    <div class="margtop15"><span class="dark">{% trans 'username' %}: </span><span
+                                            class="red">* </span></div>
+                                </div>
+                                <div class="col-md-6">
+                                    {{ sign_up_form.username|add_class:'form-control mt10' }}
+                                    {% if sign_up_form.username.errors %}
+                                        <div class="alert alert-danger">
+                                            <button type="button" class="close" data-dismiss="alert">×
+                                            </button>
+                                            <strong>{{ sign_up_form.username.errors }}</strong>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-3 textleft margtop15">
+                                </div>
+                                <div class="clearfix"></div>
+                                <br/>
+                                <div class="col-md-3 textright">
+                                    <div class="margtop15"><span class="dark">{% trans 'email' %}: </span><span
+                                            class="red">* </span></div>
+                                </div>
+                                <div class="col-md-6">
+                                    {{ sign_up_form.email|add_class:'form-control mt10' }}
+                                    {% if sign_up_form.email.errors %}
+                                        <div class="alert alert-danger">
+                                            <button type="button" class="close" data-dismiss="alert">×
+                                            </button>
+                                            <strong>{{ sign_up_form.email.errors }}</strong>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-3 textleft margtop15">
+                                </div>
+
+                                <div class="clearfix"></div>
+                                <br/>
+                                <div class="col-md-3 textright">
+                                    <div class="margtop15"><span class="dark">{% trans 'password' %}: </span><span
+                                            class="red">* </span></div>
+                                </div>
+                                <div class="col-md-6">
+                                    {{ sign_up_form.password|add_class:'form-control mt10' }}
+                                    {% if sign_up_form.password.errors %}
+                                        <div class="alert alert-danger">
+                                            <button type="button" class="close" data-dismiss="alert">×
+                                            </button>
+                                            <strong>{{ sign_up_form.password.errors }}</strong>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-3 textleft margtop15">
+                                </div>
+
+                                <div class="clearfix"></div>
+                                <br/>
+                                <div class="col-md-3 textright">
+                                    <div class="margtop15"><span
+                                            class="dark">{% trans 'repeat_password' %}: </span><span
+                                            class="red">* </span></div>
+                                </div>
+                                <div class="col-md-6">
+                                    {{ sign_up_form.repeat_password|add_class:'form-control mt10' }}
+                                    {% if sign_up_form.repeat_password.errors %}
+                                        <div class="alert alert-danger">
+                                            <button type="button" class="close" data-dismiss="alert">×
+                                            </button>
+                                            <strong>{{ sign_up_form.repeat_password.errors }}</strong>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-3 textleft margtop15">
+                                </div>
+
+                                <div class="clearfix"></div>
+                                <br/>
+                                <div class="col-md-3 textright">
+                                    <div class="margtop15"><span class="dark">{% trans 'region' %}: </span><span
+                                            class="red">* </span></div>
+                                </div>
+                                <div class="col-md-6">
+                                    {{ sign_up_form.region|add_class:'form-control select2-single mt10' }}
+                                    {% if sign_up_form.region.errors %}
+                                        <div class="alert alert-danger">
+                                            <button type="button" class="close" data-dismiss="alert">×
+                                            </button>
+                                            <strong>{{ sign_up_form.region.errors }}</strong>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-3 textleft margtop15">
+                                </div>
+                                <div class="clearfix"></div>
+
+                                <br/>
+                                <div class="col-md-3 textright">
+                                    <div class="margtop15"><span class="dark">{% trans 'businnes_types' %}: </span><span
+                                            class="red">* </span></div>
+                                </div>
+                                <div class="col-md-6">
+                                    {{ sign_up_form.businnes_types|add_class:'form-control select2-multiple mt10' }}
+                                    {% if sign_up_form.businnes_types.errors %}
+                                        <div class="alert alert-danger">
+                                            <button type="button" class="close"
+                                                    data-dismiss="alert">×
+                                            </button>
+                                            <strong>{{ sign_up_form.businnes_types.errors }}</strong>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-3 textleft margtop15">
+                                </div>
+                                <div class="clearfix"></div>
+
+                                <br/>
+                                <div id="businnes_types_parent-div" style="padding-left: 20px;">
+                                    <div class="col-md-3 textright">
+                                        <div class="margtop15"><span
+                                                class="dark"> </span><span
+                                                class="red"> </span></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ sign_up_form.businnes_types_parent|add_class:'form-control select2-multiple mt10' }}
+                                        {% if sign_up_form.businnes_types_parent.errors %}
+                                            <div class="alert alert-danger">
+                                                <button type="button" class="close"
+                                                        data-dismiss="alert">×
+                                                </button>
+                                                <strong>{{ sign_up_form.businnes_types_parent.errors }}</strong>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-3 textleft margtop15">
+                                    </div>
+                                    <div class="clearfix"></div>
+
+                                    <br/>
+                                </div>
+                                <div class="col-md-3 textright">
+                                    <div class="margtop15"><span class="dark">{% trans 'type' %}: </span><span
+                                            class="red">* </span></div>
+                                </div>
+                                <div class="col-md-6">
+                                    {{ sign_up_form.type|add_class:'form-control mt10' }}
+                                    {% if sign_up_form.type.errors %}
+                                        <div class="alert alert-danger">
+                                            <button type="button" class="close"
+                                                    data-dismiss="alert">×
+                                            </button>
+                                            <strong>{{ sign_up_form.type.errors }}</strong>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-3 textleft margtop15">
+                                </div>
+                                <div class="clearfix"></div>
+
+                                <br/>
+                                <div id="user-type-full-div">
+                                    <div class="col-md-3 textright">
+                                        <div class="margtop15"><span
+                                                class="dark">{% trans 'bank_account' %}: </span><span
+                                                class="red">* </span></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ sign_up_form.bank_account|add_class:'form-control mt10' }}
+                                        {% if sign_up_form.bank_account.errors %}
+                                            <div class="alert alert-danger">
+                                                <button type="button" class="close"
+                                                        data-dismiss="alert">×
+                                                </button>
+                                                <strong>{{ sign_up_form.bank_account.errors }}</strong>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-3 textleft margtop15">
+                                    </div>
+                                    <div class="clearfix"></div>
+
+                                    <br/>
+                                    <div class="col-md-3 textright">
+                                        <div class="margtop15"><span class="dark">{% trans 'voen' %}: </span><span
+                                                class="red">* </span></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ sign_up_form.voen|add_class:'form-control mt10' }}
+                                        {% if sign_up_form.voen.errors %}
+                                            <div class="alert alert-danger">
+                                                <button type="button" class="close"
+                                                        data-dismiss="alert">×
+                                                </button>
+                                                <strong>{{ sign_up_form.voen.errors }}</strong>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-3 textleft margtop15">
+                                    </div>
+                                    <div class="clearfix"></div>
+
+                                    <br/>
+                                    <div class="col-md-3 textright">
+                                        <div class="margtop15"><span class="dark">{% trans 'address' %}: </span><span
+                                                class="red">* </span></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ sign_up_form.address|add_class:'form-control mt10' }}
+                                        {% if sign_up_form.address.errors %}
+                                            <div class="alert alert-danger">
+                                                <button type="button" class="close"
+                                                        data-dismiss="alert">×
+                                                </button>
+                                                <strong>{{ sign_up_form.address.errors }}</strong>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-3 textleft margtop15">
+                                    </div>
+                                    <div class="clearfix"></div>
+
+                                    <br/>
+                                    <div class="col-md-3 textright">
+                                        <div class="margtop15"><span class="dark">{% trans 'practices' %}: </span><span
+                                                class="red">* </span></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ sign_up_form.practices|add_class:'form-control mt10' }}
+                                        {% if sign_up_form.practices.errors %}
+                                            <div class="alert alert-danger">
+                                                <button type="button" class="close"
+                                                        data-dismiss="alert">×
+                                                </button>
+                                                <strong>{{ sign_up_form.practices.errors }}</strong>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-3 textleft margtop15">
+                                    </div>
+                                    <div class="clearfix"></div>
+
+                                    <br/>
+                                </div>
+                                <div class="col-md-3 textright">
+                                    <div class="margtop15"><span class="dark">{% trans 'captcha' %}: </span><span
+                                            class="red">* </span></div>
+                                </div>
+                                <div class="col-md-6">
+                                    {{ sign_up_form.captcha|add_class:'form-control mt10' }}
+
+                                    {% if sign_up_form.captcha.errors %}
+                                        <div class="alert alert-danger">
+                                            <button type="button" class="close" data-dismiss="alert">×
+                                            </button>
+                                            <strong>{{ sign_up_form.captcha.errors }}</strong>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <br/>
+                                <div class="clearfix"></div>
+                                <div class="line4"></div>
+
+                                <div class="col-md-3 textright">
+                                </div>
+                                <div class="col-md-6">
+
+                                    <button style="width: 100%;margin-top: 15px;" type="submit" class="btn btn-success">
+                                        {% trans 'sign_up' %}
+                                    </button>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                    <!-- Sign-in -->
+
+
+                    <!-- create a new account -->            </div><!-- /.row -->
+            </div><!-- /.sigin-in-->
+            <!-- ============================================== BRANDS CAROUSEL ============================================== -->
+            {% include 'include/parts/partners.html' %}
+            <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->
+        </div><!-- /.container -->
+    </div>
+    <!-- /.body-content -->
+
+
+
+
+{% endblock %}
+
+
+{% block js_container %}
+    {#<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>#}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.5/sweetalert2.min.js"></script>
+    {% if message_code == 1 %}
+        <script>
+
+            $(document).ready(function () {
+                swal(
+                    '{{ message }}',
+                    '',
+                    'success'
+                );
+            });
+
+        </script>
+    {% endif %}
+    <script>
+        $(document).ready(function () {
+            {#            alert('sasa');#}
+            var main_businnes = $('#id_businnes_types');
+            var businnes_types_parent_div = $('#businnes_types_parent-div');
+            businnes_types_parent_div.hide();
+            var id_businnes_types_parent = $('#id_businnes_types_parent');
+            var url = '{% url 'parent_business_ajax' %}';
+            main_businnes.change(function () {
+                {#                alert('sasa');#}
+                {#            alert('---------');#}
+                {#            alert(main_businnes.val());#}
+                {#                alert("Handler for .change() called.");#}
+                $.ajax({
+                    url: url, // the endpoint,commonly same url
+                    dataType: "json",
+                    type: "post",
+                    data: $('#sign_up-form').serialize(),
+
+                    success: function (result) {
+                        id_businnes_types_parent.html('');
+                        if (result['message_code'] == 1) {
+                            businnes_types_parent_div.show();
+                            console.log(result['message']);
+                            {#                            console.log('-----------------');#}
+                            id_businnes_types_parent.html('');
+                            {#                            console.log(id_businnes_types_parent.html());#}
+                            {#                            alert(id_businnes_types_parent.html());#}
+                            {#                            console.log('-----------------');#}
+                            id_businnes_types_parent.html(result['message']);
+                            console.log(id_businnes_types_parent.html());
+
+                            {#                            console.log('**********************************************************');#}
+                        } else if (result['message_code'] == 5) {
+                            businnes_types_parent_div.hide();
+                        }
+                        //alert('success');
+                        // register_form_button.show(1000)
+                    },
+                    // handle a non-successful response
+                    error: function (xhr, errmsg, err) {
+                        id_businnes_types_parent.html('');
+                        businnes_types_parent_div.hide();
+                        {#                        alert(0);#}
+                        //{#                 console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console#}
+                        {#                    product_or_service_message.removeClass('alert').removeClass('alert-success').addClass('alert').addClass('alert-danger');#}
+                        {#                    product_or_service_message.html('<strong>' + 'error' + '</strong>').show();#}
+                        {#                    setTimeout(function () {#}
+                        {#                        product_or_service_message.fadeOut();#}
+                        {#                        product_or_service_button.show(1000);#}
+                        {#                    }, 4000);#}
+
+//{#                 $(".signup-message").show();#}
+//                $('#signup-loader-image').hide();
+//                 $('#register-form-button').show(1000);
+                    }
+                });
+            });
+        })
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            {#            alert('ready')#}
+            var type_user = $('#id_type');
+            var user_type_full_div = $('#user-type-full-div');
+            user_type_full_div.hide();
+            if (type_user.val() == 'ordinary-person') {
+                user_type_full_div.hide();
+            } else {
+                user_type_full_div.show();
+            }
+
+            type_user.change(function () {
+                {#                alert('sasas')#}
+                if (type_user.val() == 'ordinary-person') {
+                    user_type_full_div.hide();
+                } else {
+                    user_type_full_div.show();
+                }
+            });
+
+        });
+    </script>
+    <script>
+        {#    $('#sign_up-form').submit(function( event ) {#}
+        {#        alert('signup atm');#}
+        {#        event.preventDefault();#}
+        {##}
+        {#{);#}
+    </script>
+    <script src="{% static 'select2/select2.full.js' %}"></script>
+
+    <script>
+        $(".select2-single, .select2-multiple").select2({
+            theme: "bootstrap",
+            placeholder: "Select a State",
+            maximumSelectionSize: 6,
+            containerCssClass: ':all:'
+        });
+
+        $(":checkbox").on("click", function () {
+            $(this).parent().nextAll("select").prop("disabled", !this.checked);
+        });
+    </script>
+
+{% endblock %}

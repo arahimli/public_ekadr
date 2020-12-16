@@ -1,0 +1,198 @@
+{% extends 'profile_base.html' %}
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+{% block head_container %}
+
+{% endblock %}
+
+
+{% block base_container %}
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header" data-background-color="orange">
+                        <i class="material-icons">store</i>
+                    </div>
+                    <div class="card-content">
+                        <p class="category">{% trans 'my_companies' %}</p>
+                        <h3 class="card-title">{{ user_profile_base.get_companies.count }}</h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons text-danger">list</i>
+                            <a href="{% url 'my_companies' %}">{% trans 'all_companies' %}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header" data-background-color="orange">
+                        <i class="material-icons">shopping_cart</i>
+                    </div>
+                    <div class="card-content">
+                        <p class="category">{% trans 'company_product_or_service_count' %}</p>
+                        <h3 class="card-title">{{ company_product_or_service_count }}</h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons text-danger">list</i>
+                            <a href="{% url 'my_company' company.id %}">{{ company.name }} {% trans 'company_product_or_service' %}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header" data-background-color="orange">
+                        <i class="material-icons">shopping_cart</i>
+                    </div>
+                    <div class="card-content">
+                        <p class="category">{% trans 'company_events_count' %}</p>
+                        <h3 class="card-title">{{ company_events_count }}</h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons text-danger">list</i>
+                            <a href="{% url 'my_company_events' company.id %}">{{ company.name }} {% trans 'all_events' %}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <a href="{% url 'my_company' company.id %}" style="width: 100%"  class="btn btn-info">{% trans 'products_or_services' %}</a>
+            </div>
+            <div class="col-md-6">
+                <a href="{% url 'my_company_events' company.id %}" style="width: 100%" class="btn btn-danger">{% trans 'events' %}</a>
+            </div>
+        </div>
+        <h3>{% trans 'my_company_products_or_services' %}
+            <a class="btn btn-info" href="{% url 'create_product_service' company.id %}?next_url={{ url }}">
+                <i class="fa fa-plus" aria-hidden="true"></i> {% trans 'add_company_products_or_services' %}
+            </a>
+
+        </h3>
+        <br>
+
+        <div id="products" class="row list-group">
+            {% for company_product_or_service in company_products_or_servicess %}
+                <div class="item  col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                    <div class="thumbnail">
+                        <a href="">
+                            <img class="group list-group-image"
+                                 src="{{ company_product_or_service.logo|thumbnail_url:'profile_my_company_product_or_service' }}"
+                                 alt=""/>
+                        </a>
+                        <div class="caption">
+                            <h4 class="group inner list-group-item-heading">
+                                <a>{{ company_product_or_service.name }}</a>
+                            </h4>
+                            <p class="group inner list-group-item-text">
+                                {{ company_product_or_service.description|slice:'170' }}</p>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-12">
+                                    <p class="lead">
+                                        {{ company_product_or_service.price }} {{ company_product_or_service.currency.nominal }}</p>
+                                </div>
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="row">
+                                        <div class="col-xs-4 ">
+                                            <a class="btn btn-info" href="#">
+                                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+                                        <div class="col-xs-4 ">
+                                            <a class="btn btn-success"
+                                               href="{% url 'edit_product_service' company.id company_product_or_service.id %}?next_url={{ url }}">
+                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+                                        <div class="col-xs-4 ">
+                                            <a class="btn btn-danger"
+                                               onclick="removeProductOrservices('{{ company_product_or_service.id }}','{% url 'deleted_product_or_service' company_product_or_service.id %}?next_url={% url 'my_company' company.id %}')">
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="col-md-12" style="    background: #fff;text-align: center;">
+
+                <ul class="pagination pagination-info" style="    background: #fff;">
+                    {% if company_products_or_servicess.has_previous %}
+                        <li><a href="?page={{ company_products_or_servicess.previous_page_number }}">{% trans 'previous' %}</a></li>
+                    {% endif %}
+                    {% if company_products_or_servicess.page_range_data.show_first %}
+                        <li><a href="?page=1">1</a></li>
+                        <li><a class="ellipsis">...</a></li>
+                    {% endif %}
+                    {% for i in company_products_or_servicess.page_range_data.page_range %}
+                        {% ifequal i company_products_or_servicess.number %}
+                            <li class="active"><a>{{ i }}</a></li>
+                        {% else %}
+                            <li><a href="?page={{ i }}">{{ i }}</a></li>
+                        {% endifequal %}
+                    {% endfor %}
+                    {% if company_products_or_servicess.page_range_data.show_last %}
+                        <li><a class="ellipsis">...</a></li>
+                        <li>
+                            <a href="?page={{ company_products_or_servicess.paginator.num_pages }}">{{ company_products_or_servicess.paginator.num_pages }}</a>
+                        </li>
+                    {% endif %}
+
+                    {% if company_products_or_servicess.has_next %}
+                        <li><a href="?page={{ company_products_or_servicess.next_page_number }}">{% trans 'next' %}</a></li>
+                    {% endif %}
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block js_container %}
+    {% if messages %}
+        <script>
+            demo.showSuccessNotification('top', 'right', 'success', '{{ messages }}');
+        </script>
+    {% endif %}
+    <script>
+     function removeProductOrservices($id , $url) {
+        swal({
+          title: '{% trans 'are_you_sure' %}?',
+          text: "{% trans 'are_you_sure_delete' %}!",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: '{% trans 'yes_delete_it' %}!',
+          cancelButtonText: '{% trans 'no_cancel' %}!',
+          confirmButtonClass: 'btn btn-success',
+          cancelButtonClass: 'btn btn-danger',
+          buttonsStyling: false
+        }).then(function () {
+          window.location.replace($url);
+        }, function (dismiss) {
+          // dismiss can be 'cancel', 'overlay',
+          // 'close', and 'timer'
+          if (dismiss === 'cancel') {
+            swal(
+              '{% trans 'cancelled' %}',
+              '{% trans 'cancelled_deleted' %} :)',
+              'error'
+            )
+          }
+        })
+     }
+    </script>
+{% endblock %}}

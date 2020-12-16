@@ -1,0 +1,28 @@
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['{% trans 'year' %}', '{% trans 'product_or_service' %}', '{% trans 'event' %}', '{% trans 'company' %}'],
+            {% for data_list_item in data_list %}
+              ['{{ data_list_item.year }}',  {{ data_list_item.pors_count }},      {{ data_list_item.event_count }},      {{ data_list_item.company_count }}],
+            {% endfor %}
+        ]);
+
+        var options = {
+          title: '{{ main_business_name }} - {% trans 'companies' %},{% trans 'events' %},{% trans 'products_or_services' %}',
+          curveType: 'function',
+          legend: { position: 'top' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart_1'));
+
+        chart.draw(data, options);
+      }
+    </script>
+    <div id="curve_chart_1" style="width: 100%; height: 400px"></div>

@@ -1,0 +1,386 @@
+{% extends 'profile_base.html' %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% block head_container %}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+    <link rel="stylesheet" href="{% static 'select2/select2-bootstrap.css' %}">
+    <link href="{% static 'geoposition/geoposition.css' %}" type="text/css" media="all" rel="stylesheet" />
+    <style>
+        #add_new_product_or_service_div {
+            display: none;
+        }
+    </style>
+
+{% endblock %}
+
+
+{% block base_container %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <form id="create-or-edit-event-form" class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="card-header card-header-text" data-background-color="rose">
+                            <h4 class="card-title">
+                                {% if company %}
+                                    {% trans 'edit_event' %}
+                                {% else %}
+                                    {% trans 'add_new_event' %}
+                                {% endif %}
+                            </h4>
+                        </div>
+                        <div class="card-content">
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'name' %}</label>
+                                <div class="col-sm-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+                                        {{ form.name|add_class:"form-control" }}
+                                        {% if form.name.errors %}
+                                            <div class="alert alert-danger" style="padding: 7px 0;">
+                                                <button style="margin: 5px 10px;" type="button" class="close"
+                                                        data-dismiss="alert" aria-hidden="true">
+                                                    ×
+                                                </button>
+                                                <strong>{{ form.name.errors }}</strong>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'company_product_or_service' %}</label>
+                                <div class="col-sm-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+                                        {{ form.company_product_or_service|add_class:"form-control select2-multiple" }}
+                                        {% if form.company_product_or_service.errors %}
+                                            <div class="alert alert-danger" style="padding: 7px 0;">
+                                                <button style="margin: 5px 10px;" type="button" class="close"
+                                                        data-dismiss="alert" aria-hidden="true">
+                                                    ×
+                                                </button>
+                                                <strong>{{ form.company_product_or_service.errors }}</strong>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'image' %}</label>
+                                <div class="col-md-offset-2 col-md-4 col-sm-4">
+                                    <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                        <div class="fileinput-new thumbnail">
+                                            <img src="{% if event.image %}{{ event.image.url }}{% else %}{% static 'profile/assets/img/image_placeholder.jpg' %}{% endif %}"
+                                                 alt="...">
+                                        </div>
+                                        <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                                        <div>
+                                                    <span class="btn btn-rose btn-round btn-file">
+                                                        <span class="fileinput-new">{% trans 'select_image' %}</span>
+                                                        <span class="fileinput-exists">{% trans 'change' %}</span>
+                                                    {{ form.image }}
+                                                    </span>
+                                            <a href="#pablo" class="btn btn-danger btn-round fileinput-exists"
+                                               data-dismiss="fileinput"><i class="fa fa-times"></i> {% trans 'remove' %}
+                                            </a>
+                                        </div>
+                                    </div>
+                                    {% if form.image.errors %}
+                                        <div class="alert alert-danger" style="padding: 7px 0;">
+                                            <button style="margin: 5px 10px;" type="button" class="close"
+                                                    data-dismiss="alert" aria-hidden="true">
+                                                ×
+                                            </button>
+                                            <strong>{{ form.image.errors }}</strong>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'businness_types' %}</label>
+                                <div class="col-sm-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+                                        {{ form.businnes_type|add_class:"form-control select2-multiple" }}
+                                        {% if form.businnes_type.errors %}
+                                            <div class="alert alert-danger" style="padding: 7px 0;">
+                                                <button style="margin: 5px 10px;" type="button" class="close"
+                                                        data-dismiss="alert" aria-hidden="true">
+                                                    ×
+                                                </button>
+                                                <strong>{{ form.businnes_type.errors }}</strong>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="businnes_types_parent-div">
+                                <label class="col-sm-2 label-on-left"> </label>
+                                <div class="col-sm-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+                                        {{ form.businnes_types_parent|add_class:"form-control select2-multiple" }}
+                                        {% if form.businnes_types_parent.errors %}
+                                            <div class="alert alert-danger" style="padding: 7px 0;">
+                                                <button style="margin: 5px 10px;" type="button" class="close"
+                                                        data-dismiss="alert" aria-hidden="true">
+                                                    ×
+                                                </button>
+                                                <strong>{{ form.businnes_types_parent.errors }}</strong>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'start_date' %}</label>
+                                <div class="col-sm-6">
+                                    <div class="card-content" style="padding: 0 20px;">
+{#                                        <h4 class="card-title">Datetime Picker</h4>#}
+                                        <div class="form-group">
+                                        <label class="control-label"></label>
+                                        {{ form.start_date|add_class:"form-control datetimepicker" }}
+                                        {% if form.start_date.errors %}
+                                            <div class="alert alert-danger" style="padding: 7px 0;">
+                                                <button style="margin: 5px 10px;" type="button" class="close"
+                                                        data-dismiss="alert" aria-hidden="true">
+                                                    ×
+                                                </button>
+                                                <strong>{{ form.start_date.errors }}</strong>
+                                            </div>
+                                        {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'end_date' %}</label>
+                                <div class="col-sm-6">
+                                    <div class="card-content" style="padding: 0 20px;">
+{#                                        <h4 class="card-title">Datetime Picker</h4>#}
+                                        <div class="form-group">
+                                        <label class="control-label"></label>
+                                        {{ form.end_date|add_class:"form-control datetimepicker" }}
+                                        {% if form.end_date.errors %}
+                                            <div class="alert alert-danger" style="padding: 7px 0;">
+                                                <button style="margin: 5px 10px;" type="button" class="close"
+                                                        data-dismiss="alert" aria-hidden="true">
+                                                    ×
+                                                </button>
+                                                <strong>{{ form.end_date.errors }}</strong>
+                                            </div>
+                                        {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'is_active' %}</label>
+                                <div class="col-sm-6">
+                                    <div class="checkbox pull-left">
+                                        <label class="control-label">
+                                            {{ form.is_active }}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'quantity' %}</label>
+                                <div class="col-sm-6 ">
+                                    <div class="form-group label-floating column-sizing">
+                                        <label class="control-label"></label>
+                                        {{ form.quantity|add_class:"form-control" }}
+                                        {% if form.quantity.errors %}
+                                            <div class="alert alert-danger" style="padding: 7px 0;">
+                                                <button style="margin: 5px 10px;" type="button" class="close"
+                                                        data-dismiss="alert" aria-hidden="true">
+                                                    ×
+                                                </button>
+                                                <strong>{{ form.quantity.errors }}</strong>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'currency' %}</label>
+                                <div class="col-sm-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+                                        {{ form.currency|add_class:"form-control select2-multiple" }}
+                                        {% if form.currency.errors %}
+                                            <div class="alert alert-danger" style="padding: 7px 0;">
+                                                <button style="margin: 5px 10px;" type="button" class="close"
+                                                        data-dismiss="alert" aria-hidden="true">
+                                                    ×
+                                                </button>
+                                                <strong>{{ form.currency.errors }}</strong>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'description' %}</label>
+                                <div class="col-sm-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+
+                                        {{ form.description|add_class:"form-control" }}
+                                        {% if form.description.errors %}
+                                            <div class="alert alert-danger" style="padding: 7px 0;">
+                                                <button style="margin: 5px 10px;" type="button" class="close"
+                                                        data-dismiss="alert" aria-hidden="true">
+                                                    ×
+                                                </button>
+                                                <strong>{{ form.description.errors }}</strong>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2 label-on-left">{% trans 'position' %}</label>
+                                <div class="col-sm-8">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+
+                                        {{ form.position|add_class:"form-control" }}
+                                        {% if form.position.errors %}
+                                            <div class="alert alert-danger" style="padding: 7px 0;">
+                                                <button style="margin: 5px 10px;" type="button" class="close"
+                                                        data-dismiss="alert" aria-hidden="true">
+                                                    ×
+                                                </button>
+                                                <strong>{{ form.position.errors }}</strong>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <input type="submit"  onclick="document.getElementById('create-or-edit-event-form').submit();" class="btn btn-rose btn-fill" value="{% if event %}{% trans 'edit' %}{% else %}{% trans 'create' %}{% endif %}"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block js_container %}
+
+    <script type="text/javascript" src="{% static 'geoposition/geoposition.js' %}"></script>
+    <script src="{% static 'select2/select2.full.js' %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <!-- DateTimePicker Plugin -->
+    <script src="{% static 'profile/assets/js/bootstrap-datetimepicker.js' %}"></script>
+    <script>
+dateTimeOptions = {
+'format': 'Y-MM-D HH:mm:ss',
+'autoclose': true,
+'showMeridian' : true
+};
+{#widgets = {#}
+{#    #NOT Use localization and set a default format#}
+{#    'datetime': DateTimeWidget(options = dateTimeOptions)#}
+{#    }#}
+    </script>
+    <script>
+        $(".select2-single, .select2-multiple").select2({
+            theme: "bootstrap",
+            placeholder: "Select a State",
+            maximumSelectionSize: 6,
+            containerCssClass: ':all:'
+        });
+
+        $(":checkbox").on("click", function () {
+            $(this).parent().nextAll("select").prop("disabled", !this.checked);
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            {#            md.initSliders();#}
+            demo.initFormExtendedDatetimepickers();
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+{#            alert('sasa');#}
+            var main_businnes = $('#id_businnes_type');
+            var businnes_types_parent_div = $('#businnes_types_parent-div');
+            {% if event_parent_businnes_os.count > 0 %}
+                businnes_types_parent_div.show();
+            {% else %}
+                businnes_types_parent_div.hide();
+            {% endif %}
+            var id_businnes_types_parent = $('#id_businnes_types_parent');
+            var url = '{% url 'profile_parent_business_ajax' %}';
+            main_businnes.change(function () {
+{#                alert('sasa')#}
+                {#            alert('---------');#}
+                {#            alert(main_businnes.val());#}
+                {#                alert("Handler for .change() called.");#}
+                $.ajax({
+                    url: url, // the endpoint,commonly same url
+                    dataType: "json",
+                    type: "post",
+                    data: $('#create-or-edit-event-form').serialize(),
+
+                    success: function (result) {
+                        id_businnes_types_parent.html('');
+                        if (result['message_code'] == 1) {
+                            businnes_types_parent_div.show();
+                            console.log(result['message']);
+                            {#                            console.log('-----------------');#}
+                            id_businnes_types_parent.html('');
+                            {#                            console.log(id_businnes_types_parent.html());#}
+                            {#                            alert(id_businnes_types_parent.html());#}
+                            {#                            console.log('-----------------');#}
+                            id_businnes_types_parent.html(result['message']);
+                            console.log(id_businnes_types_parent.html());
+
+                            {#                            console.log('**********************************************************');#}
+                        } else if (result['message_code'] == 5) {
+                            businnes_types_parent_div.hide();
+                        }
+                        //alert('success');
+                        // register_form_button.show(1000)
+                    },
+                    // handle a non-successful response
+                    error: function (xhr, errmsg, err) {
+                        id_businnes_types_parent.html('');
+                        businnes_types_parent_div.hide();
+                        {#                        alert(0);#}
+                        //{#                 console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console#}
+                        {#                    product_or_service_message.removeClass('alert').removeClass('alert-success').addClass('alert').addClass('alert-danger');#}
+                        {#                    product_or_service_message.html('<strong>' + 'error' + '</strong>').show();#}
+                        {#                    setTimeout(function () {#}
+                        {#                        product_or_service_message.fadeOut();#}
+                        {#                        product_or_service_button.show(1000);#}
+                        {#                    }, 4000);#}
+
+//{#                 $(".signup-message").show();#}
+//                $('#signup-loader-image').hide();
+//                 $('#register-form-button').show(1000);
+                    }
+                });
+            });
+        })
+    </script>
+
+
+{% endblock %}

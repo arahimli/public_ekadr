@@ -1,0 +1,294 @@
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+{% get_available_languages as languages %}
+{% get_current_language as LANGUAGE_CODE %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- Bootstrap -->
+    <link href="{% static 'main/dist/css/bootstrap.css' %}" rel="stylesheet" media="screen"/>
+    <link href="{% static 'main/assets/css/custom.css' %}" rel="stylesheet" media="screen"/>
+
+    <link href="{% static 'main/examples/carousel/carousel.css' %}" rel="stylesheet"/>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="{% static 'main/assets/js/html5shiv.js' %}"></script>
+      <script src="{% static 'main/assets/js/respond.min.js' %}"></script>
+    <![endif]-->
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic'
+          rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,400,300,300italic' rel='stylesheet'
+          type='text/css'>
+
+    <!-- Font-Awesome -->
+    <link rel="stylesheet" type="text/css" href="{% static 'main/assets/css/font-awesome.css' %}" media="screen"/>
+    <!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="{% static 'main/assets/css/font-awesome-ie7.css' %}" media="screen" />
+    <![endif]-->
+
+    <!-- REVOLUTION BANNER CSS SETTINGS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/fullscreen.css' %}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'main/rs-plugin/css/settings.css' %}" media="screen"/>
+
+    <!-- Picker -->
+    <link rel="stylesheet" href="{% static 'main/assets/css/jquery-ui.css' %}"/>
+
+    <!-- bin/jquery.slider.min.css -->
+    <link rel="stylesheet" href="{% static 'main/plugins/jslider/css/jslider.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'main/plugins/jslider/css/jslider.round.css' %}" type="text/css"/>
+
+    <!-- jQuery -->
+    <script src="{% static 'main/assets/js/jquery.v2.0.3.js' %}"></script>
+
+
+    <!-- bin/jquery.slider.min.js -->
+    <script type="text/javascript" src="{% static 'main/plugins/jslider/js/jshashtable-2.1_src.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'main/plugins/jslider/js/jquery.numberformatter-1.2.3.js' %}"></script>
+    <script type="text/javascript" src="{% static 'main/plugins/jslider/js/tmpl.js' %}"></script>
+    <script type="text/javascript" src="{% static 'main/plugins/jslider/js/jquery.dependClass-0.1.js' %}"></script>
+    <script type="text/javascript" src="{% static 'main/plugins/jslider/js/draggable-0.1.js' %}"></script>
+    <script type="text/javascript" src="{% static 'main/plugins/jslider/js/jquery.slider.js' %}"></script>
+    <!-- end -->
+<link rel="stylesheet" type="text/css" href="{% static 'scroll-effects/assets/animate.css' %}" />
+    {% block head_container %}
+
+    {% endblock %}
+</head>
+<body id="top" class="thebg">
+
+<!-- Top wrapper -->
+<div class="navbar-wrapper2 navbar-fixed-top">
+    <div class="container">
+        <div class="navbar mtnav">
+
+            <div class="container offset-3">
+                <!-- Navigation-->
+                <div class="navbar-header">
+                    <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="{% url 'index' %}" class="navbar-brand"><img src="{% static 'main/images/logo.png' %}"
+                                                                          alt="Travel Agency Logo" class="logo"/></a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{% url 'index' %}">{% trans 'home' %}</a></li>
+                        <li class="dropdown active">
+                            <a data-toggle="dropdown" class="dropdown-toggle">{% trans 'business' %}<b
+                                    class="lightcaret mt-2"></b></a>
+                            <ul class="dropdown-menu posright-0">
+                                <li>
+                                    <div class="row dropwidth01">
+                                        <ul class="droplist col-md-4">
+                                            <li class="dropdown-header">{% trans 'business' %}</li>
+                                            {% for based_busines in based_busineses %}
+                                                <li>
+                                                    <a href="{% url 'busines' based_busines.id 'products-or-services' %}">
+                                                        {{ based_busines.name }}
+                                                    </a>
+                                                </li>
+                                                {% if forloop.counter == 6 and not forloop.last %}
+                                                    </ul>
+                                                    <ul class="droplist col-md-4">
+                                                    <li class="dropdown-header">-</li>
+                                                {% endif %}
+                                            {% endfor %}
+                                            </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="{% url 'companies' %}">{% trans 'companies' %}</a></li>
+                        <li><a href="{% url 'events' %}">{% trans 'events' %}</a></li>
+                        <li><a href="{% url 'faq' %}">{% trans 'faq' %}</a></li>
+                        {% if request.user.is_authenticated %}
+                            <li class="dropdown">
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="#">{% trans 'profile' %} <b
+                                        class="lightcaret mt-2"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{% url 'dashboard' %}">{% trans 'profile' %}</a></li>
+                                    <li><a href="{% url 'log_out' %}">{% trans 'log_out' %}</a></li>
+                                </ul>
+                            </li>
+                        {% else %}
+                            <li class="dropdown">
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="#">{% trans 'sign_in' %} <b
+                                        class="lightcaret mt-2"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{% url 'sign_in' %}?next_url={{ request.path }}">{% trans 'sign_in' %}</a>
+                                    </li>
+                                    <li><a href="{% url 'sign_up' %}">{% trans 'sign_up' %}</a></li>
+                                </ul>
+                            </li>
+                        {% endif %}
+
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ LANGUAGE_CODE }} <b
+                                    class="lightcaret mt-2"></b></a>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-header">{{ LANGUAGE_CODE }}</li>
+                                {% for language in languages %}
+                                    {% if language.0 != LANGUAGE_CODE %}
+                                        <li class="{{ language.0 }}">
+                                            <a href="{% url 'set_language' %}?language={{ language.0 }}&next={{ request.path }}">
+                                                {{ language.0 }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+                <!-- /Navigation-->
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /Top wrapper -->
+{% block base_container %}
+
+{% endblock %}
+
+
+
+<!-- FOOTER -->
+
+<div class="footerbgblack">
+    <div class="container">
+
+        <div class="col-md-3">
+            <span class="ftitle">Let's socialize </span>
+            <div class="scont">
+                <a href="#" class="social1b"><img src="{% static 'main/images/icon-facebook.png' %}" alt=""/></a>
+                <a href="#" class="social2b"><img src="{% static 'main/images/icon-twitter.png' %}" alt=""/></a>
+                <a href="#" class="social3b"><img src="{% static 'main/images/icon-gplus.png' %}" alt=""/></a>
+                <a href="#" class="social4b"><img src="{% static 'main/images/icon-youtube.png' %}" alt=""/></a>
+                <br/><br/><br/>
+                    <img  style="width: 100px;" src="{% static 'main/images/logosmal.png' %}" alt=""/><br/>
+                    &copy; {{ now.year }} <br/>
+                    {% trans 'all_rights_reserved' %}
+                    <br/><br/>
+
+            </div>
+        </div>
+        <!-- End of column 1-->
+        {% if base_useful_links %}
+
+
+            <div class="col-md-3">
+                <span class="ftitle">{% trans 'useful_links' %}</span>
+                <br/><br/>
+                <ul class="footerlist">
+                    {% for base_useful_link in base_useful_links|slice:'12' %}
+                        <li><a href="#">Golf Vacations </a></li>
+                        {% if forloop.counter|divisibleby:'6' %}
+                            </ul>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="ftitle">{% trans 'useful_links' %} </span>
+                                <br/><br/>
+                                <ul class="footerlist">
+                                    {% elif forloop.counter < 6 and forloop.last %}
+                                </ul>
+                            </div>
+                            <div class="col-md-3">
+                            <span class="ftitle">{% trans 'useful_links' %} </span>
+                            <br/><br/>
+                            <ul class="footerlist">
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+                    </div>
+            <!-- End of column 2-->
+        {% else %}
+            <div class="col-md-3">
+                <span class="ftitle">{% trans 'useful_links' %}</span>
+                <br/><br/>
+            </div>
+            <div class="col-md-3">
+                <span class="ftitle">{% trans 'useful_links' %}</span>
+                <br/><br/>
+            </div>
+        {% endif %}
+        <div class="col-md-3 grey">
+            <span class="ftitle">{% trans 'customer_support' %}</span><br/>
+            <span class="pnr">{{ base_company_info.main_phone }} </span><br/>
+            {{ base_company_info.main_email }}
+        </div>
+        <!-- End of column 4-->
+
+
+    </div>
+</div>
+
+<div class="footerbg3black">
+    <div class="container center grey">
+            <a href="{% url 'index' %}">{% trans 'home' %} </a> |
+            <a href="{% url 'companies' %}">{% trans 'companies' %}</a> |
+            <a href="{% url 'events' %}">{% trans 'events' %}</a> |
+            <a href="{% url 'faq' %}">{% trans 'faq' %}</a>
+            <a href="#top" class="gotop scroll"><img src="{% static 'main/images/spacer.png' %}" alt=""/></a>
+    </div>
+</div>
+
+{% if request.resolver_match.url_name != 'sign_up' %}
+<!-- Counter -->
+<script src="{% static 'main/assets/js/js-list3.js' %}"></script>
+{% endif %}
+
+<!-- Custom Select -->
+<script type='text/javascript' src='{% static 'main/assets/js/jquery.customSelect.js' %}'></script>
+
+<!-- JS Ease -->
+<script src="{% static 'main/assets/js/jquery.easing.js' %}"></script>
+
+<!-- Custom functions -->
+<script src="{% static 'main/assets/js/functions.js' %}"></script>
+
+<!-- jQuery KenBurn Slider  -->
+<script type="text/javascript" src="{% static 'main/rs-plugin/js/jquery.themepunch.revolution.min.js' %}"></script>
+{% if request.resolver_match.url_name != 'sign_up' %}
+<!-- Counter -->
+<script src="{% static 'main/assets/js/counter.js' %}"></script>
+{% endif %}
+<!-- Nicescroll  -->
+<script src="{% static 'main/assets/js/jquery.nicescroll.min.js' %}"></script>
+
+<!-- Picker -->
+<script src="{% static 'main/assets/js/jquery-ui.js' %}"></script>
+
+<!-- Bootstrap -->
+<script src="{% static 'main/dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'scroll-effects/assets/viewportchecker.js' %}"></script>
+<script type="text/javascript">
+jQuery(document).ready(function() {
+	jQuery('.row').addClass("hidden").viewportChecker({
+	    classToAdd: 'visible animated bounceInUp', // Class to add to the elements when they are visible
+	    offset: 100
+	   });
+});
+</script>
+{% block js_container %}
+
+
+{% endblock %}
+
+
+
+</body>
+</html>

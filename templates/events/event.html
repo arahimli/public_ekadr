@@ -1,0 +1,1097 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+{% load widget_tweaks %}
+{% block head_container %}
+    <style>
+        #map-big, html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+{% endblock %}
+
+
+{#<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.5/sweetalert2.min.css">#}
+
+{#https://limonte.github.io/sweetalert2/dist/sweetalert2.min.css#}
+
+
+{% block base_container %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.5/sweetalert2.min.css"
+          type="text/css"/>
+    <style>
+
+
+        .card {
+            padding-top: 20px;
+            margin: 10px 0 20px 0;
+            background-color: rgba(214, 224, 226, 0.2);
+            border-top-width: 0;
+            border-bottom-width: 2px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+
+        }
+
+        .card .card-heading.image .card-heading-header h3 {
+            margin: 0;
+            font-size: 14px;
+            line-height: 16px;
+            color: #262626;
+        }
+
+        .card .card-heading.image .card-heading-header span {
+            font-size: 12px;
+            color: #999999;
+        }
+
+        .card .card-body {
+            padding: 0 20px;
+            margin-top: 20px;
+        }
+
+        .card .card-media {
+            padding: 0 20px;
+            margin: 0 -14px;
+        }
+
+        .card .card-media img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .card .card-actions {
+            min-height: 30px;
+            padding: 0 20px 20px 20px;
+            margin: 20px 0 0 0;
+        }
+
+        .card .card-comments {
+            padding: 20px;
+            margin: 0;
+            background-color: #f8f8f8;
+        }
+
+        .card .card-comments .comments-collapse-toggle {
+            padding: 0;
+            margin: 0 20px 12px 20px;
+        }
+
+        .card .card-comments .comments-collapse-toggle a,
+        .card .card-comments .comments-collapse-toggle span {
+            padding-right: 5px;
+            overflow: hidden;
+            font-size: 12px;
+            color: #999;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .card-comments .media-heading {
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .card.people {
+            position: relative;
+            display: inline-block;
+            width: 170px;
+            height: 300px;
+            padding-top: 0;
+            margin-left: 20px;
+            overflow: hidden;
+            vertical-align: top;
+        }
+
+        .card.people:first-child {
+            margin-left: 0;
+        }
+
+        .card.people .card-top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: inline-block;
+            width: 170px;
+            height: 150px;
+            background-color: #ffffff;
+        }
+
+        .card.people .card-top.green {
+            background-color: #53a93f;
+        }
+
+        .card.people .card-top.blue {
+            background-color: #427fed;
+        }
+
+        .card.people .card-info {
+            position: absolute;
+            top: 150px;
+            display: inline-block;
+            width: 100%;
+            height: 101px;
+            overflow: hidden;
+            background: #ffffff;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .card.people .card-info .title {
+            display: block;
+            margin: 8px 14px 0 14px;
+            overflow: hidden;
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 18px;
+            color: #404040;
+        }
+
+        .card.people .card-info .desc {
+            display: block;
+            margin: 8px 14px 0 14px;
+            overflow: hidden;
+            font-size: 12px;
+            line-height: 16px;
+            color: #737373;
+            text-overflow: ellipsis;
+        }
+
+        .card.people .card-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            display: inline-block;
+            width: 100%;
+            padding: 10px 20px;
+            line-height: 29px;
+            text-align: center;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .card.hovercard {
+            position: relative;
+            padding-top: 0;
+            overflow: hidden;
+            text-align: center;
+            background-color: #fff;
+        }
+
+        .card.hovercard .cardheader {
+            background: url("http://lorempixel.com/850/280/nature/4/");
+            background-size: cover;
+            height: 135px;
+        }
+
+        .card.hovercard .avatar {
+            position: relative;
+            top: -50px;
+            margin-bottom: -50px;
+        }
+
+        .card.hovercard .avatar img {
+            width: 100px;
+            height: 100px;
+            max-width: 100px;
+            max-height: 100px;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+            border: 5px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .card.hovercard .info {
+            padding: 4px 8px 10px;
+        }
+
+        .card.hovercard .info .title {
+            margin-bottom: 4px;
+            font-size: 24px;
+            line-height: 1;
+            color: #262626;
+            vertical-align: middle;
+        }
+
+        .card.hovercard .info .desc {
+            overflow: hidden;
+            font-size: 12px;
+            line-height: 20px;
+            color: #737373;
+            text-overflow: ellipsis;
+        }
+
+        .card.hovercard .bottom {
+            padding: 0 20px;
+            margin-bottom: 17px;
+        }
+
+        {#        .btn {#}
+        {#            border-radius: 50%;#}
+        {#            width: 32px;#}
+        {#            height: 32px;#}
+        {#            line-height: 18px;#}
+        {#        }#}
+
+    </style>
+
+    <link href="{% static 'yuukCountdown-js/css/style.css' %}" rel="stylesheet" type="text/css"/>
+    <style>
+        .countdown .item .day {
+            width: 110px;
+        }
+
+        .well-company {
+            min-height: 20px;
+        {#            padding: 19px;#} margin-bottom: 20px;
+        {#            background-color: #f5f5f5;#}{#            border: 1px solid #e3e3e3;#} -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+            -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+
+    <style>
+        .apply-form-content {
+            margin: 20px auto;
+            padding: 20px;
+            background: #0099cc;
+            border-radius: 10px;
+        }
+    </style>
+
+    <!-- ============================================== HEADER : END ============================================== -->
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-inner">
+                <ul class="list-inline list-unstyled">
+                    <li><a href="{% url 'index' %}">{% trans 'home' %}</a></li>
+                    <li class='active'>{{ event.name }}</li>
+                </ul>
+            </div><!-- /.breadcrumb-inner -->
+        </div><!-- /.container -->
+    </div><!-- /.breadcrumb -->
+    <div class="body-content outer-top-xs">
+        <div class='container'>
+            <div class='row single-product'>
+                <div class='col-md-3 sidebar'>
+                    <div class="sidebar-module-container">
+                        <div class="home-banner outer-top-n" style="margin-bottom: 10px;">
+                            {% if based_ads.event_detail1_ads_active %}
+                                {% if based_ads.event_detail1_ads_image %}
+                                    <a href="{{ based_ads.event_detail1_ads_url }}">
+                                        <img class="img-responsive"
+                                             src="{{ based_ads.event_detail1_ads_image|thumbnail_url:'event_detail1_ads_image' }}"
+                                             alt="">
+                                    </a>
+                                {% elif based_ads.event_detail1_ads_context %}
+                                    {% autoescape off %}
+                                        {{ based_ads.event_detail1_ads_context }}
+                                    {% endautoescape %}
+
+                                {% else %}
+                                    <img class="img-responsive"
+                                         src="https://placeholdit.co//i/262x262?bg=cccccc"
+                                         alt="">
+                                {% endif %}
+                            {% else %}
+                                <img class="img-responsive"
+                                     src="https://placeholdit.co//i/262x262?bg=cccccc"
+                                     alt="">
+                            {% endif %}
+                        </div>
+                        {% include 'include/parts/random_events.html' %}
+                        <div class="home-banner outer-top-n" style="margin-bottom: 10px;">
+                            {% if based_ads.event_detail2_ads_active %}
+                                {% if based_ads.event_detail2_ads_image %}
+                                    <a href="{{ based_ads.event_detail2_ads_url }}">
+                                        <img class="img-responsive"
+                                             src="{{ based_ads.event_detail2_ads_image|thumbnail_url:'event_detail2_ads_image' }}"
+                                             alt="">
+                                    </a>
+                                {% elif based_ads.event_detail2_ads_context %}
+                                    {% autoescape off %}
+                                        {{ based_ads.event_detail2_ads_context }}
+                                    {% endautoescape %}
+
+                                {% else %}
+                                    <img class="img-responsive"
+                                         src="https://placeholdit.co//i/262x262?bg=cccccc"
+                                         alt="">
+                                {% endif %}
+                            {% else %}
+                                <img class="img-responsive"
+                                     src="https://placeholdit.co//i/262x262?bg=cccccc"
+                                     alt="">
+                            {% endif %}
+                        </div>
+                    </div>
+                </div><!-- /.sidebar -->
+                <div class='col-md-9'>
+                    <div class="detail-block">
+                        <div class="row  wow fadeInUp">
+
+                            <div class="col-xs-12 col-sm-6 col-md-5 gallery-holder">
+                                <div class="product-item-holder size-big single-product-gallery small-gallery">
+
+                                    <div id="owl-single-product">
+                                        <div class="single-product-gallery-item" id="slide1">
+                                            <a data-lightbox="image-1" data-title="Gallery"
+                                               href="{{ event.image|thumbnail_url:'product_detail_big' }}">
+                                                <img class="img-responsive" alt=""
+                                                     src="{{ event.image|thumbnail_url:'product_detail_big' }}"
+                                                     data-echo="{{ event.image|thumbnail_url:'product_detail_big' }}"/>
+                                            </a>
+                                        </div><!-- /.single-product-gallery-item -->
+                                        {#                                        {% for company_product_or_service_get_image in company_product_or_service.get_images %}#}
+                                        {#                                            <div class="single-product-gallery-item"#}
+                                        {#                                                 id="slide{{ forloop.counter|add:'1' }}">#}
+                                        {#                                                <a data-lightbox="image-1" data-title="Gallery"#}
+                                        {#                                                   href="{{ company_product_or_service_get_image.image|thumbnail_url:'product_detail_big' }}">#}
+                                        {#                                                    <img class="img-responsive" alt=""#}
+                                        {#                                                         src="{{ company_product_or_service_get_image.image|thumbnail_url:'product_detail_big' }}"#}
+                                        {#                                                         data-echo="{{ company_product_or_service_get_image.image|thumbnail_url:'product_detail_big' }}"/>#}
+                                        {#                                                </a>#}
+                                        {#                                            </div><!-- /.single-product-gallery-item -->#}
+                                        {#                                        {% endfor %}#}
+                                    </div><!-- /.single-product-slider -->
+
+
+                                    <div class="single-product-gallery-thumbs gallery-thumbs">
+
+                                        <div id="owl-single-product-thumbnails">
+                                            <div class="item">
+                                                <a class="horizontal-thumb active" data-target="#owl-single-product"
+                                                   data-slide="1" href="#slide1">
+                                                    <img class="img-responsive" width="85" alt=""
+                                                         src="{{ event.image|thumbnail_url:'product_detail_mini' }}"
+                                                         data-echo="{{ event.image|thumbnail_url:'product_detail_big' }}"/>
+                                                </a>
+                                            </div>
+                                            {#                                            {% for company_product_or_service_get_image in company_product_or_service.get_images %}#}
+                                            {#                                                <div class="item">#}
+                                            {#                                                    <a class="horizontal-thumb" data-target="#owl-single-product"#}
+                                            {#                                                       data-slide="{{ forloop.counter|add:'1' }}"#}
+                                            {#                                                       href="#slide{{ forloop.counter|add:'1' }}">#}
+                                            {#                                                        <img class="img-responsive" width="85" alt=""#}
+                                            {#                                                             src="{{ company_product_or_service_get_image.image|thumbnail_url:'product_detail_mini' }}"#}
+                                            {#                                                             data-echo="{{ company_product_or_service_get_image.image|thumbnail_url:'product_detail_big' }}"/>#}
+                                            {#                                                    </a>#}
+                                            {#                                                </div>#}
+                                            {#                                            {% endfor %}#}
+                                        </div><!-- /#owl-single-product-thumbnails -->
+
+
+                                    </div><!-- /.gallery-thumbs -->
+
+                                </div><!-- /.single-product-gallery -->
+                            </div><!-- /.gallery-holder -->
+                            <div class='col-sm-6 col-md-7 product-info-block'>
+                                <div class="product-info">
+                                    <h1 class="name">{{ event.name }}</h1>
+
+                                    <div class="rating-reviews m-t-20">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <div class="rating rateit-small"></div>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <div class="reviews">
+                                                    <a href="#" class="lnk">(13 {% trans 'reviews' %})</a>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.row -->
+                                    </div><!-- /.rating-reviews -->
+
+                                    <div class="stock-container info-container m-t-10">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="stock-box">
+                                                    <span style="font-weight: 600"
+                                                          class="label">{% trans 'start_date' %} :</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="stock-box">
+                                                    <span style="font-weight: 600;"
+                                                          class="value">{{ event.start_date }}</span>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.row -->
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="stock-box">
+                                                    <span style="font-weight: 600;" class="label">{% trans 'end_date' %} :</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="stock-box">
+                                                    <span style="font-weight: 600;color: green;"
+                                                          class="value">{{ event.end_date }}</span>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.row -->
+                                    </div><!-- /.stock-container -->
+
+                                    <div class="description-container m-t-20">
+                                        {{ event.description|truncatechars:'200' }}
+                                    </div><!-- /.description-container -->
+
+                                    <div class="price-container info-container m-t-20">
+                                        <div class="row">
+
+
+                                            <div class="col-sm-6">
+                                                <div class="price-box">
+                                                    {#                                                    <span class="price">{{ company_product_or_service.currency.nominal }}{{ company_product_or_service.price|floatformat:'-2' }}</span>#}
+                                                    {#                                                    <span class="price-strike">$900.00</span>#}
+                                                </div>
+                                            </div>
+
+                                            {#                                            <div class="col-sm-6">#}
+                                            {#                                                <div class="favorite-button m-t-10">#}
+                                            {#                                                    <a class="btn btn-primary" data-toggle="tooltip"#}
+                                            {#                                                       data-placement="right" title="Wishlist" href="#">#}
+                                            {#                                                        <i class="fa fa-heart"></i>#}
+                                            {#                                                    </a>#}
+                                            {#                                                    <a class="btn btn-primary" data-toggle="tooltip"#}
+                                            {#                                                       data-placement="right" title="Add to Compare" href="#">#}
+                                            {#                                                        <i class="fa fa-signal"></i>#}
+                                            {#                                                    </a>#}
+                                            {#                                                    <a class="btn btn-primary" data-toggle="tooltip"#}
+                                            {#                                                       data-placement="right" title="E-mail" href="#">#}
+                                            {#                                                        <i class="fa fa-envelope"></i>#}
+                                            {#                                                    </a>#}
+                                            {#                                                </div>#}
+                                            {#                                            </div>#}
+
+                                        </div><!-- /.row -->
+                                    </div><!-- /.price-container -->
+
+                                    <div class="quantity-container info-container">
+                                        <div class="row">
+
+                                            <div class="col-sm-2">
+
+                                            </div>
+
+                                            <div class="col-sm-7">
+                                                <a data-toggle="tab"
+                                                   href="#appeal-tab" class="btn btn-primary"><i
+                                                        class="fa fa-check inner-right-vs"></i> {% trans 'apply' %}</a>
+                                            </div>
+
+
+                                        </div><!-- /.row -->
+                                    </div><!-- /.quantity-container -->
+
+
+                                </div><!-- /.product-info -->
+                            </div><!-- /.col-sm-7 -->
+                        </div><!-- /.row -->
+                    </div>
+
+                    <div class="product-tabs inner-bottom-xs  wow fadeInUp">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <ul id="product-tabs" class="nav nav-tabs nav-tab-cell">
+                                    <li class="active"><a data-toggle="tab"
+                                                          href="#appeal-tab">{% trans 'appeal' %}</a></li>
+                                    <li><a data-toggle="tab"
+                                           href="#description">{% trans 'description' %}</a></li>
+                                    <li onclick="initMap()"><a data-toggle="tab"
+                                           href="#maps-tab">{% trans 'map' %}</a></li>
+                                    {#                                    <li onclick="LoadMapEvent()"><a data-toggle="tab" href="#maps">{% trans 'map' %}</a>#}
+                                    {#                                    </li>#}
+                                </ul><!-- /.nav-tabs #product-tabs -->
+                            </div>
+                            <div class="col-sm-9">
+
+                                <div class="tab-content">
+
+                                    <div id="appeal-tab" class="tab-pane in active">
+
+                                        <div class="product-tab">
+                                            {% if event.start_date < now and event.end_date > now %}
+
+                                                <a class="btn btn-primary" style="width: 100%;"
+                                                   onclick="applyDiv('apply-div');">{% trans 'apply' %}</a>
+
+                                                {#                            </div>#}
+                                                <div id="apply-div"
+                                                     style="{% if is_post_val == True %} display: block; {% else %} display: none; {% endif %}">
+                                                    <div class="property-filter widget">
+                                                        <div class="apply-form-content">
+                                                            {% if request.user.is_authenticated %}
+                                                                <form method="post"
+                                                                      action="" enctype="multipart/form-data">
+                                                                    {% csrf_token %}
+                                                                    <div class="input-group">
+                                                            <span class="input-group-addon"
+                                                                  id="basic-addon1">{% trans 'company' %}</span>
+                                                                        {{ event_appeal_form.company|add_class:"form-control" }}
+                                                                    </div>
+                                                                    {% if event_appeal_form.company.errors %}
+                                                                        <div class="alert alert-danger"
+                                                                             style="    margin-top: 9px;padding: 7px 0;">
+                                                                            <button style="margin: 5px 30px;"
+                                                                                    type="button" class="close"
+                                                                                    data-dismiss="alert"
+                                                                                    aria-hidden="true">
+                                                                                ×
+                                                                            </button>
+                                                                            <strong>{{ event_appeal_form.company.errors }}</strong>
+                                                                        </div>
+                                                                    {% endif %}
+                                                                    <br/>
+                                                                    <div class="input-group">
+                                                            <span class="input-group-addon"
+                                                                  id="basic-addon1">{% trans 'price' %}</span>
+                                                                        {{ event_appeal_form.price|add_class:"form-control" }}
+                                                                    </div>
+                                                                    {% if event_appeal_form.price.errors %}
+                                                                        <div class="alert alert-danger"
+                                                                             style="padding: 7px 0;">
+                                                                            <button style="margin: 5px 30px;"
+                                                                                    type="button" class="close"
+                                                                                    data-dismiss="alert"
+                                                                                    aria-hidden="true">
+                                                                                ×
+                                                                            </button>
+                                                                            <strong>{{ event_appeal_form.price.errors }}</strong>
+                                                                        </div>
+                                                                    {% endif %}
+                                                                    <br/>
+                                                                    <div class="input-group">
+                                                            <span class="input-group-addon"
+                                                                  id="basic-addon1">{% trans 'currency' %}</span>
+                                                                        {{ event_appeal_form.currency|add_class:"form-control" }}
+                                                                    </div>
+                                                                    {% if event_appeal_form.currency.errors %}
+                                                                        <div class="alert alert-danger"
+                                                                             style="padding: 7px 0;">
+                                                                            <button style="margin: 5px 30px;"
+                                                                                    type="button" class="close"
+                                                                                    data-dismiss="alert"
+                                                                                    aria-hidden="true">
+                                                                                ×
+                                                                            </button>
+                                                                            <strong>{{ event_appeal_form.currency.errors }}</strong>
+                                                                        </div>
+                                                                    {% endif %}
+                                                                    <br/>
+                                                                    <div class="input-group">
+                                                            <span class="input-group-addon"
+                                                                  id="basic-addon1">{% trans 'choose_all_event_attachments' %}</span>
+                                                                        {{ event_appeal_form.attachments|add_class:"form-control" }}
+
+                                                                    </div>
+                                                                    {% if event_appeal_form.attachments.errors %}
+                                                                        <div class="alert alert-danger"
+                                                                             style="padding: 7px 0;">
+                                                                            <button style="margin: 5px 30px;"
+                                                                                    type="button" class="close"
+                                                                                    data-dismiss="alert"
+                                                                                    aria-hidden="true">
+                                                                                ×
+                                                                            </button>
+                                                                            <strong>{{ event_appeal_form.attachments.errors }}</strong>
+                                                                        </div>
+                                                                    {% endif %}
+                                                                    <br/>
+                                                                    <div class="form-actions">
+                                                                        <input type="submit"
+                                                                               value="{% trans 'apply_now' %}"
+                                                                               class="btn btn-success"
+                                                                               style="width: 100%;">
+                                                                    </div><!-- /.form-actions -->
+                                                                </form>
+                                                            {% else %}
+                                                                <div style="text-align: center;">
+                                                                    <a href="{% url 'sign_in' %}?next_url={% url 'event' event.id %}"
+                                                                       class="btn btn-danger btn-large">{% trans 'sign_in' %}</a>
+                                                                    <span style="color: #fff; font-weight: 600;">{% trans 'or' %}</span>
+                                                                    <a href="{% url 'sign_up' %}"
+                                                                       class="btn btn-danger btn-large">{% trans 'sign_up' %}</a>
+                                                                </div>
+                                                            {% endif %}
+                                                        </div><!-- /.content -->
+                                                    </div><!-- /.property-filter -->
+                                                </div>
+                                            {% else %}
+                                                <a class="btn btn-primary disabled"
+                                                   style="width: 100%;">{% trans 'apply' %}</a>
+                                            {% endif %}
+
+                                        </div>
+                                    </div><!-- /.tab-pane -->
+
+                                    <div id="description" class="tab-pane">
+                                        <div class="product-tab">
+                                            <p class="text">
+                                                {{ event.description }}
+                                            </p>
+                                        </div>
+                                    </div><!-- /.tab-pane -->
+
+                                    <div id="maps-tab" class="tab-pane">
+                                        <div class="product-tab">
+
+                                            <div class="col-md-12" style="min-height: 500px;margin: 0;padding: 0;">
+                                                <input type="hidden" disabled value="{{ event.name }}"
+                                                       id="map-location-postion-name-id">
+                                                <input type="hidden" disabled value="{% url 'event' event.id %}"
+                                                       id="map-location-postion-url-id">
+                                                <input type="hidden" disabled
+                                                       value="{{ event.image|thumbnail_url:'event_page_map' }}"
+                                                       id="map-location-postion-image-id">
+                                                <input type="hidden" disabled value="{{ event_longitude }}"
+                                                       id="map-location-postion-longitude-id">
+                                                <input type="hidden" disabled value="{{ event_latitude }}"
+                                                       id="map-location-postion-latitude-id">
+                                                <input type="hidden" disabled value="{% trans 'view_more' %}"
+                                                       id="map-location-postion-view_more-id">
+                                                <div id="init-map" style="height: 500px;"></div>
+                                                <script src="{% static 'main/assets/js/jquery-1.11.1.min.js' %}"></script>
+                                                <script>
+                                                    var map_location_postion_longitude_id = document.getElementById("map-location-postion-longitude-id");
+                                                    var map_location_postion_latitude_id = document.getElementById("map-location-postion-latitude-id");
+                                                    var map_location_postion_name_id = document.getElementById("map-location-postion-name-id");
+                                                    var map_location_postion_url_id = document.getElementById("map-location-postion-url-id");
+                                                    var map_location_postion_image_id = document.getElementById("map-location-postion-image-id");
+                                                    var map_location_postion_view_more_id = document.getElementById("map-location-postion-view_more-id");
+                                                    // This example displays a marker at the center of Australia.
+                                                    // When the user clicks the marker, an info window opens.
+
+                                                    function initMap() {
+{#                                                        var  c_longitude = map_location_postion_longitude_id.value;#}
+{#                                                        alert(map_location_postion_longitude_id.value);#}
+{#                                                        alert(map_location_postion_latitude_id.value);#}
+                                                        var uluru = {lat: Number(map_location_postion_latitude_id.value), lng: Number(map_location_postion_longitude_id.value)};
+                                                        var map = new google.maps.Map(document.getElementById('init-map'), {
+                                                            center: uluru,
+                                                            zoom: 10,
+                                                            scrollwheel: false,
+                                                            mapTypeId: 'roadmap'
+                                                        });
+                                                        {#        var varia = '<div class="infobox"><div class="image"><img src="' + map_location_postion_image_id.value + '" alt=""></div><div class="title"><a href="' + map_location_postion_url_id.value + '">' + map_location_postion_name_id.value + '</a></div><div class="link"><a href="' + map_location_postion_url_id.value + '">' + map_location_postion_view_more_id.value + '</a></div></div>';#}
+                                                        {#        var contentString = "div class='infobox'><div class='image'>sassjasj</div></div>';#}
+
+                                                        var infowindow = new google.maps.InfoWindow({
+                                                            content: '<div class="infobox"><div class="image"><img src="' + map_location_postion_image_id.value + '" alt=""></div><div class="title"><a href="' + map_location_postion_url_id.value + '">' + map_location_postion_name_id.value + '</a></div><div class="link"><a style="margin-top: 6px;" class="btn btn-xs btn-warning" href="' + map_location_postion_url_id.value + '">' + map_location_postion_view_more_id.value + '</a></div></div>',
+                                                        });
+
+                                                        var marker = new google.maps.Marker({
+                                                            position: uluru,
+                                                            map: map,
+                                                            title: 'Uluru (Ayers Rock)'
+                                                        });
+                                                        marker.addListener('click', function () {
+                                                            infowindow.open(map, marker);
+                                                        });
+                                                    }
+                                                </script>
+                                                <script async defer
+                                                        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHM1aAD6JYoSjzWBqcn-kCtVyzB1gfIIo&language=az&region=AZ">
+                                                </script>
+                                            </div>
+                                        </div><!-- /.product-tab -->
+                                    </div><!-- /.tab-pane -->
+
+                                </div><!-- /.tab-content -->
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+                    </div><!-- /.product-tabs -->
+                    <!-- ============================================== UPSELL PRODUCTS ============================================== -->
+                    {#                    <section class="section featured-product wow fadeInUp">#}
+                    {#                        <h3 class="section-title">{% trans 'related_product_service' %}</h3>#}
+                    {#                        <div class="owl-carousel home-owl-carousel upsell-product custom-carousel owl-theme outer-top-xs">#}
+                    {#                            {% for company_product_or_service_get_related_product_service in company_product_or_service.get_related_products_services %}#}
+                    {#                                {% with company_product_or_service_get_related_product_service as related_compamy_product %}#}
+                    {#                                    <div class="item item-carousel">#}
+                    {#                                        <div class="products">#}
+                    {##}
+                    {#                                            <div class="product">#}
+                    {#                                                <div class="product-image">#}
+                    {#                                                    <div class="image">#}
+                    {#                                                        <a href="{% url 'company_product_or_service' related_compamy_product.id %}">#}
+                    {#                                                            <img src="{{ related_compamy_product.logo|thumbnail_url:'home_event_product_slider' }}"#}
+                    {#                                                                                   alt="">#}
+                    {#                                                        </a>#}
+                    {#                                                    </div><!-- /.image -->#}
+                    {##}
+                    {#                                                    <div class="tag sale"><span>sale</span></div>#}
+                    {#                                                </div><!-- /.product-image -->#}
+                    {##}
+                    {##}
+                    {#                                                <div class="product-info text-left">#}
+                    {#                                                    <h3 class="name"><a href="{% url 'company_product_or_service' related_compamy_product.id %}">{{ company_product_or_service_get_related_product_service.name }}</a>#}
+                    {#                                                    </h3>#}
+                    {#                                                    <div class="rating rateit-small"></div>#}
+                    {#                                                    <div class="description"></div>#}
+                    {##}
+                    {#                                                    <div class="product-price">#}
+                    {#				<span class="price">#}
+                    {#                                    {{ company_product_or_service_get_related_product_service.currency.nominal }}#}
+                    {#                                    {{ company_product_or_service_get_related_product_service.price|floatformat:'-2' }}#}
+                    {#                </span>#}
+                    {#                                                        <span class="price-before-discount">$ 800</span>#}
+                    {##}
+                    {#                                                    </div><!-- /.product-price -->#}
+                    {##}
+                    {#                                                </div><!-- /.product-info -->#}
+                    {#                                                <div class="cart clearfix animate-effect">#}
+                    {#                                                    <div class="action">#}
+                    {#                                                        <ul class="list-unstyled">#}
+                    {#                                                            <li class="add-cart-button btn-group">#}
+                    {#                                                                <button class="btn btn-primary icon"#}
+                    {#                                                                        data-toggle="dropdown"#}
+                    {#                                                                        type="button">#}
+                    {#                                                                    <i class="fa fa-shopping-cart"></i>#}
+                    {#                                                                </button>#}
+                    {#                                                                <button class="btn btn-primary cart-btn" type="button">#}
+                    {#                                                                    {% trans 'add_to_cart' %}#}
+                    {#                                                                </button>#}
+                    {##}
+                    {#                                                            </li>#}
+                    {##}
+                    {#                                                            <li class="lnk wishlist">#}
+                    {#                                                                <a class="add-to-cart" href="{% url 'company_product_or_service' related_compamy_product.id %}"#}
+                    {#                                                                   title="Wishlist">#}
+                    {#                                                                    <i class="icon fa fa-heart"></i>#}
+                    {#                                                                </a>#}
+                    {#                                                            </li>#}
+                    {##}
+                    {#                                                            <li class="lnk">#}
+                    {#                                                                <a class="add-to-cart" href="{% url 'company_product_or_service' related_compamy_product.id %}"#}
+                    {#                                                                   title="Compare">#}
+                    {#                                                                    <i class="fa fa-signal"></i>#}
+                    {#                                                                </a>#}
+                    {#                                                            </li>#}
+                    {#                                                        </ul>#}
+                    {#                                                    </div><!-- /.action -->#}
+                    {#                                                </div><!-- /.cart -->#}
+                    {#                                            </div><!-- /.product -->#}
+                    {##}
+                    {#                                        </div><!-- /.products -->#}
+                    {#                                    </div><!-- /.item -->#}
+                    {##}
+                    {#                                {% endwith %}#}
+                    {#                            {% endfor %}#}
+                    {#                        </div><!-- /.home-owl-carousel -->#}
+                    {#                    </section><!-- /.section -->#}
+                    {#                    <!-- ============================================== UPSELL PRODUCTS : END ============================================== -->#}
+
+                </div>
+                <div class="clearfix"></div>
+            </div><!-- /.row -->
+            <!-- ============================================== BRANDS CAROUSEL ============================================== -->
+            {#            <div id="brands-carousel" class="logo-slider wow fadeInUp">#}
+            {##}
+            {#                <div class="logo-slider-inner">#}
+            {#                    <div id="brand-slider" class="owl-carousel brand-slider custom-carousel owl-theme">#}
+            {#                        <div class="item m-t-15">#}
+            {#                            <a href="#" class="image">#}
+            {#                                <img data-echo="{% static 'main/assets/images/brands/brand1.png' %}" src="{% static 'main/assets/images/blank.gif' %}" alt="">#}
+            {#                            </a>#}
+            {#                        </div><!--/.item-->#}
+            {##}
+            {#                        <div class="item m-t-10">#}
+            {#                            <a href="#" class="image">#}
+            {#                                <img data-echo="{% static 'main/assets/images/brands/brand2.png' %}" src="{% static 'main/assets/images/blank.gif' %}" alt="">#}
+            {#                            </a>#}
+            {#                        </div><!--/.item-->#}
+            {##}
+            {#                        <div class="item">#}
+            {#                            <a href="#" class="image">#}
+            {#                                <img data-echo="{% static 'main/assets/images/brands/brand3.png' %}" src="{% static 'main/assets/images/blank.gif' %}" alt="">#}
+            {#                            </a>#}
+            {#                        </div><!--/.item-->#}
+            {##}
+            {#                        <div class="item">#}
+            {#                            <a href="#" class="image">#}
+            {#                                <img data-echo="{% static 'main/assets/images/brands/brand4.png' %}" src="{% static 'main/assets/images/blank.gif' %}" alt="">#}
+            {#                            </a>#}
+            {#                        </div><!--/.item-->#}
+            {##}
+            {#                        <div class="item">#}
+            {#                            <a href="#" class="image">#}
+            {#                                <img data-echo="{% static 'main/assets/images/brands/brand5.png' %}" src="{% static 'main/assets/images/blank.gif' %}" alt="">#}
+            {#                            </a>#}
+            {#                        </div><!--/.item-->#}
+            {##}
+            {#                        <div class="item">#}
+            {#                            <a href="#" class="image">#}
+            {#                                <img data-echo="{% static 'main/assets/images/brands/brand6.png' %}" src="{% static 'main/assets/images/blank.gif' %}" alt="">#}
+            {#                            </a>#}
+            {#                        </div><!--/.item-->#}
+            {##}
+            {#                        <div class="item">#}
+            {#                            <a href="#" class="image">#}
+            {#                                <img data-echo="{% static 'main/assets/images/brands/brand2.png' %}" src="{% static 'main/assets/images/blank.gif' %}" alt="">#}
+            {#                            </a>#}
+            {#                        </div><!--/.item-->#}
+            {##}
+            {#                        <div class="item">#}
+            {#                            <a href="#" class="image">#}
+            {#                                <img data-echo="{% static 'main/assets/images/brands/brand4.png' %}" src="{% static 'main/assets/images/blank.gif' %}" alt="">#}
+            {#                            </a>#}
+            {#                        </div><!--/.item-->#}
+            {##}
+            {#                        <div class="item">#}
+            {#                            <a href="#" class="image">#}
+            {#                                <img data-echo="{% static 'main/assets/images/brands/brand1.png' %}" src="{% static 'main/assets/images/blank.gif' %}" alt="">#}
+            {#                            </a>#}
+            {#                        </div><!--/.item-->#}
+            {##}
+            {#                        <div class="item">#}
+            {#                            <a href="#" class="image">#}
+            {#                                <img data-echo="{% static 'main/assets/images/brands/brand5.png' %}" src="{% static 'main/assets/images/blank.gif' %}" alt="">#}
+            {#                            </a>#}
+            {#                        </div><!--/.item-->#}
+            {#                    </div><!-- /.owl-carousel #logo-slider -->#}
+            {#                </div><!-- /.logo-slider-inner -->#}
+            {##}
+            {#            </div><!-- /.logo-slider -->#}
+            <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->
+        </div><!-- /.container -->
+    </div><!-- /.body-content -->
+
+
+
+
+
+    {#    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&amp;sensor=true"></script>#}
+
+{% endblock %}
+
+{% block js_container %}
+
+    {#    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.5/sweetalert2.common.min.js"></script>#}
+    {#    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.5/sweetalert2.common.min.js.map"></script>#}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.5/sweetalert2.min.js"></script>
+
+
+    {#    <script>#}
+    {#        function initMap() {#}
+    {#            var locations = [#}
+    {#'<div class="infobox"><div class="image"><img src="{{ map_company.logo|thumbnail_url:'company_page_map' }}" alt=""></div><div class="title"><a href="{% url 'company' map_company.id %}">{{ map_company.name }}</a></div><div class="link"><a href="{% url 'company' map_company.id %}">{{ map_company.name }}</a></div></div>'#}
+    {#                ['<a href="{% url 'event' event.id %}"><strong><img src="{{ event.image|thumbnail_url:'company_page_map' }}" style="margin-right: 5px;"/>{{ event.name }}</strong></a><br>\#}
+    {#					<p style="text-align:center; margin: 5px auto;font-weight: 500;">{{ event.slogan }}</p>\#}
+    {#					<p style="text-align:center;     margin-bottom: 0;"><a style="padding: 4px 7px;" class="btn btn-primary" href="{% url 'event' event.id %}">{% trans 'get_event' %}</a></p>',#}
+    {#                    {{ event.position.latitude }},#}
+    {#                    {{ event.position.longitude }},#}
+    {#                    3#}
+    {#                ],#}
+    {##}
+    {#                [broadway.info, broadway.lat, broadway.long, 0],#}
+    {#                [belmont.info, belmont.lat, belmont.long, 1],#}
+    {#                [sheridan.info, sheridan.lat, sheridan.long, 2],#}
+    {#            ];#}
+    {##}
+    {#            var map = new google.maps.Map(document.getElementById('map'), {#}
+    {#                zoom: 10,#}
+    {#                center: new google.maps.LatLng({{ event.position.latitude }}, {{ event.position.longitude }}),#}
+    {#                mapTypeId: google.maps.MapTypeId.ROADMAP,#}
+    {#                scrollwheel: false,#}
+    {#            });#}
+    {##}
+    {#            var infowindow = new google.maps.InfoWindow({});#}
+    {##}
+    {#            var marker, i;#}
+    {##}
+    {#            for (i = 0; i < locations.length; i++) {#}
+    {#                marker = new google.maps.Marker({#}
+    {#                    position: new google.maps.LatLng(locations[i][1], locations[i][2]),#}
+    {#                    map: map#}
+    {#                });#}
+    {##}
+    {#                google.maps.event.addListener(marker, 'click', (function (marker, i) {#}
+    {#                    return function () {#}
+    {#                        infowindow.setContent(locations[i][0]);#}
+    {#                        infowindow.open(map, marker);#}
+    {#                    }#}
+    {#                })(marker, i));#}
+    {#            }#}
+    {#        }#}
+    {#    </script>#}
+    {#    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSa6WgfgKT23MVzgPs9YkGlDE7i0MNFqA&libraries=places"#}
+    {#            async defer></script>#}
+
+
+    {#    <script async defer#}
+    {#    src="https://maps.googleapis.com/maps/api/js?callback=initMap">#}
+    {#    </script>#}
+    <!-- This is what you need -->
+    {#    <script src="{% static 'sweetalert2-master/dist/sweetalert2.js' %}"></script>#}
+
+    {#    <script>#}
+    {##}
+    {#        function LoadMapEvent() {#}
+    {#            map_location_postion_longitude_id = document.getElementById("map-location-postion-longitude-id");#}
+    {#            map_location_postion_latitude_id = document.getElementById("map-location-postion-latitude-id");#}
+    {#            map_location_postion_name_id = document.getElementById("map-location-postion-name-id");#}
+    {#            map_location_postion_url_id = document.getElementById("map-location-postion-url-id");#}
+    {#            map_location_postion_image_id = document.getElementById("map-location-postion-image-id");#}
+    {#            map_location_postion_view_more_id = document.getElementById("map-location-postion-view_more-id");#}
+    {#            var locations = new Array(#}
+    {#                [map_location_postion_latitude_id.value, map_location_postion_longitude_id.value]#}
+    {#            );#}
+    {#            var markers = new Array();#}
+    {#            var mapOptions = {#}
+    {#                center: new google.maps.LatLng(map_location_postion_latitude_id.value, map_location_postion_longitude_id.value),#}
+    {#                zoom: 8,#}
+    {#                mapTypeId: google.maps.MapTypeId.ROADMAP,#}
+    {#                scrollwheel: false#}
+    {#            };#}
+    {##}
+    {#            var map = new google.maps.Map(document.getElementById('property-map'), mapOptions);#}
+    {##}
+    {#            $.each(locations, function (index, location) {#}
+    {#                var marker = new google.maps.Marker({#}
+    {#                    position: new google.maps.LatLng(location[0], location[1]),#}
+    {#                    map: map,#}
+    {#                    icon: '/static/main/assets/img/marker-transparent.png'#}
+    {#                });#}
+    {##}
+    {#                var myOptions = {#}
+    {#                    content: '<div class="infobox"><div class="image"><img src="' + map_location_postion_image_id.value + '" alt=""></div><div class="title"><a href="' + map_location_postion_url_id.value + '">' + map_location_postion_name_id.value + '</a></div><div class="link"><a href="' + map_location_postion_url_id.value + '">' + map_location_postion_view_more_id.value + '</a></div></div>',#}
+    {#                    disableAutoPan: false,#}
+    {#                    maxWidth: 0,#}
+    {#                    pixelOffset: new google.maps.Size(-146, -190),#}
+    {#                    zIndex: null,#}
+    {#                    closeBoxURL: "",#}
+    {#                    infoBoxClearance: new google.maps.Size(1, 1),#}
+    {#                    position: new google.maps.LatLng(location[0], location[1]),#}
+    {#                    isHidden: false,#}
+    {#                    pane: "floatPane",#}
+    {#                    enableEventPropagation: false#}
+    {#                };#}
+    {#                marker.infobox = new InfoBox(myOptions);#}
+    {#                marker.infobox.isOpen = false;#}
+    {##}
+    {#                var myOptions = {#}
+    {#                    draggable: true,#}
+    {#                    content: '<div class="marker"><div class="marker-inner"></div></div>',#}
+    {#                    disableAutoPan: true,#}
+    {#                    pixelOffset: new google.maps.Size(-21, -58),#}
+    {#                    position: new google.maps.LatLng(location[0], location[1]),#}
+    {#                    closeBoxURL: "",#}
+    {#                    isHidden: false,#}
+    {#                    // pane: "mapPane",#}
+    {#                    enableEventPropagation: true#}
+    {#                };#}
+    {#                marker.marker = new InfoBox(myOptions);#}
+    {#                marker.marker.open(map, marker);#}
+    {#                markers.push(marker);#}
+    {##}
+    {#                google.maps.event.addListener(marker, "click", function (e) {#}
+    {#                    var curMarker = this;#}
+    {##}
+    {#                    $.each(markers, function (index, marker) {#}
+    {#                        // if marker is not the clicked marker, close the marker#}
+    {#                        if (marker !== curMarker) {#}
+    {#                            marker.infobox.close();#}
+    {#                            marker.infobox.isOpen = false;#}
+    {#                        }#}
+    {#                    });#}
+    {##}
+    {##}
+    {#                    if (curMarker.infobox.isOpen === false) {#}
+    {#                        curMarker.infobox.open(map, this);#}
+    {#                        curMarker.infobox.isOpen = true;#}
+    {#                        map.panTo(curMarker.getPosition());#}
+    {#                    } else {#}
+    {#                        curMarker.infobox.close();#}
+    {#                        curMarker.infobox.isOpen = false;#}
+    {#                    }#}
+    {##}
+    {#                });#}
+    {#            });#}
+    {#        }#}
+    {#    </script>#}
+    {#    <script>#}
+    {##}
+    {#        $(document).ready(function () {#}
+    {#            swal(#}
+    {#                'success_message',#}
+    {#                '',#}
+    {#                'success'#}
+    {#            );#}
+    {#        });#}
+    {##}
+    {#    </script>#}
+    {% if success_message %}
+        <script>
+
+            $(document).ready(function () {
+                swal(
+                    '{{ success_message }}',
+                    '',
+                    'success'
+                );
+            });
+
+        </script>
+    {% endif %}
+    <script>
+        function applyDiv($element) {
+            var div_apply = $('#' + $element);
+            if (div_apply.is(":visible")) {
+                div_apply.hide(500);
+            } else {
+                div_apply.show(500);
+            }
+        }
+    </script>
+    <script type="text/javascript" src="{% static 'yuukCountdown-js/js/jQuery.yuukCountdown.js' %}"></script>
+    {% if event.start_date < now and event.end_date > now %}
+        <script>
+            $(function () {
+                $('#js-countDown').yuukCountDown({
+                    starttime: '{{ event.start_date|date:'Y/m/d H:i' }}',
+                    endtime: '{{ event.end_date|date:'Y/m/d H:i' }}',
+                    notStartCallBack: function (time) {
+                        console.log("Ready");
+                    },
+                    startCallBack: function (time) {
+                        console.log("Running");
+                    },
+                    endCallBack: function (time) {
+                        console.log("Complete");
+                    }
+                });
+            });
+        </script>
+    {% elif event.start_date > now and event.end_date > now %}
+        <script>
+            $(function () {
+                $('#js-countDown').yuukCountDown({
+                    starttime: '{{ now|date:'Y/m/d H:i' }}',
+                    endtime: '{{ event.start_date|date:'Y/m/d H:i' }}',
+                    notStartCallBack: function (time) {
+                        console.log("Ready");
+                    },
+                    startCallBack: function (time) {
+                        console.log("Running");
+                    },
+                    endCallBack: function (time) {
+                        console.log("Complete");
+                    }
+                });
+            });
+        </script>
+    {% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,448 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load thumbnail %}
+{% block head_container %}
+
+
+{% endblock %}
+
+
+{% block base_container %}
+
+
+    <!-- ============================================== HEADER : END ============================================== -->
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-inner">
+                <ul class="list-inline list-unstyled">
+                    <li><a href="{% url 'index' %}">{% trans 'home' %}</a></li>
+                    <li class='active'>{{ company_product_or_service.name }}</li>
+                </ul>
+            </div><!-- /.breadcrumb-inner -->
+        </div><!-- /.container -->
+    </div><!-- /.breadcrumb -->
+    <div class="body-content outer-top-xs">
+        <div class='container'>
+            <div class='row single-product'>
+                <div class='col-md-3 sidebar'>
+                    <div class="sidebar-module-container">
+                        <div class="home-banner outer-top-n" style="margin-bottom: 10px;">
+                            {% if based_ads.product_detail1_ads_active %}
+                                {% if based_ads.product_detail1_ads_image %}
+                                    <a href="{{ based_ads.product_detail1_ads_url }}">
+                                        <img class="img-responsive"
+                                             src="{{ based_ads.product_detail1_ads_image|thumbnail_url:'product_detail1_ads_image' }}"
+                                             alt="">
+                                    </a>
+                                {% elif based_ads.product_detail1_ads_context %}
+                                    {% autoescape off %}
+                                        {{ based_ads.product_detail1_ads_context }}
+                                    {% endautoescape %}
+
+                                {% else %}
+                                    <img class="img-responsive"
+                                         src="https://placeholdit.co//i/262x262?bg=cccccc"
+                                         alt="">
+                                {% endif %}
+                            {% else %}
+                                <img class="img-responsive"
+                                     src="https://placeholdit.co//i/262x262?bg=cccccc"
+                                     alt="">
+                            {% endif %}
+                        </div>
+                        {% include 'include/parts/random_events.html' %}
+                        <div class="home-banner outer-top-n" style="margin-bottom: 10px;">
+                            {% if based_ads.product_detail2_ads_active %}
+                                {% if based_ads.product_detail2_ads_image %}
+                                    <a href="{{ based_ads.product_detail2_ads_url }}">
+                                        <img class="img-responsive"
+                                             src="{{ based_ads.product_detail2_ads_image|thumbnail_url:'product_detail2_ads_image' }}"
+                                             alt="">
+                                    </a>
+                                {% elif based_ads.product_detail2_ads_context %}
+                                    {% autoescape off %}
+                                        {{ based_ads.product_detail2_ads_context }}
+                                    {% endautoescape %}
+
+                                {% else %}
+                                    <img class="img-responsive"
+                                         src="https://placeholdit.co//i/262x262?bg=cccccc"
+                                         alt="">
+                                {% endif %}
+                            {% else %}
+                                <img class="img-responsive"
+                                     src="https://placeholdit.co//i/262x262?bg=cccccc"
+                                     alt="">
+                            {% endif %}
+                        </div>
+                    </div>
+                </div><!-- /.sidebar -->
+                <div class='col-md-9'>
+                    <div class="detail-block">
+                        <div class="row  wow fadeInUp">
+
+                            <div class="col-xs-12 col-sm-6 col-md-5 gallery-holder">
+                                <div class="product-item-holder size-big single-product-gallery small-gallery">
+
+                                    <div id="owl-single-product">
+                                        <div class="single-product-gallery-item" id="slide1">
+                                            <a data-lightbox="image-1" data-title="Gallery"
+                                               href="{{ company_product_or_service.logo|thumbnail_url:'product_detail_big' }}">
+                                                <img class="img-responsive" alt=""
+                                                     src="{{ company_product_or_service.logo|thumbnail_url:'product_detail_big' }}"
+                                                     data-echo="{{ company_product_or_service.logo|thumbnail_url:'product_detail_big' }}"/>
+                                            </a>
+                                        </div><!-- /.single-product-gallery-item -->
+                                        {% for company_product_or_service_get_image in company_product_or_service.get_images %}
+                                            <div class="single-product-gallery-item"
+                                                 id="slide{{ forloop.counter|add:'1' }}">
+                                                <a data-lightbox="image-1" data-title="Gallery"
+                                                   href="{{ company_product_or_service_get_image.image|thumbnail_url:'product_detail_big' }}">
+                                                    <img class="img-responsive" alt=""
+                                                         src="{{ company_product_or_service_get_image.image|thumbnail_url:'product_detail_big' }}"
+                                                         data-echo="{{ company_product_or_service_get_image.image|thumbnail_url:'product_detail_big' }}"/>
+                                                </a>
+                                            </div><!-- /.single-product-gallery-item -->
+                                        {% endfor %}
+                                    </div><!-- /.single-product-slider -->
+
+
+                                    <div class="single-product-gallery-thumbs gallery-thumbs">
+
+                                        <div id="owl-single-product-thumbnails">
+                                            <div class="item">
+                                                <a class="horizontal-thumb active" data-target="#owl-single-product"
+                                                   data-slide="1" href="#slide1">
+                                                    <img class="img-responsive" width="85" alt=""
+                                                         src="{{ company_product_or_service.logo|thumbnail_url:'product_detail_mini' }}"
+                                                         data-echo="{{ company_product_or_service.logo|thumbnail_url:'product_detail_big' }}"/>
+                                                </a>
+                                            </div>
+                                            {% for company_product_or_service_get_image in company_product_or_service.get_images %}
+                                                <div class="item">
+                                                    <a class="horizontal-thumb" data-target="#owl-single-product"
+                                                       data-slide="{{ forloop.counter|add:'1' }}"
+                                                       href="#slide{{ forloop.counter|add:'1' }}">
+                                                        <img class="img-responsive" width="85" alt=""
+                                                             src="{{ company_product_or_service_get_image.image|thumbnail_url:'product_detail_mini' }}"
+                                                             data-echo="{{ company_product_or_service_get_image.image|thumbnail_url:'product_detail_big' }}"/>
+                                                    </a>
+                                                </div>
+                                            {% endfor %}
+                                        </div><!-- /#owl-single-product-thumbnails -->
+
+
+                                    </div><!-- /.gallery-thumbs -->
+
+                                </div><!-- /.single-product-gallery -->
+                            </div><!-- /.gallery-holder -->
+                            <div class='col-sm-6 col-md-7 product-info-block'>
+                                <div class="product-info">
+                                    <h1 class="name">{{ company_product_or_service.name }}</h1>
+
+                                    <div class="rating-reviews m-t-20">
+                                        <div class="row">
+{#                                            <div class="col-sm-3">#}
+{#                                                <div class="rating rateit-small"></div>#}
+{#                                            </div>#}
+                                            <div class="col-sm-8">
+                                                <div class="reviews">
+                                                    <a href="#" class="lnk">(13 {% trans 'reviews' %})</a>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.row -->
+                                    </div><!-- /.rating-reviews -->
+
+                                    <div class="stock-container info-container m-t-10">
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <div class="stock-box">
+                                                    <span class="label">{% trans 'availability' %} :</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <div class="stock-box">
+                                                    <span class="value">{% trans 'in_stock' %}</span>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.row -->
+                                    </div><!-- /.stock-container -->
+
+                                    <div class="description-container m-t-20">
+                                        {{ company_product_or_service.description|truncatechars:'200' }}
+                                    </div><!-- /.description-container -->
+
+                                    <div class="price-container info-container m-t-20">
+                                        <div class="row">
+
+
+                                            <div class="col-sm-6">
+                                                <div class="price-box">
+                                                    <span class="price">{{ company_product_or_service.currency.nominal }}{{ company_product_or_service.price|floatformat:'-2' }}</span>
+                                                    {#                                                    <span class="price-strike">$900.00</span>#}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6">
+{#                                                <div class="favorite-button m-t-10">#}
+{#                                                    <a class="btn btn-primary" data-toggle="tooltip"#}
+{#                                                       data-placement="right" title="Wishlist" href="#">#}
+{#                                                        <i class="fa fa-heart"></i>#}
+{#                                                    </a>#}
+{#                                                    <a class="btn btn-primary" data-toggle="tooltip"#}
+{#                                                       data-placement="right" title="Add to Compare" href="#">#}
+{#                                                        <i class="fa fa-signal"></i>#}
+{#                                                    </a>#}
+{#                                                    <a class="btn btn-primary" data-toggle="tooltip"#}
+{#                                                       data-placement="right" title="E-mail" href="#">#}
+{#                                                        <i class="fa fa-envelope"></i>#}
+{#                                                    </a>#}
+{#                                                </div>#}
+                                            </div>
+
+                                        </div><!-- /.row -->
+                                    </div><!-- /.price-container -->
+
+                                    <div class="quantity-container info-container">
+                                        <div class="row">
+{% if company_product_or_service.type == 'product' %}
+                                            <div class="col-sm-2">
+                                                <span class="label">{% trans 'qty' %} :</span>
+                                            </div>
+
+                                            <div class="col-sm-2">
+                                                <div class="cart-quantity">
+                                                    <div class="quant-input">
+                                                        <div class="arrows">
+                                                            <div class="arrow plus gradient"><span class="ir"><i
+                                                                    class="icon fa fa-sort-asc"></i></span></div>
+                                                            <div class="arrow minus gradient"><span class="ir"><i
+                                                                    class="icon fa fa-sort-desc"></i></span></div>
+                                                        </div>
+                                                        <input type="text" value="1">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-7">
+                                                <a href="#" class="btn btn-primary"><i
+                                                        class="fa fa-shopping-cart inner-right-vs"></i> {% trans 'add_to_cart' %}</a>
+                                            </div>
+{% else %}
+{% endif %}
+
+                                        </div><!-- /.row -->
+                                    </div><!-- /.quantity-container -->
+
+
+                                </div><!-- /.product-info -->
+                            </div><!-- /.col-sm-7 -->
+                        </div><!-- /.row -->
+                    </div>
+
+                    <div class="product-tabs inner-bottom-xs  wow fadeInUp">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <ul id="product-tabs" class="nav nav-tabs nav-tab-cell">
+                                    <li class="active"><a data-toggle="tab"
+                                                          href="#description">{% trans 'description' %}</a></li>
+                                    <li><a data-toggle="tab" href="#comments">{% trans 'comments' %}</a></li>
+                                    {#                                    <li><a data-toggle="tab" href="#map">{% trans 'map' %}</a></li>#}
+                                </ul><!-- /.nav-tabs #product-tabs -->
+                            </div>
+                            <div class="col-sm-9">
+
+                                <div class="tab-content">
+
+                                    <div id="description" class="tab-pane in active">
+                                        <div class="product-tab">
+                                            <p class="text">
+                                                {{ company_product_or_service.description }}
+                                            </p>
+                                        </div>
+                                    </div><!-- /.tab-pane -->
+
+                                    <div id="comments" class="tab-pane">
+                                        <div class="product-tab">
+
+                                        </div><!-- /.product-tab -->
+                                    </div><!-- /.tab-pane -->
+
+                                    {#                                    <div id="map" class="tab-pane">#}
+                                    {#                                        <div class="product-tab">#}
+                                    {##}
+                                    {##}
+                                    {##}
+                                    {#                                        </div><!-- /.product-tab -->#}
+                                    {#                                    </div><!-- /.tab-pane -->#}
+
+                                </div><!-- /.tab-content -->
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+                    </div><!-- /.product-tabs -->
+                    <!-- ============================================== UPSELL PRODUCTS ============================================== -->
+                    <section class="section featured-product wow fadeInUp">
+                        <h3 class="section-title">{% trans 'related_product_service' %}</h3>
+                        <div class="owl-carousel home-owl-carousel upsell-product custom-carousel owl-theme outer-top-xs">
+                            {% for company_product_or_service_get_related_product_service in company_product_or_service.get_related_products_services %}
+                                {% with company_product_or_service_get_related_product_service as related_compamy_product %}
+                                    <div class="item item-carousel">
+                                        <div class="products">
+
+                                            <div class="product">
+                                                <div class="product-image">
+                                                    <div class="image">
+                                                        <a href="{% url 'company_product_or_service' related_compamy_product.id %}">
+                                                            <img src="{{ related_compamy_product.logo|thumbnail_url:'home_event_product_slider' }}"
+                                                                 alt="">
+                                                        </a>
+                                                    </div><!-- /.image -->
+
+                                                    {#                                                    <div class="tag sale"><span>sale</span></div>#}
+                                                </div><!-- /.product-image -->
+
+
+                                                <div class="product-info text-left">
+                                                    <h3 class="name"><a
+                                                            href="{% url 'company_product_or_service' related_compamy_product.id %}">{{ company_product_or_service_get_related_product_service.name }}</a>
+                                                    </h3>
+                                                    {#                                                    <div class="rating rateit-small"></div>#}
+                                                    <div class="description"></div>
+
+                                                    <div class="product-price">
+                                                        <span class="price">
+                                                                            {{ company_product_or_service_get_related_product_service.currency.nominal }}
+                                                                            {{ company_product_or_service_get_related_product_service.price|floatformat:'-2' }}
+                                                        </span>
+
+                                                    </div><!-- /.product-price -->
+
+                                                </div><!-- /.product-info -->
+                                                <div class="cart clearfix animate-effect">
+                                                    <div class="action">
+                                                        <ul class="list-unstyled">
+                                                            <li class="add-cart-button btn-group">
+                                                                <button class="btn btn-primary icon"
+                                                                        data-toggle="dropdown"
+                                                                        type="button">
+                                                                    <i class="fa fa-shopping-cart"></i>
+                                                                </button>
+                                                                <button class="btn btn-primary cart-btn" type="button">
+                                                                    {% trans 'add_to_cart' %}
+                                                                </button>
+
+                                                            </li>
+
+                                                            <li class="lnk wishlist">
+                                                                <a class="add-to-cart"
+                                                                   href="{% url 'company_product_or_service' related_compamy_product.id %}"
+                                                                   title="Wishlist">
+                                                                    <i class="icon fa fa-heart"></i>
+                                                                </a>
+                                                            </li>
+
+                                                            <li class="lnk">
+                                                                <a class="add-to-cart"
+                                                                   href="{% url 'company_product_or_service' related_compamy_product.id %}"
+                                                                   title="Compare">
+                                                                    <i class="fa fa-signal"></i>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div><!-- /.action -->
+                                                </div><!-- /.cart -->
+                                            </div><!-- /.product -->
+
+                                        </div><!-- /.products -->
+                                    </div><!-- /.item -->
+
+                                {% endwith %}
+                            {% endfor %}
+                        </div><!-- /.home-owl-carousel -->
+                    </section><!-- /.section -->
+                    <!-- ============================================== UPSELL PRODUCTS : END ============================================== -->
+
+                </div>
+                <div class="clearfix"></div>
+            </div><!-- /.row -->
+            <!-- ============================================== BRANDS CAROUSEL ============================================== -->
+            {#            <div id="brands-carousel" class="logo-slider wow fadeInUp">#}
+            {##}
+            {#                <div class="logo-slider-inner">#}
+            {#                    <div id="brand-slider" class="owl-carousel brand-slider custom-carousel owl-theme">#}
+            {#                        <div class="item m-t-15">#}
+            {#                            <a href="#" class="image">#}
+            {#                                <img data-echo="{% static 'main/assets/images/brands/brand1.png' %}" src="{% static 'main/assets/images/blank.gif' %}" alt="">#}
+            {#                            </a>#}
+            {#                        </div><!--/.item-->#}
+            {##}
+            {#                        <div class="item m-t-10">#}
+            {#                            <a href="#" class="image">#}
+            {#                                <img data-echo="{% static 'main/assets/images/brands/brand2.png' %}" src="{% static 'main/assets/images/blank.gif' %}" alt="">#}
+            {#                            </a>#}
+            {#                        </div><!--/.item-->#}
+            {##}
+            {#                        <div class="item">#}
+            {#                            <a href="#" class="image">#}
+            {#                                <img data-echo="{% static 'main/assets/images/brands/brand3.png' %}" src="{% static 'main/assets/images/blank.gif' %}" alt="">#}
+            {#                            </a>#}
+            {#                        </div><!--/.item-->#}
+            {##}
+            {#                        <div class="item">#}
+            {#                            <a href="#" class="image">#}
+            {#                                <img data-echo="{% static 'main/assets/images/brands/brand4.png' %}" src="{% static 'main/assets/images/blank.gif' %}" alt="">#}
+            {#                            </a>#}
+            {#                        </div><!--/.item-->#}
+            {##}
+            {#                        <div class="item">#}
+            {#                            <a href="#" class="image">#}
+            {#                                <img data-echo="{% static 'main/assets/images/brands/brand5.png' %}" src="{% static 'main/assets/images/blank.gif' %}" alt="">#}
+            {#                            </a>#}
+            {#                        </div><!--/.item-->#}
+            {##}
+            {#                        <div class="item">#}
+            {#                            <a href="#" class="image">#}
+            {#                                <img data-echo="{% static 'main/assets/images/brands/brand6.png' %}" src="{% static 'main/assets/images/blank.gif' %}" alt="">#}
+            {#                            </a>#}
+            {#                        </div><!--/.item-->#}
+            {##}
+            {#                        <div class="item">#}
+            {#                            <a href="#" class="image">#}
+            {#                                <img data-echo="{% static 'main/assets/images/brands/brand2.png' %}" src="{% static 'main/assets/images/blank.gif' %}" alt="">#}
+            {#                            </a>#}
+            {#                        </div><!--/.item-->#}
+            {##}
+            {#                        <div class="item">#}
+            {#                            <a href="#" class="image">#}
+            {#                                <img data-echo="{% static 'main/assets/images/brands/brand4.png' %}" src="{% static 'main/assets/images/blank.gif' %}" alt="">#}
+            {#                            </a>#}
+            {#                        </div><!--/.item-->#}
+            {##}
+            {#                        <div class="item">#}
+            {#                            <a href="#" class="image">#}
+            {#                                <img data-echo="{% static 'main/assets/images/brands/brand1.png' %}" src="{% static 'main/assets/images/blank.gif' %}" alt="">#}
+            {#                            </a>#}
+            {#                        </div><!--/.item-->#}
+            {##}
+            {#                        <div class="item">#}
+            {#                            <a href="#" class="image">#}
+            {#                                <img data-echo="{% static 'main/assets/images/brands/brand5.png' %}" src="{% static 'main/assets/images/blank.gif' %}" alt="">#}
+            {#                            </a>#}
+            {#                        </div><!--/.item-->#}
+            {#                    </div><!-- /.owl-carousel #logo-slider -->#}
+            {#                </div><!-- /.logo-slider-inner -->#}
+            {##}
+            {#            </div><!-- /.logo-slider -->#}
+            <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->
+        </div><!-- /.container -->
+    </div><!-- /.body-content -->
+
+{% endblock %}
+
+
+{% block js_container %}
+
+
+{% endblock %}

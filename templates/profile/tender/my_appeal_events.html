@@ -1,0 +1,132 @@
+{% extends 'profile_base.html' %}
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+{% block head_container %}
+
+{% endblock %}
+
+
+{% block base_container %}
+
+    <div class="container-fluid">
+
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="purple">
+                        <i class="material-icons">assignment</i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">{% if company %}{{ company.name }}  - {% endif %}{% trans 'events' %}</h4>
+                        <div class="toolbar">
+                            <!--        Here you can write extra buttons/actions for the toolbar              -->
+                        </div>
+                        <div class="material-datatables">
+                            <table id="datatables" class="table table-striped table-no-bordered table-hover"
+                                   cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th>{% trans 'image' %}</th>
+                                    <th>{% trans 'name' %}</th>
+                                    <th>{% trans 'product_or_service' %}</th>
+                                    <th>{% trans 'quantity' %}</th>
+                                    <th>{% trans 'price' %} </th>
+                                    <th>{% trans 'start_date' %}</th>
+                                    <th>{% trans 'end_date' %}</th>
+                                    <th class="disabled-sorting text-right"></th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>{% trans 'image' %}</th>
+                                    <th>{% trans 'name' %}</th>
+                                    <th>{% trans 'product_or_service' %}</th>
+                                    <th>{% trans 'quantity' %}</th>
+                                    <th>{% trans 'price' %} </th>
+                                    <th>{% trans 'start_date' %}</th>
+                                    <th>{% trans 'end_date' %}</th>
+                                    <th class="text-right"></th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                {% for event in events %}
+                                    <tr>
+                                        <td><a href="{% url 'event' event.id %}" ><img src="{{ event.image|thumbnail_url:'profle_event_list_thumb' }}"/></a></td>
+                                        <td><a href="{% url 'event' event.id %}" >{{ event.name }}</a></td>
+                                        <td>{{ event.company_product_or_service.name }}</td>
+                                        <td>{{ event.quantity }}</td>
+                                        <td>{{ event.price }}</td>
+                                        <td>{{ event.start_date }}</td>
+                                        <td>{{ event.end_date }}</td>
+                                        <td class="text-right">
+                                            <a href="{% url 'event_edit' event.company.id event.id %}" class="btn btn-simple btn-info btn-icon "><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                            <a href="{% url 'my_company_event_appeals' event.company.id event.id %}" class="btn btn-simple btn-warning btn-icon "><i
+                                                    class="material-icons">dvr</i></a>
+                                            <a href="#" class="btn btn-simple btn-danger btn-icon remove"><i
+                                                    class="material-icons">close</i></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- end content-->
+                </div>
+                <!--  end card  -->
+            </div>
+            <!-- end col-md-12 -->
+        </div>
+        <!-- end row -->
+    </div>
+
+{% endblock %}
+{% block js_container %}
+
+    <script src="{% static 'profile/assets/js/jquery.datatables.js' %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#datatables').DataTable({
+                "pagingType": "full_numbers",
+                "lengthMenu": [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "{% trans 'all' %}"]
+                ],
+                responsive: true,
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "{% trans 'search_records' %}",
+                }
+
+            });
+
+
+            var table = $('#datatables').DataTable();
+
+            // Edit record
+            table.on('click', '.edit', function () {
+                $tr = $(this).closest('tr');
+
+                var data = table.row($tr).data();
+                alert('You press on Row: ' + data[0] + ' ' + data[1] + ' ' + data[2] + '\'s row.');
+            });
+
+            // Delete a record
+            table.on('click', '.remove', function (e) {
+                $tr = $(this).closest('tr');
+                table.row($tr).remove().draw();
+                e.preventDefault();
+            });
+
+            //Like record
+            table.on('click', '.like', function () {
+                alert('You clicked on Like button');
+            });
+
+            $('.card .material-datatables label').addClass('form-group');
+        });
+    </script>
+{% endblock %}

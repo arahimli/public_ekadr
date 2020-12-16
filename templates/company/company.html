@@ -1,0 +1,828 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load thumbnail %}
+{% block head_container %}
+    {#    <link rel="stylesheet" href="http://bootsnipp.com/snippets/bootstrap/css/w3.css">#}
+    <!----------------- Optional Bootstrap theme ------->
+    {#    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">#}
+{% endblock %}
+
+
+{% block base_container %}
+    <style>
+        {#        body {#}
+        {#            background-color: lightgray;#}
+        {#        }#}
+
+        #footercompanyinfo {
+            color: gray;
+            font-size: 12px;
+        }
+
+        #foundationbanner {
+            background-color: #0a83b6;
+        {#            background-image: url("http://www.planwallpaper.com/static/images/494303a2cb59b5103ed095867f3d5dbd.jpg");#}
+            background-repeat: no-repeat;
+{#            background-attachment: center;#}
+            background-position: right;
+            background-size: 100%, 100%;
+        }
+    </style>
+    <style>
+        .square, .btn {
+            border-radius: 0px !important;
+        }
+
+        /* -- color classes -- */
+        .coralbg {
+            background-color: #FA396F;
+        }
+
+        .coral {
+            color: #FA396f;
+        }
+
+        .turqbg {
+            background-color: #46D8D2;
+        }
+
+        .turq {
+            color: #46D8D2;
+        }
+
+        .white {
+            color: #fff !important;
+        }
+
+        /* -- The "User's Menu Container" specific elements. Custom container for the snippet -- */
+        div.user-menu-container {
+            z-index: 10;
+            background-color: #fff;
+            margin-top: 20px;
+            background-clip: padding-box;
+            opacity: 0.97;
+            filter: alpha(opacity=97);
+            -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+        }
+
+        div.user-menu-container .btn-lg {
+            padding: 0px 12px;
+        }
+
+        div.user-menu-container h4 {
+            font-weight: 300;
+            color: #8b8b8b;
+        }
+
+        div.user-menu-container a, div.user-menu-container .btn {
+            transition: 1s ease;
+        }
+
+        div.user-menu-container .thumbnail {
+            width: 100%;
+            min-height: 200px;
+            border: 0px !important;
+            padding: 0px;
+            border-radius: 0;
+            border: 0px !important;
+        }
+
+        /* -- Vertical Button Group -- */
+        div.user-menu-container .btn-group-vertical {
+            display: block;
+        }
+
+        div.user-menu-container .btn-group-vertical > a {
+            padding: 20px 25px;
+            background-color: #46D8D2;
+            color: white;
+            border-color: #fff;
+        }
+
+        div.btn-group-vertical > a:hover {
+            color: white;
+            border-color: white;
+        }
+
+        div.btn-group-vertical > a.active {
+            background: #FA396F;
+            box-shadow: none;
+            color: white;
+        }
+
+        /* -- Individual button styles of vertical btn group -- */
+        div.user-menu-btns {
+            padding-right: 0;
+            padding-left: 0;
+            padding-bottom: 0;
+        }
+
+        div.user-menu-btns div.btn-group-vertical > a.active:after {
+            content: '';
+            position: absolute;
+            left: 100%;
+            top: 50%;
+            margin-top: -13px;
+            border-left: 0;
+            border-bottom: 13px solid transparent;
+            border-top: 13px solid transparent;
+            border-left: 10px solid #46D8D2;
+        }
+
+        /* -- The main tab & content styling of the vertical buttons info-- */
+        div.user-menu-content {
+            color: #323232;
+        }
+
+        ul.user-menu-list {
+            list-style: none;
+            margin-top: 20px;
+            margin-bottom: 0;
+            padding: 10px;
+            border: 1px solid #eee;
+        }
+
+        ul.user-menu-list > li {
+            padding-bottom: 8px;
+            text-align: center;
+        }
+
+        div.user-menu div.user-menu-content:not(.active) {
+            display: none;
+        }
+
+        /* -- The btn stylings for the btn icons -- */
+        .btn-label {
+            position: relative;
+            left: -12px;
+            display: inline-block;
+            padding: 6px 12px;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 3px 0 0 3px;
+        }
+
+        .btn-labeled {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        /* -- Custom classes for the snippet, won't effect any existing bootstrap classes of your site, but can be reused. -- */
+
+        .user-pad {
+            padding: 20px 25px;
+        }
+
+        .no-pad {
+            padding-right: 0;
+            padding-left: 0;
+            padding-bottom: 0;
+        }
+
+        .user-details {
+            background: #eee;
+            min-height: 333px;
+        }
+
+        .user-image {
+            max-height: 200px;
+            overflow: hidden;
+        }
+
+        .overview h3 {
+            font-weight: 300;
+            margin-top: 15px;
+            margin: 10px 0 0 0;
+        }
+
+        .overview h4 {
+            font-weight: bold !important;
+            font-size: 40px;
+            margin-top: 0;
+        }
+
+        .view {
+            position: relative;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .view p {
+            margin-top: 20px;
+            margin-bottom: 0;
+        }
+
+        .caption {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: rgba(70, 216, 210, 0.44);
+            width: 100%;
+            height: 100%;
+            padding: 2%;
+            display: none;
+            text-align: center;
+            color: #fff !important;
+            z-index: 2;
+        }
+
+        .caption a {
+            padding-right: 10px;
+            color: #fff;
+        }
+
+        .info {
+            display: block;
+            padding: 10px;
+            background: #eee;
+            text-transform: uppercase;
+            font-weight: 300;
+            text-align: right;
+        }
+
+        .info p, .stats p {
+            margin-bottom: 0;
+        }
+
+        .stats {
+            display: block;
+            padding: 10px;
+            color: white;
+        }
+
+        .share-links {
+            border: 1px solid #eee;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .square, .btn {
+            border-radius: 0px !important;
+        }
+
+        /* -- media query for user profile image -- */
+        @media (max-width: 767px) {
+            .user-image {
+                max-height: 400px;
+            }
+        }
+    </style>
+    <style>
+        * {
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .well {
+            margin-top: -20px;
+            background-color: #007FBD;
+            border: 2px solid #0077B2;
+            text-align: center;
+            cursor: pointer;
+            font-size: 25px;
+            padding: 15px;
+            border-radius: 0px !important;
+        }
+
+        .well:hover {
+            margin-top: -20px;
+            background-color: #0077B2;
+            border: 2px solid #0077B2;
+            text-align: center;
+            cursor: pointer;
+            font-size: 25px;
+            padding: 15px;
+            border-radius: 0px !important;
+            border-bottom: 2px solid rgba(97, 203, 255, 0.65);
+        }
+
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #fff;
+            background-color: #F1F1F1;
+        }
+
+        .bg_blur {
+            background-image: url('http://data2.whicdn.com/images/139218968/large.jpg');
+            height: 300px;
+            background-size: cover;
+        }
+
+        .follow_btn {
+            text-decoration: none;
+            position: absolute;
+            left: 35%;
+            top: 42.5%;
+            width: 35%;
+            height: 15%;
+            background-color: #007FBE;
+            padding: 10px;
+            padding-top: 6px;
+            color: #fff;
+            text-align: center;
+            font-size: 20px;
+            border: 4px solid #007FBE;
+        }
+
+        .follow_btn:hover {
+            text-decoration: none;
+            position: absolute;
+            left: 35%;
+            top: 42.5%;
+            width: 35%;
+            height: 15%;
+            background-color: #007FBE;
+            padding: 10px;
+            padding-top: 6px;
+            color: #fff;
+            text-align: center;
+            font-size: 20px;
+            border: 4px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .header {
+            color: #808080;
+            margin-left: 10%;
+            margin-top: 70px;
+        }
+
+        .picture {
+            height: 150px;
+            width: 150px;
+            position: absolute;
+            top: 75px;
+            left: 55px;
+        }
+
+        .picture_mob {
+            position: absolute;
+            width: 35%;
+            left: 35%;
+            bottom: 70%;
+        }
+
+        .btn-style {
+            color: #fff;
+            background-color: #007FBE;
+            border-color: #adadad;
+            width: 33.3%;
+        }
+
+        .btn-style:hover {
+            color: #333;
+            background-color: #3D5DE0;
+            border-color: #adadad;
+            width: 33.3%;
+
+        }
+
+        @media (max-width: 767px) {
+            .header {
+                text-align: center;
+            }
+
+            .nav {
+                margin-top: 30px;
+            }
+        }
+
+
+    </style>
+    <style>
+        #myTab li {
+            background: #16485f;
+
+        }
+
+        #myTab li a {
+            color: #fff;
+        }
+
+        #myTab li a:hover {
+            color: #16485f;
+        }
+
+        #myTab .active a {
+            color: #16485f;
+        }
+
+        .fade {
+            display: none;
+        }
+
+        .fade.in {
+            display: block;
+        }
+
+        .red-end_date {
+            color: red !important;
+        }
+
+        .green-start_date {
+            color: green;
+        }
+
+        .font-weight700 {
+            font-weight: 700;
+        }
+
+        .company-infos-div ul li:first-child {
+            border-top: 1px solid #CCCCCC;
+        }
+
+        .company-infos-div ul li:hover {
+            border-bottom: 1px solid #CCCCCC;
+            padding: 7px 10px;
+            background: #f7f7f7;
+            cursor: copy;
+        }
+
+        .company-infos-div ul li {
+            border-bottom: 1px solid #ccc;
+            padding: 7px 10px;
+            background: #fdfdfd;
+        }
+    .hpadding20 {
+        padding: 20px;
+    }
+    #tab-description{
+        color: #333;
+    }
+    </style>
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-inner">
+                <ul class="list-inline list-unstyled">
+                    <li><a href="{% url 'index' %}">{% trans 'home' %}</a></li>
+                    <li class='active'>{{ company.name }}</li>
+                </ul>
+            </div><!-- /.breadcrumb-inner -->
+        </div><!-- /.container -->
+    </div><!-- /.breadcrumb -->
+    <!-- CONTENT -->
+    <div class="body-content outer-top-xs">
+        <div class="container" style="background: #fff;">
+            <div class="container pagecontainer offset-0">
+
+                <div class="row">
+
+                    <!-- SLIDER -->
+                    <div class="col-md-12" style="    background: #fff;">
+
+                        <div class="row" style="margin-bottom: 10px;">
+                            <div class="col-md-4 bg_blur " style="background: rgba(243, 243, 243, 0.44);">
+                                <div class="header">
+                                    <h1>{{ company.name }}</h1>
+                                    <h4>{{ company.region.name }}</h4>
+                                    <span>{{ company.practices|truncatechars:'80' }}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-8 col-xs-12">
+                                <div class="bg_blur"
+                                     style="background: url('{% if company.cover_photo %}{{ company.cover_photo|thumbnail_url:'company_detail_cover_image' }}{% else %}{% static 'profile/assets/img/company-default_image.jpg' %}{% endif %}')"></div>
+                                {% if company.logo %}
+                                    <img src="{{ company.logo|thumbnail_url:'company_profile_image' }}"
+                                         class="img-thumbnail picture hidden-xs"/>
+                                    <img src="{{ company.logo|thumbnail_url:'company_profile_image' }}"
+                                         class="img-thumbnail visible-xs picture_mob"/>
+                                {% else %}
+                                    <img src="{{ company.logo|thumbnail_url:'company_profile_image' }}"
+                                         class="img-thumbnail picture hidden-xs"/>
+                                    <img src="{{ company.logo|thumbnail_url:'company_profile_image' }}"
+                                         class="img-thumbnail visible-xs picture_mob"/>
+                                {% endif %}
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- END OF SLIDER -->
+
+                </div>
+            </div>
+            <!-- END OF container-->
+
+            <div class="container mt25 offset-0" style="background: #fff;">
+
+                <div class="col-md-8 col-sm-12 pagecontainer2 offset-0">
+                    <ul class="nav nav-tabs" id="myTab">
+                        <li class="active"><a data-toggle="tab"
+                                              href="#tab-product_or_servies"><span
+                                class="summary"></span><span class="hidetext">{% trans 'products_or_servies' %} </span>&nbsp;
+                        </a></li>
+                        <li><a data-toggle="tab" href="#tab-events"><span
+                                class="rates"></span><span class="hidetext">{% trans 'events' %}</span>&nbsp; </a></li>
+                        <li class=""><a data-toggle="tab" href="#tab-description"><span
+                                class="preferences"></span><span class="hidetext">{% trans 'practices' %} </span>&nbsp;
+                        </a>
+                        </li>
+                        <li onclick="loadScript()" class=""><a data-toggle="tab" href="#tab-maps"><span
+                                class="maps"></span><span class="hidetext">{% trans 'map' %} </span>&nbsp; </a></li>
+
+                    </ul>
+                    <div class="tab-content4">
+                        <!-- TAB 1 -->
+                        <div id="tab-product_or_servies" class="tab-pane fade active in">
+                            <div class="search-result-container ">
+                                <div id="myTabContent" class="tab-content category-list">
+                                    <div class="tab-pane active " id="grid-container">
+                                        <div class="category-product">
+                                            <div class="row" id="company_products_or_services-ajax-data">
+                                                {% for company_product_or_service in company_products_or_services %}
+                                                    <div class="col-sm-6 col-md-4 wow fadeInUp"
+                                                         style="border-bottom: 1px dotted #ccc;border-right: 1px dotted #ccc;">
+                                                        <div class="products">
+                                                            <div class="product">
+                                                                <div class="product-image">
+                                                                    <div class="image"><a
+                                                                            href="{% url 'company_product_or_service'  company_product_or_service.id %}">
+                                                                        <img src="{{ company_product_or_service.logo|thumbnail_url:'events_products_services' }}"
+                                                                             alt=""></a>
+                                                                    </div>
+                                                                    <!-- /.image -->
+
+                                                                    {#                                                                    <div class="tag new"><span>new</span></div>#}
+                                                                </div>
+                                                                <!-- /.product-image -->
+
+                                                                <div class="product-info text-left">
+                                                                    <h3 class="name"><a
+                                                                            href="{% url 'company_product_or_service'  company_product_or_service.id %}">
+                                                                        {{ company_product_or_service.name }}
+                                                                    </a></h3>
+                                                                    {#                                                                    <div class="rating rateit-small"></div>#}
+                                                                    <div class="description">
+
+                                                                    </div>
+                                                                    <div class="product-price"><span class="price">
+                                                                        {{ company_product_or_service.currency.nominal }}{{ company_product_or_service.price|floatformat:'-2' }}
+                                                                    </span>
+                                                                        {#                                                                        <span class="price-before-discount">$ 800</span>#}
+                                                                    </div>
+                                                                    <!-- /.product-price -->
+
+                                                                </div>
+                                                                <!-- /.product-info -->
+                                                                <div class="cart clearfix animate-effect">
+                                                                    <div class="action">
+                                                                        <ul class="list-unstyled">
+                                                                            <li class="add-cart-button btn-group">
+                                                                                <a href="{% url 'company_product_or_service'  company_product_or_service.id %}"
+                                                                                   class="btn btn-primary icon"
+                                                                                   data-toggle="dropdown"
+                                                                                ><i
+                                                                                        class="fa fa-shopping-cart"></i>
+                                                                                </a>
+                                                                                <a href="{% url 'company_product_or_service'  company_product_or_service.id %}"
+                                                                                   class="btn btn-primary cart-btn"
+                                                                                   type="button">{% trans 'add_to_cart' %}
+                                                                                </a>
+                                                                            </li>
+                                                                            <li class="lnk wishlist">
+                                                                                <a class="add-to-cart"
+                                                                                   href="{% url 'company_product_or_service'  company_product_or_service.id %}"
+                                                                                   title="Wishlist">
+                                                                                    {% trans 'add_to_cart' %}
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <!-- /.action -->
+                                                                </div>
+                                                                <!-- /.cart -->
+                                                            </div>
+                                                            <!-- /.product -->
+
+                                                        </div>
+                                                        <!-- /.products -->
+                                                    </div>
+                                                    {% if forloop.counter|divisibleby:'3' %}
+                                                        <div class="clearfix"></div>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                <!-- /.item -->
+                                            </div>
+                                            <!-- /.row -->
+                                        </div>
+                                        <!-- /.category-product -->
+
+                                    </div>
+                                    <!-- /.tab-pane -->
+                                </div>
+                                <!-- /.tab-content -->
+                                <!-- /.filters-container -->
+
+                            </div>
+                            <!-- /.search-result-container -->
+
+
+                        </div>
+                        <!-- TAB 1 -->
+                        <div id="tab-events" class="tab-pane fade">
+                            <div class="search-result-container ">
+                                <div id="myTabContent" class="tab-content category-list">
+                                    <div class="tab-pane active " id="grid-container">
+                                        <div class="category-product">
+                                            <div class="row" id="events-ajax-data">
+                                                {% for event in events %}
+                                                    <div class="col-sm-4 col-md-4 wow "
+                                                         style="border-bottom: 1px dotted #ccc;border-right: 1px dotted #ccc;">
+                                                        <div class="products">
+                                                            <div class="product">
+                                                                <div class="product-image">
+                                                                    <div class="image"><a
+                                                                            href="{% url 'event'  event.id %}">
+                                                                        <img src="{{ event.image|thumbnail_url:'events_products_services' }}"
+                                                                             alt=""></a>
+                                                                    </div>
+                                                                    <!-- /.image -->
+
+                                                                    {#                                                                    <div class="tag new"><span>new</span></div>#}
+                                                                </div>
+                                                                <!-- /.product-image -->
+
+                                                                <div class="product-info text-left">
+                                                                    <h3 class="name"><a
+                                                                            href="{% url 'event'  event.id %}">
+                                                                        {{ event.name }}
+                                                                    </a></h3>
+                                                                    {#                                                                    <div class="rating rateit-small"></div>#}
+                                                                    <div class="description"></div>
+                                                                    <span class="label {% if event.end_date > now %} label-success {% else %} label-danger {% endif %}">
+                                                                        {% if event.end_date > now %}
+                                                                            {% trans 'continues' %}
+                                                                        {% else %}
+                                                                            {% trans 'finished' %}
+                                                                        {% endif %}
+                                                                    </span>
+                                                                    <div class="product-price"><span class="price">
+
+                                                                        {% trans 'start_date' %}:<span
+                                                                            class="font-weight700 green-start_date">{{ event.start_date|date:'d F Y' }}</span>
+                                                                        <br/>
+                                                                        {% trans 'end_date' %}:<span
+                                                                            class="font-weight700 red-end_date">{{ event.end_date|date:'d F Y' }}</span>
+                                                                    </span>
+                                                                        {#                                                                        <span class="price-before-discount">$ 800</span>#}
+                                                                    </div>
+                                                                    <!-- /.product-price -->
+
+                                                                </div>
+                                                                <!-- /.product-info -->
+                                                                <div class="cart clearfix animate-effect">
+                                                                    <div class="action">
+                                                                        <ul class="list-unstyled">
+                                                                            <li class="add-cart-button btn-group">
+                                                                                <a class="btn btn-primary icon"
+                                                                                   data-toggle="dropdown"
+                                                                                   href="{% url 'event' event.id %}"><i
+                                                                                        class="fa fa-check"></i>
+                                                                                </a>
+                                                                                <button class="btn btn-primary cart-btn"
+                                                                                        type="button">{% trans 'apply' %}
+                                                                                </button>
+                                                                            </li>
+                                                                            <li class="lnk wishlist">
+                                                                                <a class="add-to-cart"
+                                                                                   href="{% url 'event'  event.id %}"
+                                                                                   title="Wishlist">
+                                                                                    {% trans 'apply' %}
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <!-- /.action -->
+                                                                </div>
+                                                                <!-- /.cart -->
+                                                            </div>
+                                                            <!-- /.product -->
+
+                                                        </div>
+                                                        <!-- /.products -->
+                                                    </div>
+                                                    {% if forloop.counter|divisibleby:'3' %}
+                                                        <div class="clearfix"></div>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                <!-- /.item -->
+                                            </div>
+                                            <!-- /.row -->
+                                        </div>
+                                        <!-- /.category-product -->
+
+                                    </div>
+                                    <!-- /.tab-pane -->
+                                </div>
+                                <!-- /.tab-content -->
+                                <!-- /.filters-container -->
+
+                            </div>
+                            <!-- /.search-result-container -->
+
+
+                            <div class="line4"></div>
+
+
+                        </div>
+                        <!-- TAB 2 -->
+                        <div id="tab-description" class="tab-pane fade">
+                            <div class="hpadding20">
+                                {{ company.practices }}
+                            </div>
+                            <div class="line2"></div>
+                        </div>
+
+
+                        <!-- TAB 4 -->
+                        <div id="tab-maps" class="tab-pane fade">
+                            <div class="hpadding20">
+                                <div id="map"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-12" style="color: #0f0f0f;">
+
+                    <div class="pagecontainer2 alsolikebox company-infos-div">
+                        <span class="icon-location"></span>
+
+                        <h3 class="opensans">{% trans 'about_company' %} </h3>
+                        <div class="clearfix"></div>
+                        <ul>
+                            <li><strong>{% trans 'name' %} :</strong> {{ company.name }}</li>
+                            <li><strong>{% trans 'slogan' %} :</strong> {{ company.slogan }}</li>
+                            <li><strong>{% trans 'phones' %} :</strong> {{ company.phones }}</li>
+                            <li><strong>{% trans 'email' %} :</strong> {{ company.email }}</li>
+                            <li><strong>{% trans 'voen' %} :</strong> {{ company.voen }}</li>
+                            <li><strong>{% trans 'address' %} :</strong> {{ company.address }}</li>
+                            <li><strong>{% trans 'practices'|title %} :</strong> {{ company.practices }}</li>
+                        </ul>
+                    </div>
+                    <div class="pagecontainer2 alsolikebox">
+                        <div class="cpadding1">
+                            <span class="icon-location"></span>
+
+                            <h3 class="opensans">{% trans 'company_events' %} </h3>
+                            <div class="clearfix"></div>
+                        </div>
+                        {% for event_get_related_event in event.get_company_events %}
+                            <div class="cpadding1 ">
+                                <a href="#"><img
+                                        src="{{ event_get_related_event.image|thumbnail_url:'sidebar_event_lists' }}"
+                                        class="left mr20"
+                                        alt=""/></a>
+                                <a href="#" class="dark"><b>{{ event_get_related_event.name }} </b></a><br/>
+                                <span class="opensans green bold size14">{{ event_get_related_event.start_date }}</span>
+                                <br/>
+                                <span class="opensans bold size14 red">{{ event_get_related_event.end_date }}</span><br/>
+                            </div>
+                            <div class="line5"></div>
+                        {% endfor %}
+                        <br/>
+
+
+                    </div>
+                    <br/>
+
+                    <div class="pagecontainer2 mt20 alsolikebox">
+                        <div class="cpadding1">
+                            <span class="icon-location"></span>
+                            <h3 class="opensans">{% trans 'last_events' %} </h3>
+                            <div class="clearfix"></div>
+                        </div>
+                        {% for event_get_related_event in event.get_related_events %}
+                            <div class="cpadding1 ">
+                                <a href="#"><img
+                                        src="{{ event_get_related_event.image|thumbnail_url:'sidebar_event_lists' }}"
+                                        class="left mr20"
+                                        alt=""/></a>
+                                <a href="#" class="dark"><b>{{ event_get_related_event.name }} </b></a><br/>
+                                <span class="opensans green bold size14">{{ event_get_related_event.start_date }}</span>
+                                <br/>
+                                <span class="opensans bold size14 red">{{ event_get_related_event.end_date }}</span><br/>
+                            </div>
+                            <div class="line5"></div>
+                        {% endfor %}
+                        <br/>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+        <!-- END OF CONTENT -->
+    </div>
+{% endblock %}
+
+
+{% block js_container %}
+
+
+{% endblock %}

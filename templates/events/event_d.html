@@ -1,0 +1,783 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+{% block head_container %}
+
+{% endblock %}
+
+
+{% block base_container %}
+    <style>
+
+
+        .card {
+            padding-top: 20px;
+            margin: 10px 0 20px 0;
+            background-color: rgba(214, 224, 226, 0.2);
+            border-top-width: 0;
+            border-bottom-width: 2px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+
+        }
+
+        .card .card-heading.image .card-heading-header h3 {
+            margin: 0;
+            font-size: 14px;
+            line-height: 16px;
+            color: #262626;
+        }
+
+        .card .card-heading.image .card-heading-header span {
+            font-size: 12px;
+            color: #999999;
+        }
+
+        .card .card-body {
+            padding: 0 20px;
+            margin-top: 20px;
+        }
+
+        .card .card-media {
+            padding: 0 20px;
+            margin: 0 -14px;
+        }
+
+        .card .card-media img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .card .card-actions {
+            min-height: 30px;
+            padding: 0 20px 20px 20px;
+            margin: 20px 0 0 0;
+        }
+
+        .card .card-comments {
+            padding: 20px;
+            margin: 0;
+            background-color: #f8f8f8;
+        }
+
+        .card .card-comments .comments-collapse-toggle {
+            padding: 0;
+            margin: 0 20px 12px 20px;
+        }
+
+        .card .card-comments .comments-collapse-toggle a,
+        .card .card-comments .comments-collapse-toggle span {
+            padding-right: 5px;
+            overflow: hidden;
+            font-size: 12px;
+            color: #999;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .card-comments .media-heading {
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .card.people {
+            position: relative;
+            display: inline-block;
+            width: 170px;
+            height: 300px;
+            padding-top: 0;
+            margin-left: 20px;
+            overflow: hidden;
+            vertical-align: top;
+        }
+
+        .card.people:first-child {
+            margin-left: 0;
+        }
+
+        .card.people .card-top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: inline-block;
+            width: 170px;
+            height: 150px;
+            background-color: #ffffff;
+        }
+
+        .card.people .card-top.green {
+            background-color: #53a93f;
+        }
+
+        .card.people .card-top.blue {
+            background-color: #427fed;
+        }
+
+        .card.people .card-info {
+            position: absolute;
+            top: 150px;
+            display: inline-block;
+            width: 100%;
+            height: 101px;
+            overflow: hidden;
+            background: #ffffff;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .card.people .card-info .title {
+            display: block;
+            margin: 8px 14px 0 14px;
+            overflow: hidden;
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 18px;
+            color: #404040;
+        }
+
+        .card.people .card-info .desc {
+            display: block;
+            margin: 8px 14px 0 14px;
+            overflow: hidden;
+            font-size: 12px;
+            line-height: 16px;
+            color: #737373;
+            text-overflow: ellipsis;
+        }
+
+        .card.people .card-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            display: inline-block;
+            width: 100%;
+            padding: 10px 20px;
+            line-height: 29px;
+            text-align: center;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .card.hovercard {
+            position: relative;
+            padding-top: 0;
+            overflow: hidden;
+            text-align: center;
+            background-color: #fff;
+        }
+
+        .card.hovercard .cardheader {
+            background: url("http://lorempixel.com/850/280/nature/4/");
+            background-size: cover;
+            height: 135px;
+        }
+
+        .card.hovercard .avatar {
+            position: relative;
+            top: -50px;
+            margin-bottom: -50px;
+        }
+
+        .card.hovercard .avatar img {
+            width: 100px;
+            height: 100px;
+            max-width: 100px;
+            max-height: 100px;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+            border: 5px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .card.hovercard .info {
+            padding: 4px 8px 10px;
+        }
+
+        .card.hovercard .info .title {
+            margin-bottom: 4px;
+            font-size: 24px;
+            line-height: 1;
+            color: #262626;
+            vertical-align: middle;
+        }
+
+        .card.hovercard .info .desc {
+            overflow: hidden;
+            font-size: 12px;
+            line-height: 20px;
+            color: #737373;
+            text-overflow: ellipsis;
+        }
+
+        .card.hovercard .bottom {
+            padding: 0 20px;
+            margin-bottom: 17px;
+        }
+
+{#        .btn {#}
+{#            border-radius: 50%;#}
+{#            width: 32px;#}
+{#            height: 32px;#}
+{#            line-height: 18px;#}
+{#        }#}
+
+    </style>
+
+        <link href="{% static 'yuukCountdown-js/css/style.css' %}" rel="stylesheet" type="text/css" />
+<style>
+.countdown .item .day{
+        width: 110px;
+}
+        .well-company {
+            min-height: 20px;
+        {#            padding: 19px;#} margin-bottom: 20px;
+        {#            background-color: #f5f5f5;#}{#            border: 1px solid #e3e3e3;#}
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+            -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+        }
+</style>
+<style>
+
+
+.card {
+    padding-top: 20px;
+    margin: 10px 0 20px 0;
+    background-color: rgba(214, 224, 226, 0.2);
+    border-top-width: 0;
+    border-bottom-width: 2px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+
+
+}
+
+.card .card-heading.image .card-heading-header h3 {
+    margin: 0;
+    font-size: 14px;
+    line-height: 16px;
+    color: #262626;
+}
+
+.card .card-heading.image .card-heading-header span {
+    font-size: 12px;
+    color: #999999;
+}
+
+.card .card-body {
+    padding: 0 20px;
+    margin-top: 20px;
+}
+
+.card .card-media {
+    padding: 0 20px;
+    margin: 0 -14px;
+}
+
+.card .card-media img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.card .card-actions {
+    min-height: 30px;
+    padding: 0 20px 20px 20px;
+    margin: 20px 0 0 0;
+}
+
+.card .card-comments {
+    padding: 20px;
+    margin: 0;
+    background-color: #f8f8f8;
+}
+
+.card .card-comments .comments-collapse-toggle {
+    padding: 0;
+    margin: 0 20px 12px 20px;
+}
+
+.card .card-comments .comments-collapse-toggle a,
+.card .card-comments .comments-collapse-toggle span {
+    padding-right: 5px;
+    overflow: hidden;
+    font-size: 12px;
+    color: #999;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.card-comments .media-heading {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.card.people {
+    position: relative;
+    display: inline-block;
+    width: 170px;
+    height: 300px;
+    padding-top: 0;
+    margin-left: 20px;
+    overflow: hidden;
+    vertical-align: top;
+}
+
+.card.people:first-child {
+    margin-left: 0;
+}
+
+.card.people .card-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    width: 170px;
+    height: 150px;
+    background-color: #ffffff;
+}
+
+.card.people .card-top.green {
+    background-color: #53a93f;
+}
+
+.card.people .card-top.blue {
+    background-color: #427fed;
+}
+
+.card.people .card-info {
+    position: absolute;
+    top: 150px;
+    display: inline-block;
+    width: 100%;
+    height: 101px;
+    overflow: hidden;
+    background: #ffffff;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.card.people .card-info .title {
+    display: block;
+    margin: 8px 14px 0 14px;
+    overflow: hidden;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 18px;
+    color: #404040;
+}
+
+.card.people .card-info .desc {
+    display: block;
+    margin: 8px 14px 0 14px;
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 16px;
+    color: #737373;
+    text-overflow: ellipsis;
+}
+
+.card.people .card-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: inline-block;
+    width: 100%;
+    padding: 10px 20px;
+    line-height: 29px;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.card.hovercard {
+    position: relative;
+    padding-top: 0;
+    overflow: hidden;
+    text-align: center;
+    background-color: #fff;
+    padding: 13px 13px;
+    text-align: center;
+    background: #fff;
+    color: #0677a7;
+    border: 2px solid #0677a7;
+    outline: 1px dashed #0677a7;
+    outline-offset: -10px;
+    margin: 0px 3px;
+    font-size: 15px;
+}
+
+.card.hovercard .cardheader {
+    background: url("http://lorempixel.com/850/280/nature/4/");
+    background-size: cover;
+    height: 135px;
+}
+
+.card.hovercard .avatar {
+    position: relative;
+    top: -50px;
+    margin-bottom: -50px;
+}
+
+.card.hovercard .avatar img {
+    width: 100px;
+    height: 100px;
+    max-width: 100px;
+    max-height: 100px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    border: 5px solid rgba(255,255,255,0.5);
+}
+
+.card.hovercard .info {
+    padding: 4px 8px 10px;
+}
+
+.card.hovercard .info .title {
+    margin-bottom: 4px;
+    font-size: 24px;
+    line-height: 1;
+    color: #262626;
+    vertical-align: middle;
+    font-weight: 600;
+}
+.card.hovercard .info .slogan{
+    font-size: 16px;
+    font-weight: 400;
+}
+.card.hovercard .info .region{
+    font-size: 16px;
+    font-weight: 400;
+    color: #333333;
+}
+.card.hovercard .info .title a:hover{
+    text-decoration: none;
+}
+.card.hovercard .info .desc {
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 20px;
+    color: #737373;
+    text-overflow: ellipsis;
+}
+
+.card.hovercard .bottom {
+    padding: 0 20px;
+    margin-bottom: 17px;
+}
+
+{#.btn{ border-radius: 50%; width:32px; height:32px; line-height:18px;  }#}
+
+</style>
+    <div id="content">
+        <div class="container">
+            <div id="main">
+                <div class="row">
+                    <div class="span9">
+                        <h1 class="page-header">{{ event.name }} </h1>
+
+                        <div class="carousel property">
+                            <div class="preview">
+                                <img src="{{ event.image.url }}" alt="">
+                            </div><!-- /.preview -->
+
+{#                            <div class="content">#}
+{##}
+{#                                <a class="carousel-prev" href="#">Previous</a>#}
+{#                                <a class="carousel-next" href="#">Next</a>#}
+{#                                <ul>#}
+{#                                    <li class="active">#}
+{#                                        <img src="{% static 'main/assets/img/tmp/property-large-1.jpg' %}" alt="">#}
+{#                                    </li>#}
+{#                                </ul>#}
+{#                            </div>#}
+                            <!-- /.content -->
+                        </div>
+                        <!-- /.carousel -->
+
+                        <div class="property-detail">
+                            <div class="pull-left overview">
+                                <div class="row">
+                                    <div class="span3">
+                                        <h2>{% trans 'overview' %}</h2>
+
+                                        <table>
+                                            <tr>
+                                                <th>{% trans 'price' %}:</th>
+                                                <td>€{{ event.price }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>{% trans 'company_name' %}:</th>
+                                                <td>{{ event.company.name }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>{% trans 'product_or_service_name' %}:</th>
+                                                <td>{{ event.company_product_or_service.name }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>{% trans 'quantity' %}:</th>
+                                                <td>{{ event.quantity }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>{% trans 'start_date' %}:</th>
+                                                <td>{{ event.start_date }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>{% trans 'end_date' %}:</th>
+                                                <td>{{ event.end_date }}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <!-- /.span2 -->
+                                </div>
+                                <!-- /.row -->
+                            </div>
+
+                            <p>
+
+                                {% autoescape off %}
+                                    {{ event.description }}
+                                {% endautoescape %}
+
+                            </p>
+                            <div class="span8">
+                                <div class="countdown">
+                                    <input id="countdown_days" type="hidden" value="{% trans 'days' %}">
+                                    <input id="countdown_hours" type="hidden" value="{% trans 'hours' %}">
+                                    <input id="countdown_minutes" type="hidden" value="{% trans 'minutes' %}">
+                                    <input id="countdown_seconds" type="hidden" value="{% trans 'seconds' %}">
+                                    <div class="countdown-time">
+                                        <ul class="clearfix" id="js-countDown">
+                                            <li class="item"><i class="day">00</i><span>{% trans 'days' %}</span></li>
+                                            <li class="blank">:</li>
+                                            <li class="item"><i class="hour">00</i><span>{% trans 'hours' %}</span></li>
+                                            <li class="blank">:</li>
+                                            <li class="item"><i class="minute">00</i><span>{% trans 'minutes' %}</span></li>
+                                            <li class="blank">:</li>
+                                            <li class="item"><i class="second">00</i><span>{% trans 'seconds' %}</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="span1"></div>
+                            <div class="span6">
+                                <div class="widget our-agents">
+                                    <div class="title">
+                                    </div><!-- /.title -->
+                            <div>
+{#                                <div class="">#}
+
+                                {% if event.end_date > now %}
+
+                                    <a class="property-filter widget btn btn-primary btn-large" onclick="applyDiv('apply-div');">{% trans 'apply' %}</a>
+
+{#                            </div>#}
+                                <div id="apply-div" style="{% if is_post_val == True  %} display: block; {% else %} display: none; {% endif %}">
+                                    <div class="property-filter widget">
+                                        <div class="content">
+                                            {% if request.user.is_authenticated %}
+                                            <form method="post"
+                                                  action="">
+                                                {% csrf_token %}
+                                                <div class="location control-group">
+                                                    <label class="control-label" for="inputLocation">
+                                                        {% trans 'company' %}
+                                                    </label>
+                                                    <div class="controls">
+                                                        {{ event_appeal_form.company }}
+                                                        {% if event_appeal_form.company.errors %}
+                                                            <div class="alert alert-danger" style="    margin-top: 9px;padding: 7px 0;">
+                                                                <button style="margin: 5px 30px;" type="button" class="close"
+                                                                        data-dismiss="alert" aria-hidden="true">
+                                                                    ×
+                                                                </button>
+                                                                <strong>{{ event_appeal_form.company.errors }}</strong>
+                                                            </div>
+                                                        {% endif %}
+                                                    </div><!-- /.controls -->
+                                                </div><!-- /.control-group -->
+
+                                                <div class="location control-group">
+                                                    <label class="control-label" for="inputLocation">
+                                                        {% trans 'price' %}
+                                                    </label>
+                                                    <div class="controls">
+                                                        {{ event_appeal_form.price }}
+                                                        {% if event_appeal_form.price.errors %}
+                                                            <div class="alert alert-danger" style="padding: 7px 0;">
+                                                                <button style="margin: 5px 30px;" type="button" class="close"
+                                                                        data-dismiss="alert" aria-hidden="true">
+                                                                    ×
+                                                                </button>
+                                                                <strong>{{ event_appeal_form.price.errors }}</strong>
+                                                            </div>
+                                                        {% endif %}
+                                                    </div><!-- /.controls -->
+                                                </div><!-- /.control-group -->
+                                                <div class="location control-group">
+                                                    <label class="control-label" for="inputLocation">
+                                                        {% trans 'currency' %}
+                                                    </label>
+                                                    <div class="controls">
+                                                        {{ event_appeal_form.currency }}
+
+                                                        {% if event_appeal_form.currency.errors %}
+                                                            <div class="alert alert-danger" style="    margin-top: 9px;padding: 7px 0;">
+                                                                <button style="margin: 5px 30px;" type="button" class="close"
+                                                                        data-dismiss="alert" aria-hidden="true">
+                                                                    ×
+                                                                </button>
+                                                                <strong>{{ event_appeal_form.currency.errors }}</strong>
+                                                            </div>
+                                                        {% endif %}
+                                                    </div><!-- /.controls -->
+                                                </div><!-- /.control-group -->
+                                                <div class="form-actions">
+                                                    <input type="submit" value="{% trans 'apply_now' %}"
+                                                           class="btn btn-primary btn-large">
+                                                </div><!-- /.form-actions -->
+                                            </form>
+                                            {% else %}
+                                                <div style="text-align: center;">
+                                                <a href="{% url 'sign_in' %}?next_url={% url 'event' event.id %}" class="btn btn-danger btn-large">{% trans 'sign_in' %}</a>
+                                                <span style="color: #fff; font-weight: 600;">{% trans 'or' %}</span>
+                                                <a href="{% url 'sign_up' %}" class="btn btn-danger btn-large">{% trans 'sign_up' %}</a>
+                                                </div>
+                                            {% endif %}
+                                        </div><!-- /.content -->
+                                    </div><!-- /.property-filter -->
+                                </div>
+                                {% else %}
+                                    <a class="property-filter widget btn btn-primary btn-large disabled">{% trans 'apply' %}</a>
+                                {% endif %}
+                            </div>
+                                </div><!-- /.our-agents --></div>
+                            <div id="property-map"></div><!-- /#property-map -->
+                        </div>
+
+                    </div>
+                    <div class="span3 well-company">
+                            <div class="card hovercard">
+                                <div class="cardheader">
+
+                                </div>
+                                <div class="avatar">
+                                    <a target="_blank" href="{% url 'company' event.company.id %}">
+                                        <img alt="" src="{{ event.company.logo|thumbnail_url:'event_company' }}">
+                                    </a>
+                                </div>
+                                <div class="info">
+                                    <div class="title">
+                                        <a target="_blank" href="{% url 'company' event.company.id %}">{{ event.company.name }}</a>
+                                    </div>
+                                    <div class="slogan">{{ event.company.slogan }}</div>
+                                    <div class="region">{{ event.company.region.name }}</div>
+                                </div>
+                            </div>
+
+                            <div class="widget properties last">
+                                <div class="title">
+                                    <h2>{% trans 'company_events' %}</h2>
+                                </div><!-- /.title -->
+                                <div class="content">
+                                    {% for event_get_company_event in event.get_company_events %}
+                                    <div class="property">
+                                        <div class="image">
+                                            <a href="{% url 'event' event_get_company_event.id %}"></a>
+                                            <img src="{{ event_get_company_event.image|thumbnail_url:'event_company_events' }}" alt="">
+                                        </div><!-- /.image -->
+
+                                        <div class="wrapper">
+                                            <div class="title">
+                                                <h3>
+                                                    <a href="{% url 'event' event_get_company_event.id %}">{{ event_get_company_event.name }}</a>
+                                                </h3>
+                                            </div><!-- /.title -->
+                                            <div class="location">{{ event_get_company_event.name }}</div><!-- /.location -->
+                                            <div class="price">{{ event_get_company_event.end_date|date:'d-F-Y H:i:s' }}</div><!-- /.price -->
+                                        </div><!-- /.wrapper -->
+                                    </div><!-- /.property -->
+                                    {% endfor %}
+                                </div><!-- /.content -->
+                                <div class="title">
+                                    <h2>{% trans 'last_events' %}</h2>
+                                </div><!-- /.title -->
+
+                                <div class="content">
+                                    {% for event_get_related_event in event.get_related_events %}
+                                    <div class="property">
+                                        <div class="image">
+                                            <a href="{% url 'event' event_get_related_event.id %}"></a>
+                                            <img src="{{ event_get_related_event.image|thumbnail_url:'event_company_events' }}" alt="">
+                                        </div><!-- /.image -->
+
+                                        <div class="wrapper">
+                                            <div class="title">
+                                                <h3>
+                                                    <a href="{% url 'event' event_get_related_event.id %}">{{ event_get_related_event.name }}</a>
+                                                </h3>
+                                            </div><!-- /.title -->
+                                            <div class="location">{{ event_get_related_event.name }}</div><!-- /.location -->
+                                            <div class="price">{{ event_get_related_event.end_date|date:'d-F-Y H:i:s' }}</div><!-- /.price -->
+                                        </div><!-- /.wrapper -->
+                                    </div><!-- /.property -->
+                                    {% endfor %}
+                                </div><!-- /.content -->
+                            </div><!-- /.properties -->
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- /#content -->
+
+{% endblock %}
+
+{% block js_container %}
+
+
+<script>
+    function applyDiv($element){
+        var div_apply = $('#'+$element);
+        if(div_apply.is(":visible")){
+            div_apply.hide(500);
+        }else{
+            div_apply.show(500);
+        }
+    }
+</script>
+    <script type="text/javascript" src="{% static 'yuukCountdown-js/js/jQuery.yuukCountdown.js' %}" ></script>
+    <script>
+        $(function(){
+            $('#js-countDown').yuukCountDown({
+                starttime: '{{ event.start_date|date:'Y/m/d H:i' }}',
+                endtime: '{{ event.end_date|date:'Y/m/d H:i' }}',
+                notStartCallBack: function(time){
+                    console.log("Ready");
+                },
+                startCallBack: function(time){
+                    console.log("Running");
+                },
+                endCallBack: function(time){
+                    console.log("Complete");
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

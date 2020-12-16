@@ -1,0 +1,1606 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+{% load widget_tweaks %}
+{% get_current_language as LANGUAGE_CODE %}
+{#{% load home_search_form %}#}
+{% load home_template_tag %}
+{% block head_container %}
+
+{% endblock %}
+
+
+{% block base_container %}
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        {#      #map {#}
+        {#        height: 100%;#}
+        {#      }#}
+        /* Optional: Makes the sample page fill the window. */
+        #description {
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+        }
+
+        #infowindow-content .title {
+            font-weight: bold;
+        }
+
+        #infowindow-content {
+            display: none;
+        }
+
+        #map #infowindow-content {
+            display: inline;
+        }
+
+        .pac-card {
+            margin: 10px 10px 0 0;
+            border-radius: 2px 0 0 2px;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            outline: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            background-color: #fff;
+            font-family: Roboto;
+        }
+
+        #pac-container {
+            padding-bottom: 12px;
+            margin-right: 12px;
+        }
+
+        .pac-controls {
+            display: inline-block;
+            padding: 5px 11px;
+        }
+
+        .pac-controls label {
+            font-family: Roboto;
+            font-size: 13px;
+            font-weight: 300;
+        }
+
+        @media (min-width: 979px) {
+            #pac-input {
+                background-color: #fff;
+                font-family: Roboto;
+                font-size: 15px;
+                font-weight: 300;
+                margin-left: 12px;
+                text-overflow: ellipsis;
+                width: 400px;
+                border: 17px solid #0581b5;
+                top: 10% !important;
+                padding: 8px;
+                left: 25% !important;
+
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 979px) {
+            #pac-input {
+                background-color: #fff;
+                font-family: Roboto;
+                font-size: 15px;
+                font-weight: 300;
+                margin-left: 12px;
+            {#            padding: 0 11px 0 13px;#} text-overflow: ellipsis;
+                width: 300px;
+                border: 17px solid #0581b5;
+                top: 10% !important;
+                padding: 10px;
+                left: 15% !important;
+
+            }
+        }
+
+        @media (min-width: 480px) and (max-width: 768px) {
+            #pac-input {
+                background-color: #fff;
+                font-family: Roboto;
+                font-size: 15px;
+                font-weight: 300;
+                margin-left: 12px;
+            {#            padding: 0 11px 0 13px;#} text-overflow: ellipsis;
+                width: 253px;
+                border: 17px solid #0581b5;
+                top: 5% !important;
+                padding: 10px;
+                left: 21% !important;
+
+            }
+
+        }
+
+        @media (max-width: 480px) {
+            #pac-input {
+                background-color: #fff;
+                font-family: Roboto;
+                font-size: 15px;
+                font-weight: 300;
+                margin-left: 12px;
+            {#            padding: 0 11px 0 13px;#} text-overflow: ellipsis;
+                width: 200px;
+                border: 17px solid #0581b5;
+                top: 5% !important;
+                padding: 10px;
+                left: 3% !important;
+
+            }
+        }
+
+        @media (min-width: 320px) and (max-width: 480px) {
+            #pac-input {
+                background-color: #fff;
+                font-family: Roboto;
+                font-size: 15px;
+                font-weight: 300;
+                margin-left: 12px;
+                text-overflow: ellipsis;
+                width: 215px;
+                border: 12px solid #0581b5;
+                top: 5% !important;
+                padding: 10px;
+                left: 10% !important;
+
+            }
+        }
+
+        @media (max-width: 320px) {
+            #pac-input {
+                background-color: #fff;
+                font-family: Roboto;
+                font-size: 15px;
+                font-weight: 300;
+                margin-left: 12px;
+                text-overflow: ellipsis;
+                width: 150px;
+                border: 12px solid #0581b5;
+                top: 5% !important;
+                padding: 10px;
+                left: 7% !important;
+
+            }
+        }
+
+        #pac-input:focus {
+            border-color: #4d90fe;
+        }
+
+        #title {
+            color: #fff;
+            background-color: #4d90fe;
+            font-size: 25px;
+            font-weight: 500;
+            padding: 6px 12px;
+        }
+
+        #target {
+            width: 345px;
+        }
+
+        .gray-background-section {
+            background: dimgray;
+        }
+
+        .white-background-section {
+            background: white;
+        }
+
+        .add_to_cart-button-red {
+            background: red !important;
+        }
+
+        {#    .add_to_cart-button-green{#}
+        {#        background: ;#}
+        {#    }#}
+    </style>
+    <!-- ============================================== HEADER : END ============================================== -->
+    <div class="body-content outer-top-xs" id="top-banner-and-menu">
+        <div class="container">
+            <div class="row">
+                <!-- ============================================== SIDEBAR ============================================== -->
+                <div class="col-xs-12 col-sm-12 col-md-3 sidebar">
+
+                    <!-- ================================== TOP NAVIGATION ================================== -->
+                    <div class="side-menu animate-dropdown outer-bottom-xs">
+                        <div class="head"><i class="icon fa fa-align-justify fa-fw"></i> {% trans 'business' %}</div>
+                        <nav class="yamm megamenu-horizontal">
+                            <ul class="nav">
+                                {% for based_busines in based_busineses %}
+                                    <li class="{% if based_busines.get_parent_business %}dropdown {% endif %}menu-item">
+                                        <a onclick="businesShow('{{ based_busines.id }}','{% url 'busines_ajax' based_busines.id %}','{% url 'busines' based_busines.id 'products-or-services' %}')"
+                                           href="{% if based_busines.get_parent_business %}#{% else %}{% url 'busines' based_busines.id 'products-or-services' %}{% endif %}"
+                                           class="{% if based_busines.get_parent_business %}dropdown-toggle{% endif %}"
+                                           data-toggle="dropdown">
+                                            <i class="{{ based_busines.icon }}" aria-hidden="true"></i>
+                                            <span id="busines-menu-item-{{ based_busines.id }}">{{ based_busines.name }}</span>
+                                        </a>
+                                        {% if based_busines.get_parent_business %}
+                                            <!-- ================================== MEGAMENU VERTICAL ================================== -->
+                                            <ul class="dropdown-menu mega-menu">
+                                                <li class="yamm-content">
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-sm-12 col-lg-4">
+                                                            <ul>
+                                                                {% for based_busines_get_parent_busines in based_busines.get_parent_business %}
+                                                                    <li>
+                                                                        <a id="busines-menu-item-{{ based_busines_get_parent_busines.id }}"
+                                                                           href="{% url 'busines' based_busines_get_parent_busines.id 'products-or-services' %}">
+                                                                            - {{ based_busines_get_parent_busines.name }}
+                                                                        </a>
+                                                                    </li>
+                                                                    {% if based_busines.get_parent_business.count < 15 and forloop.last and forloop.last %}
+                                                                        {#                                                                        {% for based_busines.get_parent_business.count in 10 %}#}
+                                                                        {#                                                                            <li>#}
+                                                                        {#                                                                                <a>- </a>#}
+                                                                        {#                                                                            </li>#}
+                                                                        {#                                                                        {% endfor %}#}
+                                                                        {#                                                                        {% with 10|c_minus:based_busines.get_parent_business as last_c %}#}
+                                                                        {##}
+                                                                        {#                                                                        {% endwith %}#}
+                                                                        {% for i in 15|c_minus:based_busines.get_parent_business.count|times %}
+                                                                            <li style="opacity: 0;">
+                                                                                <a>- </a>
+                                                                            </li>
+                                                                        {% endfor %}
+                                                                    {% endif %}
+                                                                    {% if forloop.counter|divisibleby:'15' and not forloop.last %}
+
+                                                                        </ul>
+                                                                        </div>
+                                                                        <div class="col-xs-12 col-sm-12 col-lg-4">
+                                                                        <ul>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                                </ul>
+                                                                </div>
+                                                        <div class="dropdown-banner-holder">
+                                                            <a href="{% url 'busines' based_busines.id 'products-or-services' %}">
+                                                                <img src="{{ based_busines.image|thumbnail_url:'business_header_image' }}"/>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.row -->
+                                                </li>
+                                                <!-- /.yamm-content -->
+                                            </ul>
+                                            <!-- /.dropdown-menu -->
+                                            <!-- ================================== MEGAMENU VERTICAL ================================== -->
+                                        {% endif %}
+                                    </li>
+                                    <!-- /.menu-item -->
+                                {% endfor %}
+                                <!-- /.menu-item -->
+
+                            </ul>
+                            <!-- /.nav -->
+                        </nav>
+                        <!-- /.megamenu-horizontal -->
+                    </div>
+                    <!-- /.side-menu -->
+                    <!-- ================================== TOP NAVIGATION : END ================================== -->
+                    <div class="home-banner">
+                        {% if based_ads.home4_ads_active %}
+                            {% if based_ads.home4_ads_image %}
+                                <a href="{{ based_ads.home4_ads_url }}">
+                                    <img class="img-responsive"
+                                         src="{{ based_ads.home4_ads_image|thumbnail_url:'home4_ads_image' }}"
+                                         alt="">
+                                </a>
+                            {% elif based_ads.home4_ads_context %}
+                                {% autoescape off %}
+                                    {{ based_ads.home4_ads_context }}
+                                {% endautoescape %}
+
+                            {% else %}
+                                <img class="img-responsive"
+                                     src="https://placeholdit.co//i/262x262?bg=cccccc"
+                                     alt="">
+                            {% endif %}
+                        {% else %}
+                            <img class="img-responsive"
+                                 src="https://placeholdit.co//i/262x262?bg=cccccc"
+                                 alt="">
+                        {% endif %}
+                    </div>
+                    <!-- ============================================== HOT DEALS ============================================== -->
+                    <div class="sidebar-widget hot-deals wow fadeInUp outer-bottom-xs">
+                        <h3 class="section-title">{% trans 'special_events' %}</h3>
+                        <div class="owl-carousel sidebar-carousel custom-carousel owl-theme outer-top-ss">
+                            {% for spec_event in spec_events %}
+                                <div class="item">
+                                    <div class="products">
+                                        <div class="hot-deal-wrapper">
+                                            <div class="image"><img
+                                                    src="{{ spec_event.image|thumbnail_url:'events_products_services' }}"
+                                                    alt=""></div>
+                                            {#                                            <div class="sale-offer-tag"><span>49%<br>off</span></div>#}
+                                            {#                                            <div class="timing-wrapper">#}
+                                            {#                                                <div class="box-wrapper">#}
+                                            {#                                                    <div class="date box"><span class="key">120</span> <span#}
+                                            {#                                                            class="value">DAYS</span></div>#}
+                                            {#                                                </div>#}
+                                            {#                                                <div class="box-wrapper">#}
+                                            {#                                                    <div class="hour box"><span class="key">20</span> <span#}
+                                            {#                                                            class="value">HRS</span></div>#}
+                                            {#                                                </div>#}
+                                            {#                                                <div class="box-wrapper">#}
+                                            {#                                                    <div class="minutes box"><span class="key">36</span> <span#}
+                                            {#                                                            class="value">MINS</span>#}
+                                            {#                                                    </div>#}
+                                            {#                                                </div>#}
+                                            {#                                                <div class="box-wrapper hidden-md">#}
+                                            {#                                                    <div class="seconds box"><span class="key">60</span> <span#}
+                                            {#                                                            class="value">SEC</span></div>#}
+                                            {#                                                </div>#}
+                                            {#                                            </div>#}
+                                        </div>
+                                        <!-- /.hot-deal-wrapper -->
+
+                                        <div class="product-info text-left m-t-20">
+                                            <h3 class="name"><a
+                                                    href="{% url 'event' spec_event.id %}">{{ spec_event.name }}</a>
+                                            </h3>
+                                            <span class="label {% if spec_event.end_date > now %} label-success {% else %} label-danger {% endif %}">
+                                                                        {% if spec_event.end_date > now %}
+                                                                            {% trans 'continues' %}
+                                                                        {% else %}
+                                                                            {% trans 'finished' %}
+                                                                        {% endif %}
+                                                                    </span>
+                                            <div class="product-price"><span class="price">
+
+                                                                        {% trans 'start_date' %}:<span
+                                                    class="font-weight700 green-start_date">{{ spec_event.start_date|date:'d F Y' }}</span>
+                                                                        <br/>
+                                                                        {% trans 'end_date' %}:<span
+                                                    class="font-weight700 red-end_date">{{ spec_event.end_date|date:'d F Y' }}</span>
+                                                                    </span>
+
+                                                <!-- /.product-price -->
+
+                                            </div>
+                                            <!-- /.product-info -->
+
+                                            <div class="cart clearfix animate-effect">
+                                                <div class="action">
+                                                    <div class="add-cart-button btn-group">
+                                                        <button class="btn btn-primary icon" data-toggle="dropdown"
+                                                                type="button"><i
+                                                                class="fa fa-check"></i></button>
+                                                        <button class="btn btn-primary cart-btn" type="button">
+                                                            {% trans 'apply' %}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <!-- /.action -->
+                                            </div>
+                                            <!-- /.cart -->
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <!-- /.sidebar-widget -->
+                    </div>
+                    <!-- ============================================== HOT DEALS: END ============================================== -->
+                    <!-- ============================================== SPECIAL DEALS ============================================== -->
+
+                    <div class="sidebar-widget outer-bottom-small wow fadeInUp">
+                        <h3 class="section-title">{% trans 'random_products_or_services' %}</h3>
+                        <div class="sidebar-widget-body outer-top-xs">
+                            <div class="owl-carousel sidebar-carousel special-offer custom-carousel owl-theme outer-top-xs">
+                                <div class="item">
+                                    <div class="products special-product">
+                                        {% for company_product_or_service in random_company_products %}
+                                            <div class="product">
+                                                <div class="product-micro">
+                                                    <div class="row product-micro-row">
+                                                        <div class="col col-xs-5">
+                                                            <div class="product-image">
+                                                                <div class="image"><a href="#"> <img
+                                                                        src="{{ company_product_or_service.logo|thumbnail_url:'events_products_services' }}"
+                                                                        alt=""> </a></div>
+                                                                <!-- /.image -->
+
+                                                            </div>
+                                                            <!-- /.product-image -->
+                                                        </div>
+                                                        <!-- /.col -->
+                                                        <div class="col2 col-xs-7">
+                                                            <div class="product-info">
+                                                                <h3 class="name"><a
+                                                                        href="{% url 'company_product_or_service' company_product_or_service.id %}">{{ company_product_or_service.name }}</a>
+                                                                </h3>
+                                                                {#                                                                <div class="rating rateit-small"></div>#}
+                                                                <div class="product-price"><span
+                                                                        class="price">{{ company_product_or_service.currency.nominal }} {{ company_product_or_service.price|floatformat:'-2' }}</span>
+                                                                </div>
+                                                                <!-- /.product-price -->
+
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.col -->
+                                                    </div>
+                                                    <!-- /.product-micro-row -->
+                                                </div>
+                                                <!-- /.product-micro -->
+
+                                            </div>
+                                            {% if forloop.counter|divisibleby:'3' and not forloop.last %}
+                                                </div>
+                                                </div>
+                                                <div class="item">
+                                                <div class="products special-product">
+                                            {% endif %}
+                                        {% endfor %}
+                                        </div>
+                                        </div>
+                            </div>
+                        </div>
+                        <!-- /.sidebar-widget-body -->
+                    </div>
+                    <!-- /.sidebar-widget -->
+                    <!-- ============================================== SPECIAL DEALS : END ============================================== -->
+
+                    <!-- ============================================== SPECIAL OFFER ============================================== -->
+
+                    <div class="sidebar-widget outer-bottom-small wow fadeInUp">
+                        <h3 class="section-title">{% trans 'random_events' %}</h3>
+                        <div class="sidebar-widget-body outer-top-xs">
+                            <div class="owl-carousel sidebar-carousel special-offer custom-carousel owl-theme outer-top-xs">
+                                <div class="item">
+                                    <div class="products special-product">
+                                        {% for based_random_event in based_random_events %}
+                                            <div class="product">
+                                                <div class="product-micro">
+                                                    <div class="row product-micro-row">
+                                                        <div class="col col-xs-5">
+                                                            <div class="product-image">
+                                                                <div class="image"><a href="{% url 'event' based_random_event.id %}"> <img
+                                                                        src="{{ based_random_event.image|thumbnail_url:'events_products_services' }}"
+                                                                        alt=""> </a></div>
+                                                                <!-- /.image -->
+
+                                                            </div>
+                                                            <!-- /.product-image -->
+                                                        </div>
+                                                        <!-- /.col -->
+                                                        <div class="col col-xs-7">
+                                                            <div class="product-info">
+                                                                <h3 class="name"><a
+                                                                        href="{% url 'event' based_random_event.id %}">{{ based_random_event.name }}</a></h3>
+                                                                {#                                                            <div class="rating rateit-small"></div>#}
+                                                                <span class="label {% if based_random_event.end_date > now %} label-success {% else %} label-danger {% endif %}">
+                                                                        {% if based_random_event.end_date > now %}
+                                                                            {% trans 'continues' %}
+                                                                        {% else %}
+                                                                            {% trans 'finished' %}
+                                                                        {% endif %}
+                                                                    </span>
+                                                                <div class="product-price">
+                                                                    <span class="price">
+
+                                                                        <span class="font-weight700 green-start_date">
+                                                                            {{ based_random_event.start_date|date:'d F Y' }}
+                                                                        </span>
+                                                                        <br/>
+                                                                        <span class="font-weight700 red-end_date">
+                                                                            {{ based_random_event.end_date|date:'d F Y' }}
+                                                                        </span>
+                                                                    </span>
+                                                                    {#                                                                        <span class="price-before-discount">$ 800</span>#}
+                                                                </div>
+                                                                <!-- /.product-price -->
+
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.col -->
+                                                    </div>
+                                                    <!-- /.product-micro-row -->
+                                                </div>
+                                                <!-- /.product-micro -->
+
+                                            </div>
+                                            {% if forloop.counter|divisibleby:'3' and not forloop.last %}
+                                                </div>
+                                                </div>
+                                                <div class="item">
+                                                <div class="products special-product">
+                                            {% endif %}
+                                        {% endfor %}
+                                        </div>
+                                        </div>
+                            </div>
+                        </div>
+                        <!-- /.sidebar-widget-body -->
+                    </div>
+                    <!-- /.sidebar-widget -->
+                    <!-- ============================================== SPECIAL OFFER : END ============================================== -->
+                    <!-- ============================================== PRODUCT TAGS ============================================== -->
+                    {#                    <div class="sidebar-widget product-tag wow fadeInUp">#}
+                    {#                        <h3 class="section-title">Product tags</h3>#}
+                    {#                        <div class="sidebar-widget-body outer-top-xs">#}
+                    {#                            <div class="tag-list"><a class="item" title="Phone" href="category.html">Phone</a> <a#}
+                    {#                                    class="item active" title="Vest" href="category.html">Vest</a> <a class="item"#}
+                    {#                                                                                                      title="Smartphone"#}
+                    {#                                                                                                      href="category.html">Smartphone</a>#}
+                    {#                                <a class="item" title="Furniture" href="category.html">Furniture</a> <a class="item"#}
+                    {#                                                                                                        title="T-shirt"#}
+                    {#                                                                                                        href="category.html">T-shirt</a>#}
+                    {#                                <a class="item" title="Sweatpants" href="category.html">Sweatpants</a> <a class="item"#}
+                    {#                                                                                                          title="Sneaker"#}
+                    {#                                                                                                          href="category.html">Sneaker</a>#}
+                    {#                                <a class="item" title="Toys" href="category.html">Toys</a> <a class="item" title="Rose"#}
+                    {#                                                                                              href="category.html">Rose</a>#}
+                    {#                            </div>#}
+                    {#                            <!-- /.tag-list -->#}
+                    {#                        </div>#}
+                    {#                        <!-- /.sidebar-widget-body -->#}
+                    {#                    </div>#}
+                    <!-- /.sidebar-widget -->
+                    <!-- ============================================== PRODUCT TAGS : END ============================================== -->
+
+                    <div class="home-banner" style="margin-bottom: 10px;">
+                        {% if based_ads.home5_ads_active %}
+                            {% if based_ads.home5_ads_image %}
+                                <a href="{{ based_ads.home5_ads_url }}">
+                                    <img class="img-responsive"
+                                         src="{{ based_ads.home5_ads_image|thumbnail_url:'home5_ads_image' }}"
+                                         alt="">
+                                </a>
+                            {% elif based_ads.home5_ads_context %}
+                                {% autoescape off %}
+                                    {{ based_ads.home5_ads_context }}
+                                {% endautoescape %}
+
+                            {% else %}
+                                <img class="img-responsive"
+                                     src="https://placeholdit.co//i/262x262?bg=cccccc"
+                                     alt="">
+                            {% endif %}
+                        {% else %}
+                            <img class="img-responsive"
+                                 src="https://placeholdit.co//i/262x262?bg=cccccc"
+                                 alt="">
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- /.sidemenu-holder -->
+                <!-- ============================================== SIDEBAR : END ============================================== -->
+
+                <!-- ============================================== CONTENT ============================================== -->
+                <div class="col-xs-12 col-sm-12 col-md-9 homebanner-holder">
+                    <!-- ========================================== SECTION – HERO ========================================= -->
+
+                    <div id="hero">
+                        <div class="map-wrapper" id="mobile-map-div-index">
+                            <div class="map">
+                                {#                                <input id="pac-input" class="controls" type="text" placeholder="Search Box">#}
+                                <input id="pac-input" class="controls" type="text"
+                                       placeholder="{% trans 'google_search_box' %}">
+                                <div id="map" style="    height: 436px;"></div>
+                                {#                <div class="container">#}
+                                {#                            <div class="row">#}
+                                {#                                <div class="span3" style="margin-top: -380px;margin-right: 7px;">#}
+                                {#                                    <div class="property-filter pull-right">#}
+                                {#                                        <div class="content">#}
+                                {#                                            <form method="get"#}
+                                {#                                                  action="{% url 'search' 'products-or-services' %}">#}
+                                {#                                                <div class="location control-group">#}
+                                {#                                                    <label class="control-label" for="inputLocation">#}
+                                {#                                                        {% trans 'search' %}#}
+                                {#                                                    </label>#}
+                                {#                                                    <div class="controls">#}
+                                {#                                                        <input id="pac-input" class="controls" type="text"#}
+                                {#                                                               placeholder="Search Box">#}
+                                {##}
+                                {#                                                        {{ home_search_form.search }}#}
+                                {#                                                    </div><!-- /.controls -->#}
+                                {#                                                </div><!-- /.control-group -->#}
+                                {##}
+                                {#                                                <div class="type control-group">#}
+                                {#                                                    <label class="control-label" for="inputType">#}
+                                {#                                                        {% trans 'busines' %}#}
+                                {#                                                    </label>#}
+                                {#                                                    <div class="controls">#}
+                                {#                                                        {{ home_search_form.businnes|add_class:"" }}#}
+                                {#                                                    </div><!-- /.controls -->#}
+                                {#                                                </div><!-- /.control-group -->#}
+                                {##}
+                                {#                                                <div class="control-group" style="margin-top: 20px;">#}
+                                {#                                                    <label class="control-label" for="inputBeds">#}
+                                {#                                                        {% trans 'region' %}#}
+                                {#                                                    </label>#}
+                                {#                                                    <div class="controls">#}
+                                {#                                                        {{ home_search_form.regions|add_class:"" }}#}
+                                {#                                                    </div><!-- /.controls -->#}
+                                {#                                                </div><!-- /.control-group -->#}
+                                {#                                                <div class="form-actions">#}
+                                {#                                                    <input type="submit" value="{% trans 'search' %}!"#}
+                                {#                                                           class="btn btn-primary btn-large">#}
+                                {#                                                </div><!-- /.form-actions -->#}
+                                {#                                            </form>#}
+                                {#                                        </div><!-- /.content -->#}
+                                {#                                    </div><!-- /.property-filter -->#}
+                                {#                                </div><!-- /.span3 -->#}
+                                {#                            </div><!-- /.row -->#}
+                                {#                </div><!-- /.container -->#}
+                            </div><!-- /.map -->
+                        </div><!-- /.map-wrapper -->
+                        <!-- /.owl-carousel -->
+                    </div>
+
+                    <!-- ========================================= SECTION – HERO : END ========================================= -->
+
+                    <!-- ============================================== INFO BOXES ============================================== -->
+                    <div class="info-boxes wow fadeInUp">
+                        <div class="info-boxes-inner">
+                            <div class="row">
+                                {% for based_service in based_services %}
+                                    <div class="col-md-6 col-sm-4 col-lg-4">
+                                        <div class="info-box">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <h4 class="info-box-heading green">{{ based_service.title }}</h4>
+                                                </div>
+                                            </div>
+                                            <h6 class="text">{{ based_service.short_text }}</h6>
+                                        </div>
+                                    </div>
+                                    <!-- .col -->
+                                {% endfor %}
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.info-boxes-inner -->
+
+                    </div>
+                    <!-- /.info-boxes -->
+                    <!-- ============================================== INFO BOXES : END ============================================== -->
+                    <!-- ============================================== SCROLL TABS ============================================== -->
+                    <div id="product-tabs-slider" class="scroll-tabs outer-top-vs wow fadeInUp">
+                        <div class="more-info-tab clearfix ">
+                            <h3 id="busines-title-header"
+                                class="new-product-title pull-left">{{ first_busines_o.name }}</h3>
+                            <ul class="nav nav-tabs nav-tab-line pull-right" id="new-products-1">
+                                <li class="active">
+                                    <a data-transition-type="backSlide" href="#businnes-product-or-services-tab"
+                                       data-toggle="tab">
+                                        {% trans 'products_or_servies' %}
+                                    </a>
+                                </li>
+                                <li><a data-transition-type="backSlide" href="#businnes-events-tab"
+                                       data-toggle="tab">
+                                    {% trans 'events' %}
+                                </a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-tabs -->
+                        </div>
+                        <div class="tab-content outer-top-xs" style="padding-left: 0;">
+                            <div class="tab-pane in active" id="businnes-product-or-services-tab">
+
+                                <div class="category-product">
+                                    <div class="" id="businnes-product-or-services-push-content">
+                                        {% for company_product_or_service in first_company_products %}
+                                            <div class="col-sm-6 col-md-4 wow fadeInUp"
+                                                 style="border-bottom: 1px dotted #ccc;border-right: 1px dotted #ccc;">
+                                                <div class="products">
+                                                    <div class="product">
+                                                        <div class="product-image">
+                                                            <div class="image"><a
+                                                                    href="{% url 'company_product_or_service'  company_product_or_service.id %}">
+                                                                <img src="{{ company_product_or_service.logo|thumbnail_url:'events_products_services' }}"
+                                                                     alt=""></a>
+                                                            </div>
+                                                            <!-- /.image -->
+
+                                                            {#                                                                    <div class="tag new"><span>new</span></div>#}
+                                                        </div>
+                                                        <!-- /.product-image -->
+
+                                                        <div class="product-info text-left">
+                                                            <h3 class="name"><a
+                                                                    href="{% url 'company_product_or_service'  company_product_or_service.id %}">
+                                                                {{ company_product_or_service.name }}
+                                                            </a></h3>
+                                                            {#                                                                    <div class="rating rateit-small"></div>#}
+                                                            <div class="description"></div>
+                                                            <div class="product-price"><span class="price">
+                                                                        {{ company_product_or_service.currency.nominal }}{{ company_product_or_service.price|floatformat:'-2' }}
+                                                                    </span>
+                                                                {#                                                                        <span class="price-before-discount">$ 800</span>#}
+                                                            </div>
+                                                            <!-- /.product-price -->
+
+                                                        </div>
+                                                        <!-- /.product-info -->
+                                                        <div class="cart clearfix animate-effect">
+                                                            <div class="action">
+                                                                <ul class="list-unstyled">
+                                                                    <li class="add-cart-button btn-group">
+                                                                        <a id="company-product-icon-div-{{ company_product_or_service.id }}"
+                                                                           onclick="addCart('{{ company_product_or_service.id }}' ,'{% url 'add_cart_ajax' company_product_or_service.id %}')"
+                                                                           class="btn btn-primary icon"
+                                                                           data-toggle="dropdown">
+                                                                            <i class="fa fa-shopping-cart"></i>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="lnk wishlist {% if request.user.is_authenticated %}
+                                                                        {% if company_product_or_service.id in add_cart_carts_list %}
+                                                                        add_to_cart-button-red
+                                                                    {% else %}{% endif %}{% endif %}"
+                                                                        id="company-product-li-div-{{ company_product_or_service.id }}">
+                                                                        <a style="cursor: pointer;"
+                                                                           id="company-product-text-div-{{ company_product_or_service.id }}"
+                                                                           class="add-to-cart {% if request.user.is_authenticated %}
+                                                                        {% if company_product_or_service.id in add_cart_carts_list %}
+                                                                        add_to_cart-button-red
+                                                                    {% else %}{% endif %}{% endif %}"
+                                                                           onclick="addCart('{{ company_product_or_service.id }}' ,'{% url 'add_cart_ajax' company_product_or_service.id %}')"
+                                                                           title="">
+                                                                            {% if request.user.is_authenticated %}
+                                                                                {% if company_product_or_service.id in add_cart_carts_list %}
+                                                                                    {% trans 'remove_cart' %}
+                                                                                {% else %}
+                                                                                    {% trans 'add_to_cart' %}{% endif %}
+                                                                            {% else %}
+                                                                                {% if company_product_or_service.id in list_product_or_services_session %}
+                                                                                    {% trans 'remove_cart' %}
+                                                                                {% else %}
+                                                                                    {% trans 'add_to_cart' %}
+                                                                                {% endif %}
+                                                                            {% endif %}
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <!-- /.action -->
+                                                        </div>
+                                                        <!-- /.cart -->
+                                                    </div>
+                                                    <!-- /.product -->
+
+                                                </div>
+                                                <!-- /.products -->
+                                            </div>
+                                            {% if forloop.counter|divisibleby:'3' %}
+                                                <div class="clearfix"></div>
+                                            {% endif %}
+                                        {% endfor %}
+                                        <!-- /.item -->
+                                    </div>
+                                </div>
+                                <!-- /.product-slider -->
+                            </div>
+                            <!-- /.tab-pane -->
+
+                            <div class="tab-pane" id="businnes-events-tab">
+                                <div class="category-product">
+                                    <div class="" id="events-tab-push-content">
+                                        {% for event in first_events %}
+                                            <div class="col-sm-4 col-md-4 wow fadeInUp"
+                                                 style="border-bottom: 1px dotted #ccc;border-right: 1px dotted #ccc;">
+                                                <div class="products">
+                                                    <div class="product">
+                                                        <div class="product-image">
+                                                            <div class="image"><a
+                                                                    href="{% url 'event'  event.id %}">
+                                                                <img src="{{ event.image|thumbnail_url:'events_products_services' }}"
+                                                                     alt=""></a>
+                                                            </div>
+                                                            <!-- /.image -->
+
+                                                            {#                                                                    <div class="tag new"><span>new</span></div>#}
+                                                        </div>
+                                                        <!-- /.product-image -->
+
+                                                        <div class="product-info text-left">
+                                                            <h3 class="name"><a
+                                                                    href="{% url 'event'  event.id %}">
+                                                                {{ event.name }}
+                                                            </a></h3>
+                                                            {#                                                                    <div class="rating rateit-small"></div>#}
+                                                            <div class="description"></div>
+                                                            <span class="label {% if event.end_date > now %} label-success {% else %} label-danger {% endif %}">
+                                                                        {% if event.end_date > now %}
+                                                                            {% trans 'continues' %}
+                                                                        {% else %}
+                                                                            {% trans 'finished' %}
+                                                                        {% endif %}
+                                                                    </span>
+                                                            <div class="product-price"><span class="price">
+
+                                                                        {% trans 'start_date' %}:<span
+                                                                    class="font-weight700 green-start_date">{{ event.start_date|date:'d F Y' }}</span>
+                                                                        <br/>
+                                                                        {% trans 'end_date' %}:<span
+                                                                    class="font-weight700 red-end_date">{{ event.end_date|date:'d F Y' }}</span>
+                                                                    </span>
+                                                                {#                                                                        <span class="price-before-discount">$ 800</span>#}
+                                                            </div>
+                                                            <!-- /.product-price -->
+
+                                                        </div>
+                                                        <!-- /.product-info -->
+                                                        <div class="cart clearfix animate-effect">
+                                                            <div class="action">
+                                                                <ul class="list-unstyled">
+                                                                    <li class="add-cart-button btn-group">
+                                                                        <a class="btn btn-primary icon"
+                                                                           data-toggle="dropdown"
+                                                                           href="{% url 'event' event.id %}"><i
+                                                                                class="fa fa-check"></i>
+                                                                        </a>
+                                                                        <button class="btn btn-primary cart-btn"
+                                                                                type="button">{% trans 'apply' %}
+                                                                        </button>
+                                                                    </li>
+                                                                    <li class="lnk wishlist">
+                                                                        <a class="add-to-cart"
+                                                                           href="{% url 'event'  event.id %}"
+                                                                           title="Wishlist">
+                                                                            {% trans 'apply' %}
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <!-- /.action -->
+                                                        </div>
+                                                        <!-- /.cart -->
+                                                    </div>
+                                                    <!-- /.product -->
+
+                                                </div>
+                                                <!-- /.products -->
+                                            </div>
+                                            {% if forloop.counter|divisibleby:'3' %}
+                                                <div class="clearfix"></div>
+                                            {% endif %}
+                                        {% endfor %}
+                                        <!-- /.item -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.tab-pane -->
+
+                        </div>
+                        <!-- /.tab-content -->
+                        {% if first_busines_o %}
+                        <a id="busines-title-url" href="{% url 'busines' first_busines_o.id 'products-or-services' %}"
+                           class="btn btn-info" style="width: 100%;padding: 10px 0;font-size: 17px;">
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i> {% trans 'more_view' %}
+                        </a>
+                    {% endif %}
+                    </div>
+                    <!-- /.scroll-tabs -->
+                    <!-- ============================================== SCROLL TABS : END ============================================== -->
+                    <!-- ============================================== WIDE PRODUCTS ============================================== -->
+                    <div class="wide-banners wow fadeInUp outer-bottom-xs">
+                        <div class="row">
+                            <div class="col-md-7 col-sm-7">
+                                <div class="wide-banner cnt-strip">
+                                    <div class="image">
+                                        {% if based_ads.home1_ads_active %}
+                                            {% if based_ads.home1_ads_image %}
+                                                <a href="{{ based_ads.home1_ads_url }}">
+                                                    <img class="img-responsive"
+                                                         src="{{ based_ads.home1_ads_image|thumbnail_url:'home1_ads_image' }}"
+                                                         alt="">
+                                                </a>
+                                            {% elif based_ads.home1_ads_context %}
+                                                {% autoescape off %}
+                                                    {{ based_ads.home1_ads_context }}
+                                                {% endautoescape %}
+
+                                            {% else %}
+                                                <img class="img-responsive"
+                                                     src="https://placeholdit.co//i/482x180?bg=cccccc"
+                                                     alt="">
+                                            {% endif %}
+                                        {% else %}
+                                            <img class="img-responsive"
+                                                 src="https://placeholdit.co//i/482x180?bg=cccccc"
+                                                 alt="">
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+                                <!-- /.wide-banner -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-md-5 col-sm-5">
+                                <div class="wide-banner cnt-strip">
+                                    <div class="image">
+                                        {% if based_ads.home2_ads_active %}
+                                            {% if based_ads.home2_ads_image %}
+                                                <a href="{{ based_ads.home2_ads_url }}">
+                                                    <img class="img-responsive"
+                                                         src="{{ based_ads.home2_ads_image|thumbnail_url:'home2_ads_image' }}"
+                                                         alt="">
+                                                </a>
+                                            {% elif based_ads.home1_ads_context %}
+                                                {% autoescape off %}
+                                                    {{ based_ads.home1_ads_context }}
+                                                {% endautoescape %}
+
+                                            {% else %}
+                                                <img class="img-responsive"
+                                                     src="https://placeholdit.co//i/336x180?bg=cccccc"
+                                                     alt="">
+                                            {% endif %}
+                                        {% else %}
+                                            <img class="img-responsive"
+                                                 src="https://placeholdit.co//i/336x180?bg=cccccc"
+                                                 alt="">
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <!-- /.wide-banner -->
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.wide-banners -->
+
+                    <!-- ============================================== WIDE PRODUCTS : END ============================================== -->
+                    <!-- ============================================== FEATURED PRODUCTS ============================================== -->
+                    <section class="section featured-product wow fadeInUp">
+                        <h3 class="section-title">Featured products</h3>
+                        <div class="owl-carousel home-owl-carousel custom-carousel owl-theme outer-top-xs">
+                            {% for event in events %}
+                                <div class="item item-carousel">
+                                    <div class="products">
+                                        <div class="product">
+                                            <div class="product-image">
+                                                <div class="image"><a
+                                                        href="{% url 'event'  event.id %}">
+                                                    <img src="{{ event.image|thumbnail_url:'events_products_services' }}"
+                                                         alt=""></a>
+                                                </div>
+                                                <!-- /.image -->
+
+                                            </div>
+                                            <!-- /.product-image -->
+
+                                            <div class="product-info text-left">
+                                                <h3 class="name"><a
+                                                        href="{% url 'event'  event.id %}">
+                                                    {{ event.name }}
+                                                </a></h3>
+                                                <div class="description"></div>
+                                                <span class="label {% if event.end_date > now %} label-success {% else %} label-danger {% endif %}">
+                                                                        {% if event.end_date > now %}
+                                                                            {% trans 'continues' %}
+                                                                        {% else %}
+                                                                            {% trans 'finished' %}
+                                                                        {% endif %}
+                                                                    </span>
+                                                <div class="product-price"><span class="price">
+
+                                                                        {% trans 'start_date' %}:<span
+                                                        class="font-weight700 green-start_date">{{ event.start_date|date:'d F Y' }}</span>
+                                                                        <br/>
+                                                                        {% trans 'end_date' %}:<span
+                                                        class="font-weight700 red-end_date">{{ event.end_date|date:'d F Y' }}</span>
+                                                                    </span>
+                                                    {#                                                                        <span class="price-before-discount">$ 800</span>#}
+                                                </div>
+                                                <!-- /.product-price -->
+
+                                            </div>
+                                            <!-- /.product-info -->
+                                            <div class="cart clearfix animate-effect">
+                                                <div class="action">
+
+                                                    <ul class="list-unstyled">
+                                                        <li class="add-cart-button btn-group">
+                                                            <a class="btn btn-primary icon"
+                                                               data-toggle="dropdown"
+                                                               href="{% url 'event' event.id %}"><i
+                                                                    class="fa fa-check"></i>
+                                                            </a>
+                                                            <button class="btn btn-primary cart-btn"
+                                                                    type="button">{% trans 'apply' %}
+                                                            </button>
+                                                        </li>
+                                                        <li class="lnk wishlist">
+                                                            <a class="add-to-cart"
+                                                               href="{% url 'event'  event.id %}"
+                                                               title="Wishlist">
+                                                                {% trans 'apply' %}
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <!-- /.action -->
+                                            </div>
+                                            <!-- /.cart -->
+                                        </div>
+                                        <!-- /.product -->
+
+                                    </div>
+                                    <!-- /.products -->
+                                </div>
+                                <!-- /.item -->
+                            {% endfor %}
+                        </div>
+                        <!-- /.home-owl-carousel -->
+                    </section>
+                    <!-- /.section -->
+                    <!-- ============================================== FEATURED PRODUCTS : END ============================================== -->
+                    <!-- ============================================== WIDE PRODUCTS ============================================== -->
+                    <div class="wide-banners wow fadeInUp outer-bottom-xs">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="wide-banner cnt-strip">
+                                    <div class="image">
+
+                                        {% if based_ads.home3_ads_active %}
+                                            {% if based_ads.home3_ads_image %}
+                                                <a href="{{ based_ads.home3_ads_url }}">
+                                                    <img class="img-responsive"
+                                                         src="{{ based_ads.home2_ads_image|thumbnail_url:'home3_ads_image' }}"
+                                                         alt="">
+                                                </a>
+
+                                            {% elif based_ads.home3_ads_context %}
+                                                {% autoescape off %}
+                                                    {{ based_ads.home3_ads_context }}
+                                                {% endautoescape %}
+
+                                            {% else %}
+                                                <img class="img-responsive"
+                                                     src="https://placeholdit.co//i/848x201?bg=cccccc"
+                                                     alt="">
+                                            {% endif %}
+                                        {% else %}
+                                            <img class="img-responsive"
+                                                 src="https://placeholdit.co//i/848x201?bg=cccccc"
+                                                 alt="">
+                                        {% endif %}
+                                    </div>
+                                    <!-- /.new-label -->
+                                </div>
+                                <!-- /.wide-banner -->
+                            </div>
+                            <!-- /.col -->
+
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.wide-banners -->
+                    <!-- ============================================== WIDE PRODUCTS : END ============================================== -->
+                    <!-- ============================================== BEST SELLER ============================================== -->
+
+                    <div class="best-deal wow fadeInUp outer-bottom-xs">
+                        <h3 class="section-title">{% trans 'best_seller' %}</h3>
+                        <div class="sidebar-widget-body outer-top-xs">
+                            <div class="owl-carousel best-seller custom-carousel owl-theme outer-top-xs">
+                                <div class="item">
+                                    <div class="products best-product">
+                                        {% for best_seller_company_product in best_seller_company_products %}
+                                            <div class="product">
+                                                <div class="product-micro">
+                                                    <div class="row product-micro-row">
+                                                        <div class="col col-xs-5">
+                                                            <div class="product-image">
+                                                                <div class="image">
+                                                                    <a href="{% url 'company_product_or_service' best_seller_company_product.id %}">
+                                                                    <img
+                                                                        src="{{ best_seller_company_product.logo|thumbnail_url:'events_products_services' }}"
+                                                                        alt=""> </a></div>
+                                                                <!-- /.image -->
+
+                                                            </div>
+                                                            <!-- /.product-image -->
+                                                        </div>
+                                                        <!-- /.col -->
+                                                        <div class="col2 col-xs-7">
+                                                            <div class="product-info">
+                                                                <h3 class="name"><a
+                                                                        href="{% url 'company_product_or_service' best_seller_company_product.id %}">{{ best_seller_company_product.name }}</a>
+                                                                </h3>
+                                                                {#                                                                <div class="rating rateit-small"></div>#}
+                                                                <div class="product-price"><span
+                                                                        class="price">{{ best_seller_company_product.currency.nominal }} {{ best_seller_company_product.price|floatformat:'-2' }}</span>
+                                                                </div>
+                                                                <!-- /.product-price -->
+
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.col -->
+                                                    </div>
+                                                    <!-- /.product-micro-row -->
+                                                </div>
+                                                <!-- /.product-micro -->
+
+                                            </div>
+                                            {% if forloop.counter|divisibleby:'2' and not forloop.last %}
+
+                                                </div>
+                                                </div>
+                                                <div class="item">
+                                                <div class="products best-product">
+                                            {% endif %}
+                                        {% endfor %}
+                                        </div>
+                                        </div>
+                            </div>
+                        </div>
+                        <!-- /.sidebar-widget-body -->
+                    </div>
+                    <!-- /.sidebar-widget -->
+                    <!-- ============================================== BEST SELLER : END ============================================== -->
+
+                    <!-- ============================================== FEATURED PRODUCTS ============================================== -->
+                    <section class="section wow fadeInUp new-arriavls">
+                        <h3 class="section-title">{% trans 'most_view_company_products_or_services' %}</h3>
+                        <div class="owl-carousel home-owl-carousel custom-carousel owl-theme outer-top-xs">
+                            {% for company_product_or_service in most_view_company_products %}
+                                <div class="item item-carousel">
+                                    <div class="products">
+                                        <div class="product">
+                                            <div class="product-image">
+                                                <div class="image"><a
+                                                        href="{% url 'company_product_or_service' company_product_or_service.id %}"><img
+                                                        src="{{ company_product_or_service.logo|thumbnail_url:'home_event_product_slider' }}"
+                                                        alt=""></a></div>
+                                                <!-- /.image -->
+
+                                                {#                                                <div class="tag new"><span>{% trans 'new' %}</span></div>#}
+                                            </div>
+                                            <!-- /.product-image -->
+
+                                            <div class="product-info text-left">
+                                                <h3 class="name"><a
+                                                        href="{% url 'company_product_or_service' company_product_or_service.id %}">
+                                                    {{ company_product_or_service.name }}
+                                                </a>
+                                                </h3>
+                                                {#                                                <div class="rating rateit-small"></div>#}
+                                                <div class="description"></div>
+                                                <div class="product-price"><span
+                                                        class="price"> {{ company_product_or_service.currency.nominal }}{{ company_product_or_service.price|floatformat:'-2' }} </span>
+                                                    {#                                                    <span class="price-before-discount">$ 800</span>#}
+                                                </div>
+                                                <!-- /.product-price -->
+
+                                            </div>
+                                            <!-- /.product-info -->
+                                            <div class="cart clearfix animate-effect">
+                                                <div class="action">
+
+                                                    <ul class="list-unstyled">
+                                                        <li class="add-cart-button btn-group">
+                                                            <a id="company-product-icon-div-{{ company_product_or_service.id }}"
+                                                               href="{% url 'company_product_or_service'  company_product_or_service.id %}"
+                                                               class="btn btn-primary icon"
+                                                               data-toggle="dropdown">
+                                                                <i class="fa fa-shopping-cart"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li class="lnk wishlist">
+                                                            <a id="company-product-text-div-{{ company_product_or_service.id }}"
+                                                               class="add-to-cart"
+                                                               onclick="addCart('{{ company_product_or_service.id }}' ,'{% url 'add_cart_ajax' company_product_or_service.id %}')"
+                                                               title="">
+                                                                {% trans 'add_to_cart' %}
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <!-- /.action -->
+                                            </div>
+                                            <!-- /.cart -->
+                                        </div>
+                                        <!-- /.product -->
+
+                                    </div>
+                                    <!-- /.products -->
+                                </div>
+                                <!-- /.item -->
+                            {% endfor %}
+                        </div>
+                        <!-- /.home-owl-carousel -->
+                    </section>
+                    <!-- /.section -->
+                    <!-- ============================================== FEATURED PRODUCTS : END ============================================== -->
+
+                </div>
+                <!-- /.homebanner-holder -->
+                <!-- ============================================== CONTENT : END ============================================== -->
+            </div>
+            <!-- /.row -->
+            {% if based_partners %}
+                <!-- ============================================== BRANDS CAROUSEL ============================================== -->
+                <div id="brands-carousel" class="logo-slider wow fadeInUp">
+                    <div class="logo-slider-inner">
+                        <div id="brand-slider" class="owl-carousel brand-slider custom-carousel owl-theme">
+                            {% for based_partner in based_partners %}
+                                <div class="item {% if forloop.counter == 1 %} m-t-15 {% elif forloop.counter == 2 %} m-t-10 {% else %}{% endif %}">
+                                    <a href="{{ based_partner.url }}" class="image">
+                                        <img data-echo="{{ based_partner.logo|thumbnail_url:'partner_list' }}"
+                                             src="{{ based_partner.logo|thumbnail_url:'partner_list' }}"
+                                             alt="{{ based_partner.name }}"> </a></div>
+                                <!--/.item-->
+                            {% endfor %}
+
+                        </div>
+                        <!-- /.owl-carousel #logo-slider -->
+                    </div>
+                    <!-- /.logo-slider-inner -->
+
+                </div>
+                <!-- /.logo-slider -->
+                <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->
+            {% endif %}
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /#top-banner-and-menu -->
+
+    {#    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%D#}
+
+    <script src="{% static 'main/assets/js/jquery-1.11.1.min.js' %}"></script>
+    <script>
+        // This example adds a search box to a map, using the Google Place Autocomplete
+        // feature. People can enter geographical searches. The search box will return a
+        // pick list containing a mix of places and predicted search terms.
+
+        // This example requires the Places library. Include the libraries=places
+        // parameter when you first load the API. For example:
+        // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+        function initAutocomplete() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 40.40926169999999, lng: 49.86709240000005},
+                zoom: 10,
+                scrollwheel: false,
+                mapTypeId: 'roadmap'
+            });
+
+            // Create the search box and link it to the UI element.
+            var input = document.getElementById('pac-input');
+            var searchBox = new google.maps.places.SearchBox(input);
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+            // Bias the SearchBox results towards current map's viewport.
+            map.addListener('bounds_changed', function () {
+                searchBox.setBounds(map.getBounds());
+            });
+
+            var markers = [];
+            // Listen for the event fired when the user selects a prediction and retrieve
+            // more details for that place.
+            searchBox.addListener('places_changed', function () {
+                var places = searchBox.getPlaces();
+
+                if (places.length == 0) {
+                    return;
+                }
+
+                // Clear out the old markers.
+                markers.forEach(function (marker) {
+                    marker.setMap(null);
+                });
+                markers = [];
+                var locations = new Array(
+                    [40.40926169999999, 49.86709240000005], [40.551374198715166, 50.020751953125]
+                );
+                // For each place, get the icon, name and location.
+                var bounds = new google.maps.LatLngBounds();
+                places.forEach(function (place) {
+                    if (!place.geometry) {
+                        console.log("Returned place contains no geometry");
+                        return;
+                    }
+                    var icon = {
+                        url: place.icon,
+                        size: new google.maps.Size(71, 71),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(17, 34),
+                        scaledSize: new google.maps.Size(25, 25)
+                    };
+
+                    // Create a marker for each place.
+                    markers.push(new google.maps.Marker({
+                        map: map,
+                        icon: icon,
+                        title: place.name,
+                        position: place.geometry.location
+                    }));
+                    console.log(place.geometry.location);
+                    if (place.geometry.viewport) {
+                        // Only geocodes have viewport.
+                        bounds.union(place.geometry.viewport);
+                    } else {
+                        bounds.extend(place.geometry.location);
+                    }
+                });
+                map.fitBounds(bounds);
+            });
+            console.log();
+
+
+        }
+        function initMap() {
+            var locations = [
+                {% for map_company in map_companies %}
+                    {#'<div class="infobox"><div class="image"><img src="{{ map_company.logo|thumbnail_url:'company_page_map' }}" alt=""></div><div class="title"><a href="{% url 'company' map_company.id %}">{{ map_company.name }}</a></div><div class="link"><a href="{% url 'company' map_company.id %}">{{ map_company.name }}</a></div></div>'#}
+                    ['<a href="{% url 'company' map_company.id %}"><strong><img src="{{ map_company.logo|thumbnail_url:'company_page_map' }}" style="margin-right: 5px;"/>{{ map_company.name }}</strong></a><br>\
+					<p style="text-align:center; margin: 5px auto;font-weight: 500;">{{ map_company.slogan }}</p>\
+					<p style="text-align:center;     margin-bottom: 0;"><a style="padding: 4px 7px;" class="btn btn-primary" href="{% url 'company' map_company.id %}">{% trans 'view_more' %}</a></p>',
+                        {{ map_company.position.latitude }},
+                        {{ map_company.position.longitude }}
+                    ],
+                {% endfor %}
+
+                {% for map_event in map_events %}
+                    {#'<div class="infobox"><div class="image"><img src="{{ map_company.logo|thumbnail_url:'company_page_map' }}" alt=""></div><div class="title"><a href="{% url 'company' map_company.id %}">{{ map_company.name }}</a></div><div class="link"><a href="{% url 'company' map_company.id %}">{{ map_company.name }}</a></div></div>'#}
+                    ['<a href="{% url 'event' map_event.id %}"><strong><img src="{{ map_event.image|thumbnail_url:'company_page_map' }}" style="margin-right: 5px;"/>{{ map_event.name }}</strong></a><br>\
+					<p style="text-align:center; margin: 5px auto;font-weight: 500;">{{ map_event.slogan }}</p>\
+					<p style="text-align:center;     margin-bottom: 0;"><a style="padding: 4px 7px;" class="btn btn-primary" href="{% url 'event' map_event.id %}">{% trans 'get_event' %}</a></p>',
+                        {{ map_event.position.latitude }},
+                        {{ map_event.position.longitude }}
+                    ],
+                {% endfor %}
+
+                {#                [broadway.info, broadway.lat, broadway.long, 0],#}
+                {#                [belmont.info, belmont.lat, belmont.long, 1],#}
+                {#                [sheridan.info, sheridan.lat, sheridan.long, 2],#}
+            ];
+
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 10,
+                center: new google.maps.LatLng(40.40926129999999, 49.86709241000005),
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                scrollwheel: false,
+            });
+
+            var infowindow = new google.maps.InfoWindow({});
+
+            var marker, i;
+
+            for (i = 0; i < locations.length; i++) {
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                    map: map
+                });
+
+                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                    return function () {
+                        infowindow.setContent(locations[i][0]);
+                        infowindow.open(map, marker);
+                    }
+                })(marker, i));
+            }
+
+            var input = document.getElementById('pac-input');
+            var searchBox = new google.maps.places.SearchBox(input);
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+            // Bias the SearchBox results towards current map's viewport.
+            map.addListener('bounds_changed', function () {
+                searchBox.setBounds(map.getBounds());
+            });
+
+            var markers = [];
+            // Listen for the event fired when the user selects a prediction and retrieve
+            // more details for that place.
+            searchBox.addListener('places_changed', function () {
+                var places = searchBox.getPlaces();
+
+                if (places.length == 0) {
+                    return;
+                }
+
+                // Clear out the old markers.
+                markers.forEach(function (marker) {
+                    marker.setMap(null);
+                });
+                markers = [];
+                var locations = new Array(
+                    [40.40926169999999, 49.86709240000005], [40.551374198715166, 50.020751953125]);
+                // For each place, get the icon, name and location.
+                var bounds = new google.maps.LatLngBounds();
+                places.forEach(function (place) {
+                    if (!place.geometry) {
+                        console.log("Returned place contains no geometry");
+                        return;
+                    }
+                    var icon = {
+                        url: place.icon,
+                        size: new google.maps.Size(71, 71),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(17, 34),
+                        scaledSize: new google.maps.Size(25, 25)
+                    };
+
+                    // Create a marker for each place.
+                    markers.push(new google.maps.Marker({
+                        map: map,
+                        icon: icon,
+                        title: place.name,
+                        position: place.geometry.location
+                    }));
+                    console.log(place.geometry.location);
+                    if (place.geometry.viewport) {
+                        // Only geocodes have viewport.
+                        bounds.union(place.geometry.viewport);
+                    } else {
+                        bounds.extend(place.geometry.location);
+                    }
+                });
+                map.fitBounds(bounds);
+            });
+
+
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSa6WgfgKT23MVzgPs9YkGlDE7i0MNFqA&libraries=places&callback=initMap&language={{ LANGUAGE_CODE }}"
+            async defer></script>
+
+    {#    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%D#}
+
+
+{% endblock %}
+
+
+{% block js_container %}
+
+    {#    <script src="{% static 'main/assets/js/jquery.v2.0.3.js' %}"></script>#}
+    <script>
+
+        function addCart($id, $url) {
+            var cpos_company_product_or_service_text = $('#company-product-text-div-' + $id);
+            var cpos_company_product_or_service_li = $('#company-product-li-div-' + $id);
+            var cpos_company_product_or_service_icon = $('#company-product-icon-div-' + $id);
+            $.ajax({
+                url: $url, // the endpoint,commonly same url
+                dataType: "json",
+                type: "GET",
+                data: {
+                    content: $id,
+                },
+                success: function (result) {
+
+                    if (result['message_code'] == 1) {
+                        cpos_company_product_or_service_text.each(function () {
+                            $(this).text('{% trans 'remove_cart' %}');
+                            {#                            $( this ).style('color', 'red', 'important');#}
+                            $(this).addClass('add_to_cart-button-red');
+                        });
+                        cpos_company_product_or_service_li.each(function () {
+                            {#                            $( this ).style('color', 'red', 'important');#}
+                            $(this).addClass('add_to_cart-button-red');
+                        });
+                        cpos_company_product_or_service_icon.each(function () {
+                            {#                            $( this ).text('{% trans 'remove_cart' %}');#}
+                            {#                            $( this ).style('color', 'red', 'important');#}
+                            $(this).css('color', 'red !important;');
+                        });
+                    } else if (result['message_code'] == 2) {
+                        cpos_company_product_or_service_text.each(function () {
+                            $(this).removeClass('add_to_cart-button-red');
+                            $(this).text('{% trans 'add_to_cart' %}');
+                        });
+                        cpos_company_product_or_service_li.each(function () {
+                            $(this).removeClass('add_to_cart-button-red');
+                        });
+                        cpos_company_product_or_service_icon.each(function () {
+                            $(this).css('color', '#0f6cb2 !important;');
+                        });
+                    }
+                },
+                // handle a non-successful response
+                error: function (xhr, errmsg, err) {
+
+                }
+            });
+        }
+
+    </script>
+    <script>
+
+        function addWishlist($id, $url, $businnes_url) {
+            {#            alert($id)#}
+            var busines_menu_item = $('#busines-menu-item-' + $id);
+            var busines_title_header = $('#busines-title-header');
+            var busines_title_url = $('#busines-title-url');
+            var company_products_or_services_tab_content = $('#businnes-product-or-services-push-content');
+            var events_tab_content = $('#events-tab-push-content');
+            var busines_title_content = $('#busines-title-content');
+            {#            alert(busines_menu_item.html());#}
+            busines_title_header.text(busines_menu_item.text());
+            busines_title_url.attr("href", $businnes_url);
+            $.ajax({
+                url: $url, // the endpoint,commonly same url
+                dataType: "json",
+                type: "GET",
+                data: {
+                    busines: $id,
+                },
+                success: function (result) {
+
+                    if (result['message_code'] == 1) {
+                        company_products_or_services_tab_content.html(result['company_products_html_data']);
+                        events_tab_content.html(result['events_html_data']);
+                    }
+                    //alert('success');
+                    // register_form_button.show(1000)
+                },
+                // handle a non-successful response
+                error: function (xhr, errmsg, err) {
+                    //{#                 console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console#}
+                    {#                    product_or_service_message.removeClass('alert').removeClass('alert-success').addClass('alert').addClass('alert-danger');#}
+                    {#                    product_or_service_message.html('<strong>' + 'error' + '</strong>').show();#}
+                    {#                    setTimeout(function () {#}
+                    {#                        product_or_service_message.fadeOut();#}
+                    {#                        product_or_service_button.show(1000);#}
+                    {#                    }, 4000);#}
+
+//{#                 $(".signup-message").show();#}
+//                $('#signup-loader-image').hide();
+//                 $('#register-form-button').show(1000);
+                }
+            });
+        }
+
+    </script>
+
+    <script>
+
+        function businesShow($id, $url, $businnes_url) {
+            {#            alert($id)#}
+            var busines_menu_item = $('#busines-menu-item-' + $id);
+            var busines_title_header = $('#busines-title-header');
+            var busines_title_url = $('#busines-title-url');
+            var company_products_or_services_tab_content = $('#businnes-product-or-services-push-content');
+            var events_tab_content = $('#events-tab-push-content');
+            var busines_title_content = $('#busines-title-content');
+            {#            alert(busines_menu_item.html());#}
+            busines_title_header.text(busines_menu_item.text());
+            busines_title_url.attr("href", $businnes_url);
+            $.ajax({
+                url: $url, // the endpoint,commonly same url
+                dataType: "json",
+                type: "GET",
+                data: {
+                    busines: $id,
+                },
+                success: function (result) {
+
+                    if (result['message_code'] == 1) {
+                        company_products_or_services_tab_content.html(result['company_products_html_data']);
+                        events_tab_content.html(result['events_html_data']);
+                    }
+                    //alert('success');
+                    // register_form_button.show(1000)
+                },
+                // handle a non-successful response
+                error: function (xhr, errmsg, err) {
+                    //{#                 console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console#}
+                    {#                    product_or_service_message.removeClass('alert').removeClass('alert-success').addClass('alert').addClass('alert-danger');#}
+                    {#                    product_or_service_message.html('<strong>' + 'error' + '</strong>').show();#}
+                    {#                    setTimeout(function () {#}
+                    {#                        product_or_service_message.fadeOut();#}
+                    {#                        product_or_service_button.show(1000);#}
+                    {#                    }, 4000);#}
+
+//{#                 $(".signup-message").show();#}
+//                $('#signup-loader-image').hide();
+//                 $('#register-form-button').show(1000);
+                }
+            });
+        }
+    </script>
+
+{% endblock %}

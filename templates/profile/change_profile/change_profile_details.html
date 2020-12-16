@@ -1,0 +1,391 @@
+{% extends 'profile_base.html' %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% block head_container %}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+    <link rel="stylesheet" href="{% static 'select2/select2-bootstrap.css' %}">
+    <style>
+        #add_new_product_or_service_div {
+            display: none;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+{% endblock %}
+
+
+{% block base_container %}
+    <style>
+        .label-floating {
+            margin: 10px 0 0 0 !important;
+        }
+
+        .label-on-left {
+            padding-top: 10px !important;
+        }
+    </style>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">vpn_key</i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">{% trans 'change_profile_data' %} -
+                            <small class="category">{% trans 'form' %}</small>
+                        </h4>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="row">
+                                {{ form.errors }}
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4 label-on-left">{% trans 'first_name' %}</label>
+                                <div class="col-sm-8">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+                                        {{ form.first_name|add_class:"form-control" }}
+                                        {% if form.first_name.errors %}
+                                            <div class="alert alert-danger" style="padding: 7px 0;">
+                                                <button style="margin: 5px 10px;" type="button" class="close"
+                                                        data-dismiss="alert" aria-hidden="true">
+                                                    ×
+                                                </button>
+                                                <strong>{{ form.first_name.errors }}</strong>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4 label-on-left">{% trans 'last_name' %}</label>
+                                <div class="col-sm-8">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+                                        {{ form.last_name|add_class:"form-control" }}
+                                        {% if form.last_name.errors %}
+                                            <div class="alert alert-danger" style="padding: 7px 0;">
+                                                <button style="margin: 5px 10px;" type="button" class="close"
+                                                        data-dismiss="alert" aria-hidden="true">
+                                                    ×
+                                                </button>
+                                                <strong>{{ form.last_name.errors }}</strong>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4 label-on-left">{% trans 'username' %}</label>
+                                <div class="col-sm-8">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+                                        {{ form.username|add_class:"form-control" }}
+                                        {% if form.username.errors %}
+                                            <div class="alert alert-danger" style="padding: 7px 0;">
+                                                <button style="margin: 5px 10px;" type="button" class="close"
+                                                        data-dismiss="alert" aria-hidden="true">
+                                                    ×
+                                                </button>
+                                                <strong>{{ form.username.errors }}</strong>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4 label-on-left">{% trans 'email' %}</label>
+                                <div class="col-sm-8">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+                                        {{ form.email|add_class:"form-control" }}
+                                        {% if form.email.errors %}
+                                            <div class="alert alert-danger" style="padding: 7px 0;">
+                                                <button style="margin: 5px 10px;" type="button" class="close"
+                                                        data-dismiss="alert" aria-hidden="true">
+                                                    ×
+                                                </button>
+                                                <strong>{{ form.email.errors }}</strong>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4 label-on-left">{% trans 'region' %}</label>
+                                <div class="col-sm-8">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+                                        {{ form.region|add_class:"form-control select2-multiple" }}
+                                        {% if form.region.errors %}
+                                            <div class="alert alert-danger" style="padding: 7px 0;">
+                                                <button style="margin: 5px 10px;" type="button" class="close"
+                                                        data-dismiss="alert" aria-hidden="true">
+                                                    ×
+                                                </button>
+                                                <strong>{{ form.region.errors }}</strong>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4 label-on-left">{% trans 'businnes_types' %}</label>
+                                <div class="col-sm-8">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+                                        {{ form.businnes_types|add_class:"form-control select2-multiple" }}
+                                        {% if form.businnes_types.errors %}
+                                            <div class="alert alert-danger" style="padding: 7px 0;">
+                                                <button style="margin: 5px 10px;" type="button" class="close"
+                                                        data-dismiss="alert" aria-hidden="true">
+                                                    ×
+                                                </button>
+                                                <strong>{{ form.businnes_types.errors }}</strong>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4 label-on-left">{% trans 'businnes_types_parent' %}</label>
+                                <div class="col-sm-8">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+                                        {{ form.businnes_types_parent|add_class:"form-control select2-multiple" }}
+                                        {% if form.businnes_types_parent.errors %}
+                                            <div class="alert alert-danger" style="padding: 7px 0;">
+                                                <button style="margin: 5px 10px;" type="button" class="close"
+                                                        data-dismiss="alert" aria-hidden="true">
+                                                    ×
+                                                </button>
+                                                <strong>{{ form.businnes_types_parent.errors }}</strong>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% if user_profile_base.type != 'admin-person' %}
+                                <div class="row">
+                                    <label class="col-sm-4 label-on-left">{% trans 'type' %}</label>
+                                    <div class="col-sm-8">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label"></label>
+                                            {{ form.type|add_class:"form-control" }}
+                                            {% if form.type.errors %}
+                                                <div class="alert alert-danger" style="padding: 7px 0;">
+                                                    <button style="margin: 5px 10px;" type="button" class="close"
+                                                            data-dismiss="alert" aria-hidden="true">
+                                                        ×
+                                                    </button>
+                                                    <strong>{{ form.type.errors }}</strong>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <div id="user-type-full-div">
+                                {% if user_profile_base.type != 'admin-person' %}
+                                    <div class="row">
+                                        <label class="col-sm-4 label-on-left">{% trans 'address' %}</label>
+                                        <div class="col-sm-8">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label"></label>
+                                                {{ form.address|add_class:"form-control" }}
+                                                {% if form.address.errors %}
+                                                    <div class="alert alert-danger" style="padding: 7px 0;">
+                                                        <button style="margin: 5px 10px;" type="button" class="close"
+                                                                data-dismiss="alert" aria-hidden="true">
+                                                            ×
+                                                        </button>
+                                                        <strong>{{ form.address.errors }}</strong>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-4 label-on-left">{% trans 'voen' %}</label>
+                                        <div class="col-sm-8">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label"></label>
+                                                {{ form.voen|add_class:"form-control" }}
+                                                {% if form.voen.errors %}
+                                                    <div class="alert alert-danger" style="padding: 7px 0;">
+                                                        <button style="margin: 5px 10px;" type="button" class="close"
+                                                                data-dismiss="alert" aria-hidden="true">
+                                                            ×
+                                                        </button>
+                                                        <strong>{{ form.voen.errors }}</strong>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-4 label-on-left">{% trans 'bank_account' %}</label>
+                                        <div class="col-sm-8">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label"></label>
+                                                {{ form.bank_account|add_class:"form-control" }}
+                                                {% if form.bank_account.errors %}
+                                                    <div class="alert alert-danger" style="padding: 7px 0;">
+                                                        <button style="margin: 5px 10px;" type="button" class="close"
+                                                                data-dismiss="alert" aria-hidden="true">
+                                                            ×
+                                                        </button>
+                                                        <strong>{{ form.bank_account.errors }}</strong>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-4 label-on-left">{% trans 'practices' %}</label>
+                                        <div class="col-sm-8">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label"></label>
+                                                {{ form.practices|add_class:"form-control" }}
+                                                {% if form.practices.errors %}
+                                                    <div class="alert alert-danger" style="padding: 7px 0;">
+                                                        <button style="margin: 5px 10px;" type="button" class="close"
+                                                                data-dismiss="alert" aria-hidden="true">
+                                                            ×
+                                                        </button>
+                                                        <strong>{{ form.practices.errors }}</strong>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4 label-on-left">{% trans 'current_password' %}</label>
+                                <div class="col-sm-8">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"></label>
+                                        {{ form.password|add_class:"form-control" }}
+                                        {% if form.password.errors %}
+                                            <div class="alert alert-danger" style="padding: 7px 0;">
+                                                <button style="margin: 5px 10px;" type="button" class="close"
+                                                        data-dismiss="alert" aria-hidden="true">
+                                                    ×
+                                                </button>
+                                                <strong>{{ form.password.errors }}</strong>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-rose pull-right">{% trans 'update_profile' %}</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card card-profile">
+                    <div class="card-avatar">
+                        <a>
+                            <img style="height: 130px;width: 130px;" class="img" src="
+
+
+
+
+
+
+
+                                    {% if user_profile_base.image %}{{ user_profile_base.image.url }}{% else %}{% static 'profile/assets/img/image_placeholder.jpg' %}{% endif %}"/>
+                        </a>
+                    </div>
+                    <div class="card-content">
+                        <h6 class="category text-gray">@{{ user_profile_base.user.username }}</h6>
+                        <h4 class="card-title">{{ user_profile_base.user.first_name }} {{ user_profile_base.user.last_name }}</h4>
+                        {#                        <a href="#pablo" class="btn btn-rose btn-round">Follow</a>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block js_container %}
+
+    <script src="{% static 'select2/select2.full.js' %}"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+    <link rel="stylesheet" href="{% static 'select2/select2-bootstrap.css' %}">
+    <!-- DateTimePicker Plugin -->
+    <script>
+        $(document).ready(function () {
+            {#            alert('ready')#}
+            {% if post_success_tf %}
+                swal({
+                    title: "{% trans 'success' %}",
+                    text: "{{ post_message }}",
+                    buttonsStyling: false,
+                    confirmButtonClass: "btn btn-success",
+                    type: "success"
+                });
+            {% endif %}
+            var type_user = $('#id_type');
+            var user_type_full_div = $('#user-type-full-div');
+            user_type_full_div.hide();
+
+            {% if user_profile_base.type != 'admin-person' %}
+                if (type_user.val() == 'ordinary-person' || type_user.val() == 'admin-person') {
+                    user_type_full_div.hide();
+                } else {
+                    user_type_full_div.show();
+                }
+
+                type_user.change(function () {
+                    {#                alert('sasas');#}
+                    if (type_user.val() == 'ordinary-person' || type_user.val() == 'admin-person') {
+                        user_type_full_div.hide();
+                        {#                    alert('hide')#}
+                    } else {
+                        user_type_full_div.show();
+                    }
+                });
+            {% endif %}
+
+        });
+    </script>
+
+    <script src="{% static 'profile/assets/js/bootstrap-datetimepicker.js' %}"></script>
+    <script>
+        dateTimeOptions = {
+            'format': 'Y-MM-D HH:mm:ss',
+            'autoclose': true,
+            'showMeridian': true
+        };
+        {#widgets = {#}
+        {#    #NOT Use localization and set a default format#}
+        {#    'datetime': DateTimeWidget(options = dateTimeOptions)#}
+        {#    }#}
+    </script>
+    <script>
+        $(".select2-single, .select2-multiple").select2({
+            theme: "bootstrap",
+            placeholder: "Select a State",
+            maximumSelectionSize: 6,
+            containerCssClass: ':all:'
+        });
+
+        $(":checkbox").on("click", function () {
+            $(this).parent().nextAll("select").prop("disabled", !this.checked);
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            {#            md.initSliders();#}
+            demo.initFormExtendedDatetimepickers();
+        });
+    </script>
+{% endblock %}

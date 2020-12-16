@@ -1,0 +1,31 @@
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+    google.charts.load('current', {'packages': ['corechart']});
+    google.charts.setOnLoadCallback(drawVisualization);
+
+    function drawVisualization() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable([
+            ['{% trans 'month' %}', '{% trans 'companys' %}', '{% trans 'events' %}', '{% trans 'products_or_services' %}'],
+            {% for data_list_month_item in data_list_month %}
+                ['{{ data_list_month_item.month_name }}', {{ data_list_month_item.company_count }}, {{ data_list_month_item.event_count }}, {{ data_list_month_item.pors_count }}],
+            {% endfor %}
+        ]);
+
+        var options = {
+            title: '{{ year }} - {% trans 'monthly_data' %}',
+            vAxis: {title: '{% trans 'count' %}'},
+            hAxis: {title: '{% trans 'month' %}'},
+            seriesType: 'bars',
+            series: {5: {type: 'line'}}
+        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('chart_div_3'));
+        chart.draw(data, options);
+    }
+</script>
+<div id="chart_div_3" class="" style="width: 100%; height: 500px;"></div>
